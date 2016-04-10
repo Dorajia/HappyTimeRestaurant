@@ -7,18 +7,21 @@ SID:	010751455
 1. The work I did last week:
  - Organize the team members meeting for three times and discussing the Team Project.
  - Decide the Project Topic as Happy Time Restaurant.
- - Finish the Requirement Analysis, write the Requirement Analysis Document.
+ - Finish the Requirement Analysis, write the Requirement Analysis Document and commit in the Github Repository.
  - Research the techniques which will be needed in this project, and deside the technique solution:
  	- For DB, we will use MongoDB + MySQL deployed on AWS;
  	- For Web Service, we will use NodeJs depployed on AWS;
  	- For Front End, we will use AngularJS deployed on Heroku.
  - Build the Github Repository and Waffle Board as a team leader.
  - Take the Front-End development task of User-Related Modules
- 	- E.g, Sign Up, Sign In, Sign Out, View User Profile, Update User Profile, Comment Orders, etc. 
- 	- Carry out the initial research and design.
+ 	-- E.g, Sign Up, Sign In, Sign Out, View User Profile, Update User Profile, Comment Orders, etc. 
+ 	-- Carry out the initial research and design of front-end.
+ 	-- Learn programming language AngularJS.
+	-- Start the development, finish Sign In part and commit in the Github Repository.
 
 2. The problems I encountered:
  - We didn't have enough knowledge for DB Scaling right now, so we haven't made decision about the DB Scaling Design.
+ - Not familiar with AngularJS, learn its usage from scratch.
  - Not familiar with Heroku.
 
 3. The work I plan to do next week:
