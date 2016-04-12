@@ -6,8 +6,8 @@ This is a team project for CMPE281, SJSU in Spring 2016, which provides cloud-ba
 
 Team Members:
 
-wxtestelle     (Xiaotong  Wang)
-jfch           (Jiongfeng Chen)
+wxtestelle(Xiaotong  Wang)
+jfch(Jiongfeng Chen)
 littlesnail1982(Xing      Yang)
-Dorajia        (Yuanyuan   Jia)
-StarRuc        (Xingxing    Ju)
+Dorajia(Yuanyuan   Jia)
+StarRuc(Xingxing    Ju)
