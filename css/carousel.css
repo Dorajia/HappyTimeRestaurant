@@ -5,8 +5,15 @@
 body {
   padding-bottom: 40px;
   color: #5a5a5a;
+  background-color: #777;
 }
-
+a {
+  color: lightpink;
+}
+input[type="text"] {
+  width: 40px;
+  text-align: center;
+}
 
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
@@ -46,7 +53,13 @@ body {
 .carousel-caption {
   z-index: 10;
 }
+.carousel-content{
+  margin-top: 160px;
+  margin-left: 70px;
+  margin-right: 70px;
+  /*margin-bottom: 160px;*/
 
+}
 /* Declare heights because of positioning of img element */
 .carousel .item {
   height: 500px;
@@ -132,3 +145,13 @@ body {
     margin-top: 120px;
   }
 }
+/*Shopping Cart*/
+.order-number{
+  /*margin-right: 10px;*/
+  padding-left: 700px;
+}
+
+/*.trash{*/
+  /*margin-top: 20px;*/
+  /*padding-bottom: 30px;*/
+/*}*/
