@@ -116,6 +116,7 @@
 
             <div class = address-editor>
                 <h4>Add a new address</h4>
+                <form>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Full Name</span>
                 <input type="text" class="form-control"  aria-describedby="basic-addon1">
@@ -151,7 +152,9 @@
                     <input type="text" class="form-control" aria-describedby="basic-addon1">
                 </div>
                 <br>
+
                 <button type="button" class="btn btn-default">Ship to this Address</button>
+                </form>
             </div>
         </div>
     </div>
@@ -163,6 +166,9 @@
             <h3 class="panel-title">Select a Payment Method</h3>
         </div>
         <div class="panel-body">
+            <br>
+            <h4>Current Total is $ 10.00</h4>
+            <br>
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -183,6 +189,7 @@
             <br>
             <button type="button" class="btn btn-default">Add a new Card</button>
             <br>
+            <form>
             <table class="table">
                 <thead>
                 <tr>
@@ -192,7 +199,9 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 <tr>
+
                     <td><input type="text"  style = "width: 300px" aria-describedby="basic-addon1"></td>
                     <td><input type="text"  style = "width: 300px" aria-describedby="basic-addon1"></td>
                     <td><input type="text"  style = "width: 300px" placeholder="mm/yyyy" aria-describedby="basic-addon1"></td>
@@ -202,6 +211,38 @@
             <span class = "pull-right">
             <button type="button" class="btn btn-default">Add Your Card</button>
             </span>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Verify Your Order</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Dish Name</th>
+                    <th>Amount</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Yu Xiang Rou Si</td>
+                    <td>1</td>
+                    <td>$ 10.00</td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <span class = "pull-right">
+            <button type="button" class="btn btn-default">Cancel</button>
+            &nbsp
+            <button type="button" class="btn btn-default">Finish</button>
+                </span>
         </div>
     </div>
 
