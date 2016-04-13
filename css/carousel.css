@@ -14,7 +14,11 @@ input[type="text"] {
   width: 40px;
   text-align: center;
 }
-
+.img {
+  margin-left: 40px;
+  height:  100px;
+  width: auto;
+}
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
 
@@ -55,6 +59,9 @@ input[type="text"] {
 }
 .carousel-content{
   margin-top: 160px;
+  /*margin-left: 70px;*/
+  /*margin-right: 70px;*/
+
   margin-left: 70px;
   margin-right: 70px;
   /*margin-bottom: 160px;*/
@@ -95,7 +102,7 @@ input[type="text"] {
 ------------------------- */
 
 .featurette-divider {
-  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+  margin: 20px 0; /* Space out the Bootstrap <hr> more */
 }
 
 /* Thin out the marketing headings */
@@ -148,10 +155,46 @@ input[type="text"] {
 /*Shopping Cart*/
 .order-number{
   /*margin-right: 10px;*/
-  padding-left: 700px;
+  /*padding-left: 700px;*/
+  /*width: auto;*/
+  /*margin-left: 30%;*/
+  /*margin-right: 30%;*/
+  /*padding-right: 50px;*/
+  position: absolute;
+  right: 100px;
+  top: 45px;
+  /*top: 0px;*/
 }
-
-/*.trash{*/
-  /*margin-top: 20px;*/
-  /*padding-bottom: 30px;*/
-/*}*/
+.order-name{
+  position: absolute;
+  left: 300px;
+  top: 45px;
+}
+.order-description{
+  position: absolute;
+  left: 470px;
+  top: 45px;
+  /*max-height: 10px;*/
+  max-width: 370px;
+  /*height: auto;*/
+}
+.trash{
+  position: absolute;
+  right: 30px;
+  top: 50px;
+}
+div.back-up{
+  position: fixed;
+  right: 0px;
+  top: 500px;
+}
+.check-out-button{
+  position: absolute;
+  right: 70px;
+  top: 120px;
+}
+.inputbutton{
+  position: absolute;
+  right: 100px;
+  top: 45px;
+}
