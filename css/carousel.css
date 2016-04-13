@@ -161,21 +161,26 @@ input[type="text"] {
   /*margin-right: 30%;*/
   /*padding-right: 50px;*/
   position: absolute;
-  right: 100px;
+  right: 210px;
   top: 45px;
   /*top: 0px;*/
 }
 .order-name{
   position: absolute;
-  left: 300px;
+  left: 240px;
+  top: 45px;
+}
+.order-price{
+  position: absolute;
+  right: 120px;
   top: 45px;
 }
 .order-description{
   position: absolute;
-  left: 470px;
+  left: 410px;
   top: 45px;
   /*max-height: 10px;*/
-  max-width: 370px;
+  max-width: 320px;
   /*height: auto;*/
 }
 .trash{
@@ -197,4 +202,25 @@ div.back-up{
   position: absolute;
   right: 100px;
   top: 45px;
+}
+.item-info{
+  position: absolute;
+  left: 380px;
+  top: 190px;
+}
+
+.item-number{
+  position: absolute;
+  left: 830px;
+  top: 190px;
+}
+.item-price{
+  position: absolute;
+  left: 960px;
+  top: 190px;
+}
+.item-trash{
+  position: absolute;
+  right: 90px;
+  top: 190px;
 }
