@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app = 'shopping_cart'>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
+    <script type = text/javascript src = "../controller/shopping_cart_controller.js"></script>
     <title>My Shopping Cart</title>
 
     <!-- Bootstrap core CSS -->
@@ -37,7 +37,7 @@
 <!-- NAVBAR
 ================================================== -->
 <body>
-<div class="navbar-wrapper">
+<div class="navbar-wrapper" ng-controller = "cartmanager as manager">
     <div class="container">
 
         <nav class="navbar navbar-inverse navbar-static-top">
@@ -79,7 +79,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
 
-                        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> My Shopping Cart</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> My Shopping Cart <span class="badge">{{badge}}</span></a></li>
 
                         <li><a href="#">Profile</a></li>
                         <!--<li><a href="#">Contact</a></li>-->
@@ -161,9 +161,9 @@
 ================================================== -->
 <!-- Wrap the rest of the page in another container to center all the content. -->
 
-<div class="carousel-content">
+<div class="carousel-content" ng-controller = "cartmanager as manager">
     <h1 style = "position: absolute; left: 55px; top:93px"><span class = "pull-left"><span class="label label-default">My Shopping Cart</span></span></h1>
-    <h2 style = "position: absolute; right: 170px; top:100px"><span class = "pull-left"><span class="label label-default">$ 0.00</span></span></h2>
+    <h2 style = "position: absolute; right: 170px; top:100px"><span class = "pull-left"><span class="label label-default">$ {{totalPrice}}</span></span></h2>
     <div class = check-out-button>
         <!--<h2 style = "position:relative; right: 130px; top: -30px">$ 0.00</h2>-->
 
@@ -187,167 +187,220 @@
     <hr class="featurette-divider">
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">
-            <input type="checkbox" style = "padding-left: 50px">
-            <!--<h3 class = order-name>Item Information</h3>-->
-            <p class = item-info>Item Information</p>
-            <p class = item-number>Amount</p>
-            <p class = item-price>Price</p>
-            <p class = item-trash>Delete</p>
+        <!--<div class="panel-heading">-->
+            <!--<input type="checkbox" style = "padding-left: 50px">-->
+            <!--&lt;!&ndash;<h3 class = order-name>Item Information</h3>&ndash;&gt;-->
+            <!--<p class = item-info>Item Information</p>-->
+            <!--<p class = item-number>Amount</p>-->
+            <!--<p class = item-price>Price</p>-->
+            <!--<p class = item-trash>Delete</p>-->
 
 
-            <!--<span class = "pull-right"><a>Select All</a></span>-->
-        </div>
-
+            <!--&lt;!&ndash;<span class = "pull-right"><a>Select All</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        <div class="panel-body" >
         <!-- Table -->
-        <ul class="list-group">
-            <li class="list-group-item">
-                <input type="checkbox" aria-label="...">
+        <!--<ul class="list-group">-->
+            <!--<li class="list-group-item">-->
+                <!--<input type="checkbox" aria-label="...">-->
 
 
-                <img class = img src="../images/shopping_cart_pink.png">
-                <p class = order-name>Yu Xiang Rou Si</p>
-                <p class = order-description>This is a traditional Sichuan Dish This is a traditional Sichuan Dish This is a traditional Sichuan Dish This is a traditional Sichuan Dish
-                </p>
-                <span class = order-number>
-                <div class="input-group input-group-sm" style = "width: 100px">
-                    <span class="input-group-btn">
-                         <button class="btn btn-default" type="button">-</button>
-                    </span>
-                    <input type="text" class="form-control" placeholder="1">
-                     <span class="input-group-btn">
-                         <button class="btn btn-default" type="button">+</button>
-                    </span>
-                </div>
-                </span>
-                <p class = order-price> $ 10.00</p>
-                <span class = trash>
-                    <span class="pull-right">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="false"></span>
-                    </span>
-                </span>
+                <!--<img class = img src="../images/shopping_cart_pink.png">-->
+                <!--<p class = order-name>Yu Xiang Rou Si</p>-->
+                <!--<p class = order-description>This is a traditional Sichuan Dish This is a traditional Sichuan Dish This is a traditional Sichuan Dish This is a traditional Sichuan Dish-->
+                <!--</p>-->
+                <!--<span class = order-number>-->
+                <!--<div class="input-group input-group-sm" style = "width: 100px">-->
+                    <!--<span class="input-group-btn">-->
+                         <!--<button class="btn btn-default" type="button">-</button>-->
+                    <!--</span>-->
+                    <!--<input type="text" class="form-control" placeholder="1">-->
+                     <!--<span class="input-group-btn">-->
+                         <!--<button class="btn btn-default" type="button">+</button>-->
+                    <!--</span>-->
+                <!--</div>-->
+                <!--</span>-->
+                <!--<p class = order-price> $ 10.00</p>-->
+                <!--<span class = trash>-->
+                    <!--<span class="pull-right">-->
+                        <!--<span class="glyphicon glyphicon-trash" aria-hidden="false"></span>-->
+                    <!--</span>-->
+                <!--</span>-->
 
-            </li>
+            <!--</li>-->
 
-            <li class="list-group-item">
+            <!--<li class="list-group-item">-->
 
-                <input type="checkbox" aria-label="...">
+                <!--<input type="checkbox" aria-label="...">-->
 
-                <img class = img src="../images/shopping_cart_pink.png">
+                <!--<img class = img src="../images/shopping_cart_pink.png">-->
 
-                <p class = order-name>Yu Xiang Rou Si</p>
+                <!--<p class = order-name>Yu Xiang Rou Si</p>-->
 
-                <p class = order-description>This is a traditional Sichuan Dish</p>
+                <!--<p class = order-description>This is a traditional Sichuan Dish</p>-->
 
-                <span class = order-number>
+                <!--<span class = order-number>-->
+                    <!--<div class="input-group input-group-sm" style = "width: 100px">-->
+                    <!--<span class="input-group-btn">-->
+                         <!--<button class="btn btn-default" type="button">-</button>-->
+                    <!--</span>-->
+                        <!--<input type="text" class="form-control" placeholder="1">-->
+                     <!--<span class="input-group-btn">-->
+                         <!--<button class="btn btn-default" type="button">+</button>-->
+                    <!--</span>-->
+                    <!--</div>-->
+                <!--</span>-->
+                <!--<p class = order-price> $ 10.00</p>-->
+                <!--<span class = trash>-->
+                    <!--<span class="pull-right">-->
+                        <!--<span class="glyphicon glyphicon-trash" aria-hidden="false"></span>-->
+                    <!--</span>-->
+                <!--</span>-->
+
+            <!--</li>-->
+            <!--<li class="list-group-item">-->
+
+                <!--<input type="checkbox" aria-label="...">-->
+
+                <!--<img class = img src="../images/shopping_cart_pink.png">-->
+
+                <!--<p class = order-name>Yu Xiang Rou Si</p>-->
+
+                <!--<p class = order-description>This is a traditional Sichuan Dish</p>-->
+
+                <!--<span class = order-number>-->
+                    <!--<div class="input-group input-group-sm" style = "width: 100px">-->
+                    <!--<span class="input-group-btn">-->
+                         <!--<button class="btn btn-default" type="button">-</button>-->
+                    <!--</span>-->
+                        <!--<input type="text" class="form-control" placeholder="1">-->
+                     <!--<span class="input-group-btn">-->
+                         <!--<button class="btn btn-default" type="button">+</button>-->
+                    <!--</span>-->
+                    <!--</div>-->
+                <!--</span>-->
+                <!--<p class = order-price> $ 10.00</p>-->
+                <!--<span class = trash>-->
+                    <!--<span class="pull-right">-->
+                        <!--<span class="glyphicon glyphicon-trash" aria-hidden="false"></span>-->
+                    <!--</span>-->
+                <!--</span>-->
+
+            <!--</li>-->
+            <!--<li class="list-group-item">-->
+
+                <!--<input type="checkbox" aria-label="...">-->
+
+                <!--<img class = img src="../images/shopping_cart_pink.png">-->
+
+                <!--<p class = order-name>Yu Xiang Rou Si</p>-->
+
+                <!--<p class = order-description>This is a traditional Sichuan Dish</p>-->
+
+                <!--<span class = order-number>-->
+                    <!--<div class="input-group input-group-sm" style = "width: 100px">-->
+                    <!--<span class="input-group-btn">-->
+                         <!--<button class="btn btn-default" type="button">-</button>-->
+                    <!--</span>-->
+                        <!--<input type="text" class="form-control" placeholder="1">-->
+                     <!--<span class="input-group-btn">-->
+                         <!--<button class="btn btn-default" type="button">+</button>-->
+                    <!--</span>-->
+                    <!--</div>-->
+                <!--</span>-->
+                <!--<p class = order-price> $ 10.00</p>-->
+                <!--<span class = trash>-->
+                    <!--<span class="pull-right">-->
+                        <!--<span class="glyphicon glyphicon-trash" aria-hidden="false"></span>-->
+                    <!--</span>-->
+                <!--</span>-->
+
+            <!--</li>-->
+            <!--<li class="list-group-item">-->
+
+                <!--<input type="checkbox" aria-label="...">-->
+
+                <!--<img class = img src="../images/shopping_cart_pink.png">-->
+
+                <!--<p class = order-name>Yu Xiang Rou Si</p>-->
+
+                <!--<p class = order-description>This is a traditional Sichuan Dish</p>-->
+
+                <!--<span class = order-number>-->
+                   <!--<div class="input-group input-group-sm" style = "width: 100px">-->
+                    <!--<span class="input-group-btn">-->
+                         <!--<button class="btn btn-default" type="button">-</button>-->
+                    <!--</span>-->
+                       <!--<input type="text" class="form-control" placeholder="1">-->
+                     <!--<span class="input-group-btn">-->
+                         <!--<button class="btn btn-default" type="button">+</button>-->
+                    <!--</span>-->
+                   <!--</div>-->
+                <!--</span>-->
+                <!--<p class = order-price> $ 10.00</p>-->
+                <!--<span class = trash>-->
+                    <!--<span class="pull-right">-->
+                        <!--<span class="glyphicon glyphicon-trash" aria-hidden="false"></span>-->
+                    <!--</span>-->
+                <!--</span>-->
+
+            <!--</li>-->
+        <!--</ul>-->
+        <!--<br>-->
+        <!--<br>-->
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th><input type="checkbox" ng-model="allCheck" ng-change="checkAll()" aria-label="..."></th>
+                <th>dish image</th>
+                <th>dish name</th>
+                <th>description</th>
+                <th>unit price</th>
+                <th>amount</th>
+                <th>total price</th>
+                <th>delete</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat = "item in manager.items track by $index">
+                <td><input type="checkbox" ng-model = "item.checked" aria-label="..."></td>
+                <td><img style = "max-width:100px; height: auto" class = img src="../images/shopping_cart_pink.png"></td>
+                <td>{{item.name}}</td>
+                <td style="max-width: 200px">{{item.description}}</td>
+                <td>${{item.price}}</td>
+                <td>
+
                     <div class="input-group input-group-sm" style = "width: 100px">
+
                     <span class="input-group-btn">
-                         <button class="btn btn-default" type="button">-</button>
+                         <button class="btn btn-default" type="button" ng-click="decrement($index)">-</button>
                     </span>
-                        <input type="text" class="form-control" placeholder="1">
+                    <input type="text" class="form-control" placeholder='{{item.amount}}'>
                      <span class="input-group-btn">
-                         <button class="btn btn-default" type="button">+</button>
+                         <button class="btn btn-default" type="button" ng-click="increment($index)">+</button>
                     </span>
-                    </div>
-                </span>
-                <p class = order-price> $ 10.00</p>
-                <span class = trash>
-                    <span class="pull-right">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="false"></span>
-                    </span>
-                </span>
 
-            </li>
-            <li class="list-group-item">
+                </div></td>
+                <td>${{item.total}}</td>
+                <td><span>
+                        <span class="glyphicon glyphicon-trash" aria-hidden="false" ng-click="delete($index)"></span>
+                    </span></td>
+            </tr>
+            <!--<tr>-->
+                <!--<td>Mary</td>-->
+                <!--<td>Moe</td>-->
+                <!--<td>mary@example.com</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>July</td>-->
+                <!--<td>Dooley</td>-->
+                <!--<td>july@example.com</td>-->
+            <!--</tr>-->
+            </tbody>
+        </table>
 
-                <input type="checkbox" aria-label="...">
-
-                <img class = img src="../images/shopping_cart_pink.png">
-
-                <p class = order-name>Yu Xiang Rou Si</p>
-
-                <p class = order-description>This is a traditional Sichuan Dish</p>
-
-                <span class = order-number>
-                    <div class="input-group input-group-sm" style = "width: 100px">
-                    <span class="input-group-btn">
-                         <button class="btn btn-default" type="button">-</button>
-                    </span>
-                        <input type="text" class="form-control" placeholder="1">
-                     <span class="input-group-btn">
-                         <button class="btn btn-default" type="button">+</button>
-                    </span>
-                    </div>
-                </span>
-                <p class = order-price> $ 10.00</p>
-                <span class = trash>
-                    <span class="pull-right">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="false"></span>
-                    </span>
-                </span>
-
-            </li>
-            <li class="list-group-item">
-
-                <input type="checkbox" aria-label="...">
-
-                <img class = img src="../images/shopping_cart_pink.png">
-
-                <p class = order-name>Yu Xiang Rou Si</p>
-
-                <p class = order-description>This is a traditional Sichuan Dish</p>
-
-                <span class = order-number>
-                    <div class="input-group input-group-sm" style = "width: 100px">
-                    <span class="input-group-btn">
-                         <button class="btn btn-default" type="button">-</button>
-                    </span>
-                        <input type="text" class="form-control" placeholder="1">
-                     <span class="input-group-btn">
-                         <button class="btn btn-default" type="button">+</button>
-                    </span>
-                    </div>
-                </span>
-                <p class = order-price> $ 10.00</p>
-                <span class = trash>
-                    <span class="pull-right">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="false"></span>
-                    </span>
-                </span>
-
-            </li>
-            <li class="list-group-item">
-
-                <input type="checkbox" aria-label="...">
-
-                <img class = img src="../images/shopping_cart_pink.png">
-
-                <p class = order-name>Yu Xiang Rou Si</p>
-
-                <p class = order-description>This is a traditional Sichuan Dish</p>
-
-                <span class = order-number>
-                   <div class="input-group input-group-sm" style = "width: 100px">
-                    <span class="input-group-btn">
-                         <button class="btn btn-default" type="button">-</button>
-                    </span>
-                       <input type="text" class="form-control" placeholder="1">
-                     <span class="input-group-btn">
-                         <button class="btn btn-default" type="button">+</button>
-                    </span>
-                   </div>
-                </span>
-                <p class = order-price> $ 10.00</p>
-                <span class = trash>
-                    <span class="pull-right">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="false"></span>
-                    </span>
-                </span>
-
-            </li>
-        </ul>
-
-
+        </div>
     </div>
 
     <div class = back-up>
@@ -420,16 +473,16 @@
         <!--</div>-->
     <!--</div>-->
 
-    <hr class="featurette-divider">
+    <!--<hr class="featurette-divider">-->
 
     <!-- /END THE FEATURETTES -->
 
 
     <!-- FOOTER -->
-    <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; CMPE281 Group 6 Team Project. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-    </footer>
+    <!--<footer>-->
+        <!--<p class="pull-right"><a href="#">Back to top</a></p>-->
+        <!--<p>&copy; CMPE281 Group 6 Team Project. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>-->
+    <!--</footer>-->
 
 </div><!-- /.container -->
 
@@ -437,7 +490,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../js/vendor/jquery.min.js"><\/script>')</script>
+<script>window.jQuery || document.write('<script src="../js/jquery.min.js"><\/script>')</script>
 <script src="../js/bootstrap.min.js"></script>
 <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
 <script src="../js/holder.min.js"></script>
