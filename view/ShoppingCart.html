@@ -372,7 +372,7 @@
             <tbody>
             <tr ng-repeat = "item in manager.items track by $index">
                 <td><input type="checkbox" ng-model = "item.checked" aria-label="..."></td>
-                <td><img style = "max-width:100px; height: auto" class = img src="../images/shopping_cart_pink.png"></td>
+                <td><img style = "max-width:100px; height: auto" class = img ng-src="{{item.image}}"></td>
                 <td>{{item.name}}</td>
                 <td style="max-width: 200px">{{item.description}}</td>
                 <td>${{item.price}}</td>

@@ -40,7 +40,7 @@ app.controller('cartmanager',['$scope','$window', function($scope , $window){
     $scope.totalPrice = 0;
     $scope.badgeNum = this.items.length;
     $scope.allCheck = false;
-
+    var selectedItems = []
     for(i = 0; i < this.items.length; i ++){
         $scope.totalPrice += this.items[i].price * this.items[i].amount;
     }
