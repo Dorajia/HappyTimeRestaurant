@@ -15,6 +15,7 @@ var orders = require('./routes/orders');
 var comments = require('./routes/comments');
 var recommendations = require('./routes/recommendations');
 var specials = require('./routes/specials');
+var cart = require('./routes/carts');
 
 var app = express();
 
@@ -39,7 +40,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/user', users);
 app.use('/branch', branchs);
 app.use('/catalog',catalogs);
 app.use('/dish',dishs);
@@ -47,6 +48,7 @@ app.use('/order',orders);
 app.use('/comment',comments);
 app.use('/special',specials)
 app.use('/recommendation', recommendations);
+//app.use('/cart',cart);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

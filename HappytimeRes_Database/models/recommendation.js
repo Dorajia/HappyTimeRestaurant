@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var RecommendationSchema = new Schema({
-		recommend_id:Schema.ObjectId,
+		_id:String,
 		catalog_name:String,
 		related_dishes:[
 		{
-		 	dish_name:String,
-		 	recommend_dish:String
+		 	dish_name:{type:String, ref:'dish'},
+		 	recommend_dish:[{type:String, ref:'dish'}]
 		}]
 });
 

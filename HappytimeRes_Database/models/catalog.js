@@ -1,11 +1,10 @@
 var mongoose = require('mongoose');
-var dishs = require('../models/dish');
 var Schema = mongoose.Schema;
 
 var CatalogSchema = new Schema({
-  catalog_name: String,
+  _id: String,
   catalog_description: String,
-  dish:[{ type: Schema.ObjectId, ref: dishs }]
+  _dish:[{type:String, ref:'dish'}]
 });
 
-module.exports = mongoose.model('catalog', CatalogSchema);
+module.exports = mongoose.model('catalog', CatalogSchema,'catalog');

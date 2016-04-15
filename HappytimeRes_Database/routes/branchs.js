@@ -12,9 +12,21 @@ router.get('/', function(req, res, next) {
   });
 });
 
+//GET ref documents:
+
+router.get('/restaurant/:name', function(req, res, next) {
+	 Branch.find({ _id:req.params.name })
+	.populate('restaurant')
+	.exec(function (err, data) {
+	  if (err) return next(err);
+      for (var k in data) 
+			res.json(data[k].restaurant);
+		});
+	});
+	
 //POST
 router.post('/', function(req, res, next) {
-	var newItem = new Branch({branch_name: req.body.name, branch_status: req.body.status,zip_code:req.body.zip_code});
+	var newItem = new Branch({_id: req.body.name, branch_status: req.body.status,zip_code:req.body.zip_code});
 	newItem.save(function(err, data){
 		if (err) {
 			res.json(err);
@@ -27,7 +39,7 @@ router.post('/', function(req, res, next) {
 
 /* GET one item */
 router.get('/:name', function(req, res, next) {
-	Branch.find({branch_name: req.params.name}, function(err, data){
+	Branch.find({_id: req.params.name}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}
@@ -43,7 +55,7 @@ router.get('/:name', function(req, res, next) {
 
 /* UPDATE one item */
 router.put('/:name', function(req, res, next) {
-	var name = {branch_name: req.params.name};
+	var name = {_id: req.params.name};
 	var update = {branch_status: req.body.status};
 	var options = {new: true};
 
@@ -60,7 +72,7 @@ router.put('/:name', function(req, res, next) {
 
 /* DELETE one item */
 router.delete('/:name', function(req, res, next) {
-	Branch.findOneAndRemove({branch_name: req.params.name}, function(err, data){
+	Branch.findOneAndRemove({_id: req.params.name}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}

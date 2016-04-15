@@ -1,15 +1,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var BranchSchema = new Schema({
-zip_code: String,
-city_name:String,
-restaurant:
-{
-  branch_name:String,
-  branch_status:Boolean,
-  address:String
-}
+var RestaurantSchema = new Schema({
+      _id:String,
+      branch_status:Boolean,
+      address:String,
+      zip_code:{type:String, ref: 'branch'}
 });
 
-module.exports = mongoose.model('branch', BranchSchema);
+var BranchSchema = new Schema({
+    _id: String,
+    city_name:String,
+    restaurant:[{type: String, ref: 'restaurant'}]
+    });
+
+mongoose.model('restaurant',RestaurantSchema,'restaurant');
+module.exports = mongoose.model('branch', BranchSchema,'branch');
