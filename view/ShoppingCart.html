@@ -8,6 +8,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../favicon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../js/jquery.min.js"><\/script>')</script>
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../js/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -36,11 +43,11 @@
 </head>
 <!-- NAVBAR
 ================================================== -->
-<body>
-<div class="navbar-wrapper" ng-controller = "cartmanager as manager">
+<body   ng-controller = "cartmanager as manager">
+<div class="navbar-wrapper">
     <div class="container">
 
-        <nav class="navbar navbar-inverse navbar-static-top">
+        <nav class="navbar navbar-inverse navbar-static-top" >
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -79,7 +86,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
 
-                        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> My Shopping Cart <span class="badge">{{badge}}</span></a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> My Shopping Cart <span class="badge">{{badgeNum}}</span></a></li>
 
                         <li><a href="#">Profile</a></li>
                         <!--<li><a href="#">Contact</a></li>-->
@@ -99,7 +106,7 @@
 
 <!-- Carousel
 ================================================== -->
-<div id="myCarousel" class="carousel-content" data-ride="carousel">
+<!--<div id="myCarousel" class="carousel-content" data-ride="carousel">-->
     <!--<div class="row">-->
         <!--<div class="col-xs-6 col-md-3">-->
             <!--<a href="#" class="thumbnail">-->
@@ -154,16 +161,16 @@
         <!--<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>-->
         <!--<span class="sr-only">Next</span>-->
     <!--</a>-->
-</div><!-- /.carousel -->
+<!--</div>&lt;!&ndash; /.carousel &ndash;&gt;-->
 
 
 <!-- Marketing messaging and featurettes
 ================================================== -->
 <!-- Wrap the rest of the page in another container to center all the content. -->
 
-<div class="carousel-content" ng-controller = "cartmanager as manager">
+<div class="carousel-content">
     <h1 style = "position: absolute; left: 55px; top:93px"><span class = "pull-left"><span class="label label-default">My Shopping Cart</span></span></h1>
-    <h2 style = "position: absolute; right: 170px; top:100px"><span class = "pull-left"><span class="label label-default">$ {{totalPrice}}</span></span></h2>
+    <h2 style = "position: absolute; right: 170px; top:100px"><span class = "pull-left"><span class="label label-default"> $ {{totalPrice}}</span></span></h2>
     <div class = check-out-button>
         <!--<h2 style = "position:relative; right: 130px; top: -30px">$ 0.00</h2>-->
 
@@ -376,13 +383,13 @@
                     <span class="input-group-btn">
                          <button class="btn btn-default" type="button" ng-click="decrement($index)">-</button>
                     </span>
-                    <input type="text" class="form-control" placeholder='{{item.amount}}'>
+                    <input type="text" class="form-control" ng-change = "updatePrice()" ng-model = "item.amount" placeholder='{{item.amount}}'>
                      <span class="input-group-btn">
                          <button class="btn btn-default" type="button" ng-click="increment($index)">+</button>
                     </span>
 
                 </div></td>
-                <td>${{item.total}}</td>
+                <td>${{item.price * item.amount}}</td>
                 <td><span>
                         <span class="glyphicon glyphicon-trash" aria-hidden="false" ng-click="delete($index)"></span>
                     </span></td>
@@ -489,12 +496,6 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../js/jquery.min.js"><\/script>')</script>
-<script src="../js/bootstrap.min.js"></script>
-<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-<script src="../js/holder.min.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../js/ie10-viewport-bug-workaround.js"></script>
+
 </body>
 </html>

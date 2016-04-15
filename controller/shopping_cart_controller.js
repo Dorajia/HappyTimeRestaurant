@@ -9,7 +9,7 @@ var items = [{'image':'../images/shopping_cart_pink.png',
               'price':10.00,
               'amount':1,
               'total':10.00,
-                'checked':true},
+                'checked':false},
              {'image':'../images/shopping_cart_pink.png',
                  'name':'Wudong Noodle',
                  'description':'This is a traditional noodle',
@@ -34,16 +34,17 @@ var items = [{'image':'../images/shopping_cart_pink.png',
             ];
 console.log(items[1]);
 var total = 104.00;
-app.controller('cartmanager',['$scope', function($scope){
+app.controller('cartmanager',['$scope','$window', function($scope , $window){
     this.items = items;
+    var parent = this;
     $scope.totalPrice = 0;
-    //$scope.whether = true;
-    $scope.badge = this.items.length;
+    $scope.badgeNum = this.items.length;
     $scope.allCheck = false;
+
     for(i = 0; i < this.items.length; i ++){
         $scope.totalPrice += this.items[i].price * this.items[i].amount;
     }
-    var parent = this;
+
     $scope.increment =function(index){
 
         parent.items[index].amount ++;
@@ -51,15 +52,23 @@ app.controller('cartmanager',['$scope', function($scope){
         $scope.totalPrice += parent.items[index].price;
 
     };
+
     $scope.decrement =function(index){
         if(parent.items[index].amount > 1){
             parent.items[index].amount --;
             parent.items[index].total -= parent.items[index].price;
             $scope.totalPrice -= parent.items[index].price;
+        }else{
+            //$scope.greeting = 'Hello, World!';
+            $window.alert('Oops! Amount can not be smaller than one, use trash icon to delete!');
         }
     };
+
     $scope.delete = function(index){
+        $scope.badgeNum -= 1;
+        console.log($scope.badgeNum);
         parent.items.splice(index , 1);
+        $scope.updatePrice();
     }
 
     $scope.checkAll = function(){
@@ -69,5 +78,14 @@ app.controller('cartmanager',['$scope', function($scope){
             parent.items[i].checked = $scope.allCheck;
         }
     }
+
+    $scope.updatePrice = function(){
+        $scope.totalPrice = 0;
+        for(i = 0; i < parent.items.length; i ++){
+            $scope.totalPrice += parent.items[i].price * parent.items[i].amount;
+        }
+    }
+
+
 }]);
 
