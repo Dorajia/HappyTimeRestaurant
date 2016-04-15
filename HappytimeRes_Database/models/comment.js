@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var timestamps = require('mongoose-createdat-updatedat');
 
 var CommentSchema = new Schema(
 {
@@ -10,5 +11,8 @@ var CommentSchema = new Schema(
 	score:Number,
 	comment_description: String
 });
+
+//automaticall add createdat and updateat in the schema.
+CommentSchema.plugin(timestamps);
 
 module.exports = mongoose.model('comment', CommentSchema,'comment');

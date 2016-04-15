@@ -10,8 +10,7 @@ var DishSchema = new Schema(
 	dish_description:String,
 	dish_soldout:Boolean,
 	_catalog: { type:String, ref: 'catalog'},
-    catalog: String,
-	_comment:[{type:Schema.Types.ObjectId, ref:'comment'}]
+    catalog: String
 });
 
 module.exports = mongoose.model('dish', DishSchema,'dish');

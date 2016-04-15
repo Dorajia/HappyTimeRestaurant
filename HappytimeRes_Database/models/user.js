@@ -4,7 +4,8 @@ var DeliverySchema = new mongoose.Schema(
 	{
 		state:String,
 		zipcode:Number,
-		address:String
+		address:String,
+		user_name: {type:String, ref:'user'}
 	});
 
 var UserSchema = new mongoose.Schema(
