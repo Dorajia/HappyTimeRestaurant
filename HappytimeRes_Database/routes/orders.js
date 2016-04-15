@@ -3,6 +3,15 @@ var router = express.Router();
 
 var Order = require('../models/order.js');
 
+/*Save one order*/
+
+/*GET order by user_name*/
+
+/*GET order by user_name and order_time*/
+
+/*DELETE order by user_name and order_time*/
+
+
 /* GET /Dish listing. */
 router.get('/', function(req, res, next) {
   Order.find(function (err, data) {

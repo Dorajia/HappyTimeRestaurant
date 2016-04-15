@@ -2,25 +2,19 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var OrderSchema = new Schema({
-order_id: Number,
-user_name:String,
-order_time:Date,
-confirm_time:Date,
-restaurant_name:String,
-delivery_address:
-{
-    street:String,
-    city:String,
-    state:String,
-    zip:Number
-},
-dishes: [{
-dish_name:String,
-dish_pic:{ data: Buffer, contentType: String },
-dish_price:Number,
-number:Number
-}]
+    _user:{type:String, ref:'user'},
+    user: String,
+    order_time: { type: Date, required: true, default: Date.now },
+    confirm_time: { type: Date, required: true, default: Date.now },
+    restaurant_name: String,
+    delivery_address:
+    {
+        street:String,
+        city:String,
+        state:String,
+        zip:Number
+    },
+    dishes: [{type:String, ref:'dish'}],
+    });
 
-});
-
-module.exports = mongoose.model('order', OrderSchema);
+module.exports = mongoose.model('order', OrderSchema,'order');

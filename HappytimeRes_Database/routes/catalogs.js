@@ -11,6 +11,18 @@ router.get('/', function(req, res, next) {
   });
 });
 
+/* GET all dishes under one catalog*/
+router.get('/dish/:name', function(req, res, next) {
+	Catalog.find({ _id:req.params.name })
+	.populate('dish') // <--
+	.exec(function (err, data) {
+	  if (err) return next(err);
+	  for (var k in data) 
+	  res.json(data[k].dish);
+	});
+});
+
+
 //POST
 router.post('/', function(req, res, next) {
 	var newItem = new Catalog({catalog_name: req.body.name, catalog_description: req.body.description});
@@ -26,7 +38,7 @@ router.post('/', function(req, res, next) {
 
 /* GET one item */
 router.get('/:name', function(req, res, next) {
-	Catalog.find({catalog_name: req.params.name}, function(err, data){
+	Catalog.find({_id: req.params.name}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}
@@ -34,7 +46,8 @@ router.get('/:name', function(req, res, next) {
 			res.json({message: 'An item with that name does not exist in this database.'});
 		}
 		else {
-			res.json(data);
+			for (var k in data) 
+			res.json(data[k]);
 		}
 	});
 });
@@ -71,5 +84,7 @@ router.delete('/:name', function(req, res, next) {
 		}
 	});
 });
+
+//Ref Test
 
 module.exports = router;

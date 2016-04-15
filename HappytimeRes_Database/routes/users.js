@@ -3,6 +3,19 @@ var router = express.Router();
 
 var User = require('../models/user.js');
 
+/*change password*/
+
+/*Add delivery_address*/
+/*Update delivery_address*/
+/*Remove delivery_address*/
+/*Get one delivery-address*/
+/*Get all delivery_address*/
+
+/*Update phone number*/
+/*Remove phone number*/
+/*Add phone number*/
+
+
 //Get All
 router.get('/', function(req, res, next) {
   User.find(function (err, data) {
@@ -14,18 +27,10 @@ router.get('/', function(req, res, next) {
 //POST
 router.post('/', function(req, res, next) {
 	var newItem = new User({
- 	user_SKU:req.body.sku,
-	user_name: req.body.name,
+	_id: req.body.name,
 	password:req.body.password,
 	email_address:req.body.email_address,
-	phone_number:[req.body.phone_number],
-	delivery_address:
-	[
-		{street:req.body.street,
-		city:req.body.city,
-		state:req.body.state,
-		zip:req.body.zip}
-	]
+	phone_number:[req.body.phone_number]
 });
 	newItem.save(function(err, data){
 		if (err) {
@@ -37,9 +42,10 @@ router.post('/', function(req, res, next) {
 	});
 });
 
+
 /* GET one item */
 router.get('/:name', function(req, res, next) {
-	User.find({user_name: req.params.name}, function(err, data){
+	User.find({_id: req.params.name}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}
@@ -53,9 +59,9 @@ router.get('/:name', function(req, res, next) {
 });
 
 
-/* UPDATE one item */
+/* UPDATE email_address */
 router.put('/:name', function(req, res, next) {
-	var name = {user_name: req.params.name};
+	var name = {_id: req.params.name};
 	var update = {email_address: req.body.email_address};
 	var options = {new: true};
 
@@ -72,7 +78,7 @@ router.put('/:name', function(req, res, next) {
 
 /* DELETE one item */
 router.delete('/:name', function(req, res, next) {
-	User.findOneAndRemove({user_name: req.params.name}, function(err, data){
+	User.findOneAndRemove({_id: req.params.name}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}

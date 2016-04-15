@@ -50,6 +50,17 @@ router.get('/:id', function(req, res, next) {
 	});
 });
 
+/* GET one item with full dish information with special ID*/
+
+router.get('/catalog/:name', function(req, res, next) {
+	 Special.find({ _id:req.params.name })
+	.populate('recommended_dish')
+	.exec(function (err, data) {
+	  if (err) return next(err);
+      for (var k in data) 
+			res.json(data[k].recommended_dish);
+		});
+	});
 
 /* UPDATE one item */
 router.put('/:id', function(req, res, next) {

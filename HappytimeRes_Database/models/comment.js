@@ -1,15 +1,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var timestamps = require('mongoose-createdat-updatedat');
 
 var CommentSchema = new Schema(
 {
-	comment_id:'',
-	user_id:'',
-	dish_name:String,
+	_user:{type:String, ref:'user'},
 	user_name:String,
-	publish_time:Date,
+	dish_name:String,
+	publish_time:{type: Date, required: true, default: Date.now},
 	score:Number,
 	comment_description: String
 });
 
-module.exports = mongoose.model('comment', CommentSchema);
+//automaticall add createdat and updateat in the schema.
+CommentSchema.plugin(timestamps);
+
+module.exports = mongoose.model('comment', CommentSchema,'comment');

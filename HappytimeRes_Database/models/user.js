@@ -1,20 +1,21 @@
 var mongoose = require('mongoose');
 
+var DeliverySchema = new mongoose.Schema(
+	{
+		state:String,
+		zipcode:Number,
+		address:String,
+		user_name: {type:String, ref:'user'}
+	});
+
 var UserSchema = new mongoose.Schema(
 {
-	user_SKU:Number,
-	user_name: String,
+	_id: String,
 	password:String,
 	email_address:String,
 	phone_number:[Number],
-	delivery_address:
-	[
-		{street:String,
-		city:String,
-		state:String,
-		zip:String}
-	]
-	
+	delivery_address:[DeliverySchema]
 });
 
-module.exports = mongoose.model('user', UserSchema);
+var delivery_address=mongoose.model('delivery', DeliverySchema,'delivery');
+module.exports = mongoose.model('user', UserSchema,'user');
