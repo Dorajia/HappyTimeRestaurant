@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var chainSchema = new Schema(
 {
-	chainRest_id: Number,
+	_id: Number, //zipcode
 	chainRest_name:String,
     chainRest_address:
 	[

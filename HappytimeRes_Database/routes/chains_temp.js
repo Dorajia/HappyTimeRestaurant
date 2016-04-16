@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 //var mongoose = require('mongoose');
-var Branch = require('../models/branch.js');
+var Branch = require('../models/chain.js');
 
 /* GET all branchs. */
 router.get('/', function(req, res, next) {
