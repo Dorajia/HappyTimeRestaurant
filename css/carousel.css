@@ -259,3 +259,8 @@ div.back-up{
   vertical-align: middle;
   horiz-align: right;
 }
+.table tbody>tr>td.amount{
+  text-align: center;
+  vertical-align: middle;
+  width: 80px;
+}

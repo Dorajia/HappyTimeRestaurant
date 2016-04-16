@@ -41,27 +41,29 @@ app.controller('cartmanager',['$scope','$window', function($scope , $window){
     $scope.badgeNum = this.items.length;
     $scope.allCheck = false;
     var selectedItems = []
-    for(i = 0; i < this.items.length; i ++){
-        $scope.totalPrice += this.items[i].price * this.items[i].amount;
-    }
+    //for(i = 0; i < this.items.length; i ++){
+    //    $scope.totalPrice += this.items[i].price * this.items[i].amount;
+    //}
 
     $scope.increment =function(index){
 
         parent.items[index].amount ++;
         parent.items[index].total += parent.items[index].price;
-        $scope.totalPrice += parent.items[index].price;
-
+        //$scope.totalPrice += parent.items[index].price;
+        $scope.updatePrice();
     };
 
     $scope.decrement =function(index){
         if(parent.items[index].amount > 1){
             parent.items[index].amount --;
             parent.items[index].total -= parent.items[index].price;
-            $scope.totalPrice -= parent.items[index].price;
+            //$scope.totalPrice -= parent.items[index].price;
+            $scope.updatePrice();
         }else{
             //$scope.greeting = 'Hello, World!';
             $window.alert('Oops! Amount can not be smaller than one, use trash icon to delete!');
         }
+
     };
 
     $scope.delete = function(index){
@@ -77,12 +79,15 @@ app.controller('cartmanager',['$scope','$window', function($scope , $window){
         for(i = 0; i < parent.items.length; i ++){
             parent.items[i].checked = $scope.allCheck;
         }
+        $scope.updatePrice();
     }
 
     $scope.updatePrice = function(){
         $scope.totalPrice = 0;
         for(i = 0; i < parent.items.length; i ++){
-            $scope.totalPrice += parent.items[i].price * parent.items[i].amount;
+            if(parent.items[i].checked) {
+                $scope.totalPrice += parent.items[i].price * parent.items[i].amount;
+            }
         }
     }
 
