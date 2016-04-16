@@ -1,0 +1,28 @@
+﻿<h1>My Account</h1>
+<div class="form-container">
+    <form name="orderForm">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Order Number</th>
+                <th>Order Date</th>
+                <th>Order Status</th>
+                <th>Action</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="order in vm.orders">
+                <td>{{order.ordernum}}</td>
+                <td>{{order.orderdate}}</td>
+                <td>{{order.status}}</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-warning" ng-click="edit(order.ordernum)">Comment</button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
