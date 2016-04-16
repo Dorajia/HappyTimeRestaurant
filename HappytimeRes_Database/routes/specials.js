@@ -14,15 +14,10 @@ router.get('/', function(req, res, next) {
 //POST
 router.post('/', function(req, res, next) {
 	var newItem = new Special({
-	special_id: '',
+	_id: req.body.special,
 	recommended_dish: 
 	[
-		{dish_name:req.body.dish_name,
-		dish_picture:'',
-		dish_price:req.body.dish_price,
-		dish_description:req.body.description,
-		catalog_name:req.body.catalog_name,
-		dish_soldout:req.body.soldout}
+		{recommended_dish:req.body.dish_name}
 	]
 });
 	newItem.save(function(err, data){
@@ -35,9 +30,9 @@ router.post('/', function(req, res, next) {
 	});
 });
 
-/* GET one item */
+/* GET all disheds use id */
 router.get('/:id', function(req, res, next) {
-	Special.find({special_id: req.params.id}, function(err, data){
+	Special.find({_id: req.params.id}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}
@@ -50,17 +45,6 @@ router.get('/:id', function(req, res, next) {
 	});
 });
 
-/* GET one item with full dish information with special ID*/
-
-router.get('/catalog/:name', function(req, res, next) {
-	 Special.find({ _id:req.params.name })
-	.populate('recommended_dish')
-	.exec(function (err, data) {
-	  if (err) return next(err);
-      for (var k in data) 
-			res.json(data[k].recommended_dish);
-		});
-	});
 
 /* UPDATE one item */
 router.put('/:id', function(req, res, next) {
@@ -81,7 +65,7 @@ router.put('/:id', function(req, res, next) {
 
 /* DELETE one item */
 router.delete('/:id', function(req, res, next) {
-	Special.findOneAndRemove({special_id: req.params.id}, function(err, data){
+	Special.findOneAndRemove({_id: req.params.id}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}

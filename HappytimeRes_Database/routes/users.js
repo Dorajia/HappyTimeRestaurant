@@ -3,34 +3,13 @@ var router = express.Router();
 
 var User = require('../models/user.js');
 
-/*change password*/
-
-/*Add delivery_address*/
-/*Update delivery_address*/
-/*Remove delivery_address*/
-/*Get one delivery-address*/
-/*Get all delivery_address*/
-
-/*Update phone number*/
-/*Remove phone number*/
-/*Add phone number*/
-
-
-//Get All
-router.get('/', function(req, res, next) {
-  User.find(function (err, data) {
-    if (err) return next(err);
-    res.json(data);
-  });
-});
-
-//POST
+/*Create new user account*/
 router.post('/', function(req, res, next) {
 	var newItem = new User({
 	_id: req.body.name,
 	password:req.body.password,
 	email_address:req.body.email_address,
-	phone_number:[req.body.phone_number]
+	phone_number:{_id:req.body.phone}
 });
 	newItem.save(function(err, data){
 		if (err) {
@@ -40,6 +19,72 @@ router.post('/', function(req, res, next) {
 			res.json(data);
 		}
 	});
+});
+
+/*update password*/
+router.put('/password/:name', function(req, res, next) {
+	var name = {_id: req.params.name};
+	var update = {password: req.body.password};
+	var options = {new: true};
+
+	User.findOneAndUpdate(name, update, options, function(err, data){
+		if (err) {
+			res.json(err.message);
+		}
+		else {
+			res.json(data);
+		}
+	});
+});
+
+
+/*Add an additional phone number*/
+router.post('/add_phone/:name/:phone', function(req, res, next) {
+	var name = {_id: req.params.name};
+	var update = {$push:{phone_number:{_id:req.params.phone}}};
+	var options = {new: true};
+
+	User.findOneAndUpdate(name, update, options, function(err, data){
+		if (err) {
+			res.json(err.message);
+		}
+		else {
+			res.json(data);
+		}
+	});
+});
+
+/*Remove a phone number*/
+router.delete('/remove_phone/:name/:phone', function(req, res, next) {
+	var name = {_id: req.params.name};
+	var update = {$pull:{phone_number:{_id:req.params.phone}}};
+	var options = {new: true};
+
+	User.findOneAndUpdate(name, update, options, function(err, data){
+		if (err) {
+			res.json(err.message);
+		}
+		else {
+			res.json(data);
+		}
+	});
+});
+
+/*Add delivery_address*/
+
+
+/*Update delivery_address*/
+/*Remove delivery_address*/
+/*Get one delivery-address*/
+/*Get all delivery_address*/
+
+
+//Get All
+router.get('/', function(req, res, next) {
+  User.find(function (err, data) {
+    if (err) return next(err);
+    res.json(data);
+  });
 });
 
 

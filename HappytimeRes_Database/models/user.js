@@ -13,9 +13,8 @@ var UserSchema = new mongoose.Schema(
 	_id: String,
 	password:String,
 	email_address:String,
-	phone_number:[Number],
+	phone_number:[{_id: Number}],
 	delivery_address:[DeliverySchema]
 });
 
-var delivery_address=mongoose.model('delivery', DeliverySchema,'delivery');
 module.exports = mongoose.model('user', UserSchema,'user');

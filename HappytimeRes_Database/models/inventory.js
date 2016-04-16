@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var inventorySchema = new Schema(
 {
 	inventory_id: Number,
-        chainRest_id: Number,
+    chainRest_id: Number,
 	dish_inventory: 
 	[
 		{dish_name:String,
