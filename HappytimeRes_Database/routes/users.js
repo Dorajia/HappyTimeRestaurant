@@ -107,27 +107,11 @@ router.delete('/remove_address/:name', function(req, res, next) {
 });
 
 
-/*Get one delivery-address by user_id and address, but it will return all delivery address, not sure why */
-router.get('/get_one_address/:name', function(req, res, next) {
-	var query=User.find({ '_id':req.params.name});
-	 query.where('delivery_address.address').equals(req.body.address);
-	 query.select('delivery_address');
-	 query.exec(function(err, data) {
-	  if (err) return next(err);
-	  else{
-	  	res.json(data);
-//      	for (var k in data) 
-//			res.json(data[k].delivery_address);
-	  		}
-		});
-	});
-
-
 
 /*Get all delivery_address by user id*/
 router.get('/address/:name', function(req, res, next) {
 	 User.find({ _id:req.params.name }, function (err, data) {
-	  if (err) return next(err);
+	  if (err) return next(er
 	  else{
       	for (var k in data) 
 			res.json(data[k].delivery_address);
@@ -135,7 +119,7 @@ router.get('/address/:name', function(req, res, next) {
 		});
 	});
 
-//Get All
+//Get All users
 router.get('/', function(req, res, next) {
   User.find(function (err, data) {
     if (err) return next(err);
