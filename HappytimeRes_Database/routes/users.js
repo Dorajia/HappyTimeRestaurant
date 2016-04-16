@@ -70,14 +70,70 @@ router.delete('/remove_phone/:name/:phone', function(req, res, next) {
 	});
 });
 
-/*Add delivery_address*/
+/*Add one delivery_address*/
+router.post('/add_address/:name', function(req, res, next) {
+	var name = {_id: req.params.name};
+	var update = {$push:{delivery_address:{zipcode:req.body.zipcode, state:req.body.state,address:req.body.address}}};
+	var options = {new: true};
+
+	User.findOneAndUpdate(name, update, options, function(err, data){
+		if (err) {
+			res.json(err.message);
+		}
+		else {
+			res.json(data);
+		}
+	});
+});
 
 
-/*Update delivery_address*/
-/*Remove delivery_address*/
-/*Get one delivery-address*/
-/*Get all delivery_address*/
+/*Update delivery_address by user_id and address*/
 
+
+/*Remove one delivery_address by user_id,address*/
+router.delete('/remove_address/:name', function(req, res, next) {
+	var name = {_id: req.params.name};
+	var update = {$pull:{delivery_address:{address:req.body.address}}};
+	var options = {new: true};
+
+	User.findOneAndUpdate(name, update, options, function(err, data){
+		if (err) {
+			res.json(err.message);
+		}
+		else {
+			res.json(data);
+		}
+	});
+});
+
+
+/*Get one delivery-address by user_id and address, but it will return all delivery address, not sure why */
+router.get('/get_one_address/:name', function(req, res, next) {
+	var query=User.find({ '_id':req.params.name});
+	 query.where('delivery_address.address').equals(req.body.address);
+	 query.select('delivery_address');
+	 query.exec(function(err, data) {
+	  if (err) return next(err);
+	  else{
+	  	res.json(data);
+//      	for (var k in data) 
+//			res.json(data[k].delivery_address);
+	  		}
+		});
+	});
+
+
+
+/*Get all delivery_address by user id*/
+router.get('/address/:name', function(req, res, next) {
+	 User.find({ _id:req.params.name }, function (err, data) {
+	  if (err) return next(err);
+	  else{
+      	for (var k in data) 
+			res.json(data[k].delivery_address);
+		  }
+		});
+	});
 
 //Get All
 router.get('/', function(req, res, next) {
