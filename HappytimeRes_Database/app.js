@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var branchs = require('./routes/branchs');
+//var branchs = require('./routes/branchs');
 var catalogs = require('./routes/catalogs');
 var dishs = require('./routes/dishs');
 var orders = require('./routes/orders');
@@ -41,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', users);
-app.use('/branch', branchs);
+//app.use('/branch', branchs);
 app.use('/catalog',catalogs);
 app.use('/dish',dishs);
 app.use('/order',orders);
