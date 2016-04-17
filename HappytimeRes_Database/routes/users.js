@@ -111,7 +111,7 @@ router.delete('/remove_address/:name', function(req, res, next) {
 /*Get all delivery_address by user id*/
 router.get('/address/:name', function(req, res, next) {
 	 User.find({ _id:req.params.name }, function (err, data) {
-	  if (err) return next(er
+	  if (err) return next(err);
 	  else{
       	for (var k in data) 
 			res.json(data[k].delivery_address);

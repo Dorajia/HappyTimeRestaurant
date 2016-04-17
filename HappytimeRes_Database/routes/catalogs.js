@@ -11,14 +11,14 @@ router.get('/', function(req, res, next) {
   });
 });
 
-/* GET all dishes under one catalog*/
+/* GET all dishes details under one catalog, join example*/
 router.get('/dish/:name', function(req, res, next) {
 	Catalog.find({ _id:req.params.name })
-	.populate('dish') // <--
+	.populate('_dish') // <--
 	.exec(function (err, data) {
 	  if (err) return next(err);
 	  for (var k in data) 
-	  res.json(data[k].dish);
+	  res.json(data[k]._dish);
 	});
 });
 
