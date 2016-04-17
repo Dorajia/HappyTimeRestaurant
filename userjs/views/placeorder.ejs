@@ -1,0 +1,85 @@
+﻿<%- include('partials/header') %>
+<div class="form-container">
+    <h2>Place Order</h2>
+    <% if(locals.error) { %>
+        <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+    <!--<form method="post">-->
+        <!--<div class="form-group">-->
+            <!--<label for="username">Username</label>-->
+            <!--<input type="text" name="username" id="username" class="form-control" value="<%= locals.username || '' %>" required />-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label for="ordernum">Order Number</label>-->
+            <!--<input type="text" name="ordernum" id="ordernum" class="form-control" value="<%= locals.ordernum || '' %>" required />-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label for="orderdate">Order Date</label>-->
+            <!--<input type="text" name="email" id="email" class="form-control" value="<%= locals.email || '' %>" required />-->
+        <!--</div>-->
+        <!--<tr>-->
+            <!--<td>-->
+                <!--<label for="dishname">Dish Name</label>-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<label for="dishprice">Dish price</label>-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<label for="dishcount">Count</label>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>-->
+                <!--<input type="text" name="dishname" id="dishname" class="form-control" value="<%= locals.dishname || '' %>" required />-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input type="text" name="dishprice" id="dishprice" class="form-control" value="<%= locals.dishprice || '' %>" required />-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input type="text" name="dishcount" id="dishcount" class="form-control" value="<%= locals.dishcount || '' %>" required />-->
+            <!--</td>-->
+        <!--</tr>-->
+
+        <!--<div class="form-group">-->
+            <!--<button type="submit" class="btn btn-primary">Place Order</button>-->
+        <!--</div>-->
+    <!--</form>-->
+    <form name="Codenx" novalidate>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Dish Name</th>
+                <th>Dish Price</th>
+                <th>Dish Count</th>
+                <th>Action</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input class="form-control" ng-model="dish.name" required="" placeholder="Dish Name"></td>
+                <td><input class="form-control" ng-model="dish.price" placeholder="Dish Price"></td>
+                <td><input class="form-control" ng-model="dish.count" placeholder="Dish Count"></td>
+                <td><button class="btn btn-primary" ng-click="add(dish)" ng-if="!dish.count" type="submit" ng-disabled="!Codenx.$valid">Add Dish</button>
+                    <div class="btn-group">
+                        <button class="btn btn-info" ng-click="update(dish)" ng-if="dish._id" type="submit">Update</button>
+                        <button class="btn" ng-click="deselect()" ng-if="dish._id">Remove</button>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat="product in products">
+                <td>{{product.name}}</td>
+                <td>{{product.sku}}</td>
+                <td>{{product.price}}</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-danger" ng-click="remove(product)">Remove</button>
+                        <button class="btn btn-warning" ng-click="edit(product._id)">Edit</button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<%- include('partials/footer') %>

@@ -1,0 +1,20 @@
+Group #6 Team Project 
+Week #2 Journal
+
+Name: Xingxing Ju
+SID: 010751455
+
+1. The work I did last week:
+- Organize the team members meeting for twice and discussing the Team Project.
+- Continue the development of User-related modules frontend. Improve the Register/SignIn/SignOut UI, add the modify user profile function and display order history function.
+- Start development of backend. Create fake data in MongoDB, and develop the NodeJs modules/Rest APIs and finish the data service feeding for Register/SignIn/SignOut/UserProfileModification/OrderManagement.
+- Finish the testing for the integration of front-end and backend services for user modules and order history modules.
+
+2. The problems I encountered:
+- Didn't have enough experiences in development of accessing MongoDB data and serve the data in Rest API in NodeJS. It took me some time to fix the query result passing issue. It has been fixed.
+- Not familiar with AngularJS/HTML to display a list of items in a form, follow the online tutorial to learn and do exercises.
+
+3. The work I plan to do next week:
+- Continue the development of Order Comments Modules front-end. If finished earlier, refactor the code and integrate with other team members.
+- Learn more about Heroku.
+- Support other team members.
