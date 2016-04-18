@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET all dishes details under one catalog, join example*/
-router.get('/dish/:name', function(req, res, next) {
+router.get('/findalldish/:name', function(req, res, next) {
 	Catalog.find({ _id:req.params.name })
 	.populate('_dish') // <--
 	.exec(function (err, data) {

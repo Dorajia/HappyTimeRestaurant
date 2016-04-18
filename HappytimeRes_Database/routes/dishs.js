@@ -30,7 +30,7 @@ router.post('/', function(req, res, next) {
 });
 
 /* GET one dish details by it's name*/
-router.get('/:name', function(req, res, next) {
+router.get('/findbyname/:name', function(req, res, next) {
 	Dish.find({_id: req.params.name}, function(err, data){
 		if (err) {
 			res.json(err.message);
@@ -46,7 +46,7 @@ router.get('/:name', function(req, res, next) {
 
 
 /* GET all dishes by catalog name*/
-router.get('/catalog/:name', function(req, res, next) {
+router.get('/findbycatalog/:name', function(req, res, next) {
 	Dish.find({catalog: req.params.name}, function(err, data){
 		if (err) {
 			res.json(err.message);

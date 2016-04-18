@@ -26,6 +26,7 @@ router.post('/addcomments/:user/:dish/:score/:description', function(req, res, n
 router.get('/findbyuser/:user', function(req, res, next) {
 	var query = Comment.find({user_name: req.params.user});
 	query.sort('-publish_time');
+	query.populate('dish_name');
  	query.exec(function(err, data){
 		if (err) {
 			res.json(err.message);
@@ -51,6 +52,7 @@ router.get('/findbydate/:user/:topdate/:buttomdate', function(req, res, next) {
 		);
 //db.comment.find({'createdAt' : {'$gte': ISODate('2016-04-15T18:39:00.000Z')}}) in MongoDB
 	query.sort('createdAt');
+	query.populate('dish_name');
  	query.exec(function(err, data){
 		if (err) {
 			res.json(err.message);
