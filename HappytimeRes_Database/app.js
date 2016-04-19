@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var passport = require('passport');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -17,19 +18,19 @@ var recommendations = require('./routes/recommendations');
 var specials = require('./routes/specials');
 var cart = require('./routes/carts');
 
+
+
+var dbConfig = require('./db');
+
 var app = express();
 
-mongoose.connect('mongodb://ec2-52-11-87-42.us-west-2.compute.amazonaws.com:27017/test', function(err) {
+mongoose.connect(dbConfig.url, function(err) {
     if(err) {
         console.log('connection error', err);
     } else {
         console.log('connection successful');
     }
 });
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -38,6 +39,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+
+app.use(passport.initialize());
 
 app.use('/', routes);
 app.use('/user', users);
@@ -48,6 +52,7 @@ app.use('/order',orders);
 app.use('/comment',comments);
 app.use('/special',specials)
 app.use('/recommendation', recommendations);
+
 //app.use('/cart',cart);
 
 // catch 404 and forward to error handler
@@ -70,6 +75,7 @@ if (app.get('env') === 'development') {
     });
   });
 }
+
 
 // production error handler
 // no stacktraces leaked to user
