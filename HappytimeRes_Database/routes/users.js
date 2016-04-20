@@ -59,7 +59,7 @@ router.post('/login/:name/:password', function(req, res) {
 });
 
 //authenticate user with token 
-router.put('/updatepassword/:name/:password', passport.authenticate('jwt', { session: false}), function(req, res) {
+router.put('/updatepassword/:name/:oldpassword/:newpassword', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
@@ -71,8 +71,11 @@ router.put('/updatepassword/:name/:password', passport.authenticate('jwt', { ses
         if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
+        user.comparePassword(req.params.oldpassword, function (err, isMatch) {
+        if (isMatch && !err) {
           	var name = {_id: req.params.name};
-          	user.encrptPassword(req.params.password, function(err, hash){
+          	
+          	user.encrptPassword(req.params.newpassword, function(err, hash){
           	  if(err) return res.json(err);
           	  else{
                     	var update = {password: hash};
@@ -80,15 +83,39 @@ router.put('/updatepassword/:name/:password', passport.authenticate('jwt', { ses
                     
                     	User.findOneAndUpdate(name, update, options, function(err, data){
                     		if (err) {
-                    			res.json(err.message);
+                    			return res.status(403).send({success: false, msg: 'Failed'});
                     		}
                     		else {
-                    			res.json(data);
+                    			return res.status(200).send({success: true, msg: 'Update successful'});
                     		}
                     	});
           	  }
-          	});
+          	});          
+        }  else {
+          return res.status(403).send({success: false, msg: 'Authentication failed. Wrong password.'});
+        }
+      });
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
 
+
+router.get('/userprofile', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({_id: decoded._id})
+    .select('_id email delivery_address phone')
+    .exec (function(err, user) {
+        if (err) throw err;
+ 
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          return res.status(200).send({sucess:true, data:user});
         }
     });
   } else {
