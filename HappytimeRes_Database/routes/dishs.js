@@ -47,7 +47,7 @@ router.get('/findbyname/:name', function(req, res, next) {
 
 /* GET all dishes by catalog name*/
 router.get('/findbycatalog/:name', function(req, res, next) {
-	Dish.find({catalog: req.params.name}, function(err, data){
+	Dish.find({_catalog: req.params.name}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}
