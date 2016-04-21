@@ -59,7 +59,7 @@ router.post('/login/:name/:password', function(req, res) {
 });
 
 //authenticate user with token 
-router.put('/updatepassword/:name/:oldpassword/:newpassword', passport.authenticate('jwt', { session: false}), function(req, res) {
+router.put('/updatepassword/:oldpassword/:newpassword', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
@@ -73,7 +73,7 @@ router.put('/updatepassword/:name/:oldpassword/:newpassword', passport.authentic
         } else {
         user.comparePassword(req.params.oldpassword, function (err, isMatch) {
         if (isMatch && !err) {
-          	var name = {_id: req.params.name};
+          	var name = {_id:decoded._id};
           	
           	user.encrptPassword(req.params.newpassword, function(err, hash){
           	  if(err) return res.json(err);

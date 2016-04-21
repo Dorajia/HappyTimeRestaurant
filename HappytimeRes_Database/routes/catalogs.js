@@ -4,7 +4,7 @@ var router = express.Router();
 var Catalog = require('../models/catalog.js');
 
 /* GET all catalog. */
-router.get('/', function(req, res, next) {
+router.get('/getallcatalog', function(req, res, next) {
   Catalog.find(function (err, data) {
     if (err) return next(err);
     res.json(data);

@@ -2,10 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var OrderSchema = new Schema({
-    _user:{type:String, ref:'user'},
+    order_id: String,
     user: String,
     order_time: { type: Date, required: true, default: Date.now },
-    confirm_time: { type: Date, required: true, default: Date.now },
+    confirm_time: { type: Date, default:null},
     restaurant_name: String,
     delivery_address:
     {
@@ -14,7 +14,8 @@ var OrderSchema = new Schema({
         state:String,
         zip:Number
     },
-    dishes: [{type:String, ref:'dish'}],
+    dishes: []
     });
+
 
 module.exports = mongoose.model('order', OrderSchema,'order');
