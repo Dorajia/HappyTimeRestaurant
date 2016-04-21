@@ -9,7 +9,7 @@ var passport = require('passport');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-//var branchs = require('./routes/branchs');
+var branchs = require('./routes/branchs');
 var catalogs = require('./routes/catalogs');
 var dishs = require('./routes/dishs');
 var orders = require('./routes/orders');
@@ -17,6 +17,7 @@ var comments = require('./routes/comments');
 var recommendations = require('./routes/recommendations');
 var specials = require('./routes/specials');
 var cart = require('./routes/carts');
+var inventorys = require('./routes/inventorys');
 
 
 
@@ -45,13 +46,14 @@ app.use(passport.initialize());
 
 app.use('/', routes);
 app.use('/user', users);
-//app.use('/branch', branchs);
+app.use('/branch', branchs);
 app.use('/catalog',catalogs);
 app.use('/dish',dishs);
 app.use('/order',orders);
 app.use('/comment',comments);
 app.use('/special',specials)
 app.use('/recommendation', recommendations);
+app.use('/inventory', inventorys);
 
 //app.use('/cart',cart);
 

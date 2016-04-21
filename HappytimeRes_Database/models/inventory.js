@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 var inventorySchema = new Schema(
 {
 	_id: Number,
-        chainRest_id: Number,
+//    _branch: { type:Number, ref: 'branch'},
+    branch_id: Number,
 	dish_inventory: 
 	[
 		{dish_name:String,

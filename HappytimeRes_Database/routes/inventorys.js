@@ -12,14 +12,13 @@ router.get('/', function(req, res, next) {
 });
 
 //POST
-router.post('/', function(req, res, next) {
+router.post('/create/:branchId/:dishName/:isSoldout', function(req, res, next) {
 	var newItem = new Inventory(
-        {_id: req.body.id, 
-	chainRest_id:req.body.branchId,
+    {branch_id:req.params.branch_id,
 	dish_inventory:[
-	{    
-             dish_name:req.body.dishName,
-             dish_soldout:req.body.isSoldout
+	    {    
+             dish_name:req.params.dishName,
+             dish_soldout:req.params.isSoldout
         }]
 	});
 	newItem.save(function(err, data){
@@ -34,7 +33,7 @@ router.post('/', function(req, res, next) {
 
 /* GET one branch inventory details by its branch id*/
 router.get('/:branchId', function(req, res, next) {
-	Inventory.find({_id: req.params.branchId}, function(err, data){
+	Inventory.find({branch_id: req.params.branchId}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}
