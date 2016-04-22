@@ -38,7 +38,7 @@ router.post('/login/:name/:password', function(req, res) {
   }, function(err, user) {
     if (err)
     {
-    	return res.json(err.message);
+      return res.send({success: false, msg: err});
     }
     if (!user) {
       return res.send({success: false, msg: 'Authentication failed. User not found.'});
@@ -66,7 +66,8 @@ router.put('/updatepassword/:oldpassword/:newpassword', passport.authenticate('j
     User.findOne({
       _id: decoded._id
     }, function(err, user) {
-        if (err) throw err;
+        if (err) 
+              return res.send({success: false, msg: err});
  
         if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
@@ -110,7 +111,8 @@ router.get('/userprofile', passport.authenticate('jwt', { session: false}), func
     User.findOne({_id: decoded._id})
     .select('_id email delivery_address phone')
     .exec (function(err, user) {
-        if (err) throw err;
+        if (err) 
+          return res.send({success: false, msg: err});
  
         if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
@@ -123,6 +125,152 @@ router.get('/userprofile', passport.authenticate('jwt', { session: false}), func
   }
 });
 
+
+router.post('/addphone/:phone', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({_id: decoded._id},function(err, user) {
+        if (err)
+          return res.send({success: false, msg: err});
+ 
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          	var name = {_id: decoded._id};
+          	var update = {$push:{phone:{_id:req.params.phone}}};
+          	var options = {new: true};
+          
+          	User.findOneAndUpdate(name, update, options, function(err, data){
+          		if (err) {
+                return res.status(403).send({success: false, msg: 'Failed to add new phone'});
+          		}
+          		else {
+                 	for (var k in user) 
+            			res.status(200).send({sucess:true, data:user[k].phone});
+          		}
+          	});
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
+
+//Remove a phone number
+router.post('/removephone/:phone', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({_id: decoded._id},function(err, user) {
+        if (err) 
+          return res.send({success: false, msg: err});
+ 
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          	var name = {_id: decoded._id};
+          	var update = {$pull:{phone:{_id:req.params.phone}}};
+          	var options = {new: true};
+          
+          	User.findOneAndUpdate(name, update, options, function(err, data){
+          		if (err) {
+                return res.status(403).send({success: false, msg: 'Failed to remove phone'});
+          		}
+          		else {
+                 	for (var k in user) 
+            			res.status(200).send({sucess:true, data:user[k].phone});
+          		}
+          	});
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
+
+
+//add one delivery address
+router.post('/addaddress/:state/:zipcode/:address', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({_id: decoded._id},function(err, user) {
+        if (err)
+          return res.send({success: false, msg: err});
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          	var name = {_id: decoded._id};
+          	var update = {$push:{delivery_address:{zipcode:req.params.zipcode, state:req.params.state,address:req.params.address}}};
+          	var options = {new: true};
+          
+          	User.findOneAndUpdate(name, update, options, function(err, data){
+          		if (err) {
+                return res.status(403).send({success: false, msg: 'Failed to add address'});
+          		}
+          		else {
+                 	for (var k in user) 
+            			res.status(200).send({sucess:true, data:user[k].delivery_address});
+          		}
+          	});
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
+
+//Get all delivery address of user
+router.get('/getaddress', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({_id: decoded._id},function(err, user) {
+        if (err)
+          return res.send({success: false, msg: err});
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          	for (var k in user) 
+      			res.status(200).send({sucess:true, data:user[k].delivery_address});
+          }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
+
+//Remove one delivery address
+router.post('/removeaddress/:address', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({_id: decoded._id},function(err, user) {
+        if (err)
+          return res.send({success: false, msg: err});
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          	var name = {_id: decoded._id};
+          	var update = {$pull:{delivery_address:{address:req.params.address}}};
+          	var options = {new: true};
+          
+          	User.findOneAndUpdate(name, update, options, function(err, data){
+          		if (err) {
+                return res.status(403).send({success: false, msg: 'Failed to remove address'});
+          		}
+          		else {
+                 	for (var k in user) 
+            			res.status(200).send({sucess:true, data:user[k].delivery_address});
+          		}
+          	});
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
 
 router.get('/', function(req, res,next) {
   User.find(function (err, data) {
