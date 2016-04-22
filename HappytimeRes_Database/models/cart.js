@@ -9,10 +9,10 @@ var OrderDishSchema = new mongoose.Schema(
     });
 
 var CartSchema = new Schema({
-    _id: String,
-    dishes: [OrderDishSchema],
-    status: Boolean,
-    total_price:{Type:Number, default:0} 
+    _id: String,//it is the user name, since one user can only have one shopping cart
+    dish: [OrderDishSchema],
+    status: {type: String, default:'Empty'},
+    total_price:{type:Number, default:0} 
     });
 
 module.exports = mongoose.model('cart', CartSchema,'cart');
