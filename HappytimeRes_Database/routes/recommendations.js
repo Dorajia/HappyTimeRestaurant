@@ -12,15 +12,10 @@ router.get('/', function(req, res, next) {
 });
 
 //POST
-router.post('/', function(req, res, next) {
+router.post('/:dish/:recommendDish', function(req, res, next) {
 	var newItem = new Recommendation({
-	recommend_id:'',
-	catalog_name:req.body.catalog_name,
-	related_dishes:[
-	{
-	 	dish_name:req.body.dish,
-	 	recommend_dish:req.body.recommend_dish
-	}]
+		dish_name:req.params.dish,
+	 	recommend_dish:req.params.recommendDish
 });
 	newItem.save(function(err, data){
 		if (err) {
@@ -33,8 +28,8 @@ router.post('/', function(req, res, next) {
 });
 
 /* GET one item */
-router.get('/:id', function(req, res, next) {
-	Recommendation.find({recommend_id: req.params.id}, function(err, data){
+router.get('/:dishName', function(req, res, next) {
+	Recommendation.find({dish_name: req.params.dishName}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}
@@ -49,12 +44,12 @@ router.get('/:id', function(req, res, next) {
 
 
 /* UPDATE one item */
-router.put('/:id', function(req, res, next) {
-	var id = {recommend_id: req.params.id};
-	var update = {recommend_dish: req.body.dish};
+router.put('/:dish/:recommendDish', function(req, res, next) {
+	var dish = {dish_name: req.params.dish};
+	var update = {recommend_dish: req.params.recommendDish};
 	var options = {new: true};
 
-	Recommendation.findOneAndUpdate(id, update, options, function(err, data){
+	Recommendation.findOneAndUpdate(dish, update, options, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}
@@ -66,8 +61,8 @@ router.put('/:id', function(req, res, next) {
 
 
 /* DELETE one item */
-router.delete('/:id', function(req, res, next) {
-	Recommendation.findOneAndRemove({recommend_id: req.params.id}, function(err, data){
+router.delete('/:dish', function(req, res, next) {
+	Recommendation.findOneAndRemove({dish_name: req.params.dish}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}
