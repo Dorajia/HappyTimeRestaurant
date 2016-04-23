@@ -2,7 +2,9 @@
  * Created by xiaotong on 4/14/16.
  */
 var app = angular.module('shopping_cart',[]);
-
+app.config(function($httpProvider){
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+});
 var items = [{'image':'../images/shopping_cart_pink.png',
               'name':'Yu Xiang Rou Si',
               'description':'This is a traditional sichuan food',
@@ -33,13 +35,14 @@ var items = [{'image':'../images/shopping_cart_pink.png',
                  'checked':false}
             ];
 console.log(items[1]);
-var total = 104.00;
-app.controller('cartmanager',['$scope','$window', function($scope , $window){
-    this.items = items;
+//var total = 104.00;
+app.controller('cartmanager',['$scope','$window', '$http', function($scope , $window , $http){
+    this.items = [];
     var parent = this;
     $scope.totalPrice = 0;
     $scope.badgeNum = this.items.length;
     $scope.allCheck = false;
+    var hostname = 'http://demo3227827.mockable.io/'
     var selectedItems = []
     //for(i = 0; i < this.items.length; i ++){
     //    $scope.totalPrice += this.items[i].price * this.items[i].amount;
@@ -91,6 +94,16 @@ app.controller('cartmanager',['$scope','$window', function($scope , $window){
         }
     }
 
+    $scope.getShoppingCart = function(){
+        $http.get('/getShoppingCart')
+            .success(function(data){
+                //console.log(data);
+                parent.items = data;
+                $scope.badgeNum = this.items.length;
+            }).error(function(err){
+                console.log('Err: ' + err);
+        });
+    }
 
 }]);
 
