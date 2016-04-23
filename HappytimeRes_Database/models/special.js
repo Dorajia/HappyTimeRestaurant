@@ -3,8 +3,8 @@ var Schema = mongoose.Schema;
 
 var SpecialSchema = new Schema(
 {
-	_id: String,
-	recommended_dish: [{type:String, ref:'dish'}]
+	_id: Number,
+	special_dish: {type:String, ref:'dish'}
 });
 
 module.exports = mongoose.model('special', SpecialSchema,'special');

@@ -12,13 +12,10 @@ router.get('/', function(req, res, next) {
 });
 
 //POST
-router.post('/', function(req, res, next) {
+router.post('/:id/:dishName', function(req, res, next) {
 	var newItem = new Special({
-	_id: req.body.special,
-	recommended_dish: 
-	[
-		{recommended_dish:req.body.dish_name}
-	]
+		_id: req.params.id,
+		special_dish: req.params.dishName
 });
 	newItem.save(function(err, data){
 		if (err) {
@@ -30,42 +27,10 @@ router.post('/', function(req, res, next) {
 	});
 });
 
-/* GET all disheds use id */
-router.get('/:id', function(req, res, next) {
-	Special.find({_id: req.params.id}, function(err, data){
-		if (err) {
-			res.json(err.message);
-		}
-		else if (data.length===0) {
-			res.json({message: 'An item with that name does not exist in this database.'});
-		}
-		else {
-			res.json(data);
-		}
-	});
-});
-
-
-/* UPDATE one item */
-router.put('/:id', function(req, res, next) {
-	var id = {special_id: req.params.id};
-	var update = {dish_name: req.body.dish};
-	var options = {new: true};
-
-	Special.findOneAndUpdate(id, update, options, function(err, data){
-		if (err) {
-			res.json(err.message);
-		}
-		else {
-			res.json(data);
-		}
-	});
-});
-
 
 /* DELETE one item */
-router.delete('/:id', function(req, res, next) {
-	Special.findOneAndRemove({_id: req.params.id}, function(err, data){
+router.delete('/:dishName', function(req, res, next) {
+	Special.findOneAndRemove({special_dish: req.params.dishName}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}
