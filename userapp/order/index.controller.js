@@ -32,6 +32,7 @@
             vm.modalFlag = true;
         }
 
+        // Hide the Modal
         function hideModal() {
             vm.modalFlag = false;
         }
