@@ -69,7 +69,12 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
             parent.items[index].amount --;
             parent.items[index].total -= parent.items[index].price;
             //$scope.totalPrice -= parent.items[index].price;
-            $http.post('/decrementItem', index)
+            var data = $.param({
+                json: JSON.stringify({
+                    index: index
+                })
+            });
+            $http.post('/decrementItem', {'i':index})
                 .success(function(data){
                     console.log(data);
                     //parent.items = data;
@@ -90,7 +95,7 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
         console.log($scope.badgeNum);
         parent.items.splice(index , 1);
         $scope.updatePrice();
-        $http.delete('/deleteItem', index)
+        $http.delete('/deleteItem', {'index':index})
             .success(function(data){
                 console.log(data);
                 //parent.items = data;

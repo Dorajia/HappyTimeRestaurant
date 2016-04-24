@@ -55,7 +55,8 @@ app.get('/getShoppingCart' , function(req , res){
     res.json(items);
 });
 app.post('/decrementItem', function(req, res){
-    items[req].amount --;
+    console.log(req.body);
+    //items[req].amount --;
 });
 app.post('/incrementItem', function(req, res){
     items[req].amount ++;
