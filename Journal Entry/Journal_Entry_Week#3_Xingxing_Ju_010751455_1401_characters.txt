@@ -1,0 +1,21 @@
+Group #6 Team Project 
+Week #3 Journal
+
+Name: Xingxing Ju
+SID: 010751455
+
+1. The work I did last week:
+- Organize two team meetings in the past week and discuss the Team Project issues with team members.
+- Continue the development of User-related modules frontend. Finish the functionality of "User add comments to confirmed orders".
+- Improve the UI: apply UI template to the user-related modules HTML files; improve the CSS for HTML formatting. 
+- Finish development of testing backend APIs. Add more testing data in MongoDB, and add NodeJs Rest API to test the "User Add Order Comments" module.
+- Make testing plan for the whole application. 
+
+2. The problems I encountered:
+- I encountered some issues of using Modal Module in AngularJS - can't control its Show/Hide behavior as expected. The issue has been fixed already.
+- I encountered some issues of github commit: all my commits are labeled as "Unrecognized" since week 2, and the commits are not displayed in the weekly activity graph correctly. Fixed the issue of github commit with my github account/email.
+
+3. The work I plan to do next week:
+- Code Merge: Since the team members almost finished the development of backend APIs, we are going to start replacing the local testing API with real working backend API. 
+- Testing: Carry out complete testing after code merge.
+- Deployment: Push the web service onto Heroku and make it public.
