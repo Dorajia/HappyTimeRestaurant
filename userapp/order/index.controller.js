@@ -27,6 +27,7 @@
 
         }
 
+        // Show the Modal
         function showModal() {
             vm.modalFlag = true;
         }
