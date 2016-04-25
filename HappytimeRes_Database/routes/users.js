@@ -146,8 +146,8 @@ router.post('/addphone/:phone', passport.authenticate('jwt', { session: false}),
                 return res.status(403).send({success: false, msg: 'Failed to add new phone'});
           		}
           		else {
-                 	for (var k in user) 
-            			res.status(200).send({sucess:true, data:user[k].phone});
+//                 	for (var k in data) 
+            		 return	res.status(200).send({sucess:true, phone:data.phone});
           		}
           	});
         }
@@ -178,8 +178,8 @@ router.post('/removephone/:phone', passport.authenticate('jwt', { session: false
                 return res.status(403).send({success: false, msg: 'Failed to remove phone'});
           		}
           		else {
-                 	for (var k in user) 
-            			res.status(200).send({sucess:true, data:user[k].phone});
+
+            		return	res.status(200).send({sucess:true, phone:data.phone});
           		}
           	});
         }
@@ -210,8 +210,8 @@ router.post('/addaddress/:state/:zipcode/:address', passport.authenticate('jwt',
                 return res.status(403).send({success: false, msg: 'Failed to add address'});
           		}
           		else {
-                 	for (var k in user) 
-            			res.status(200).send({sucess:true, data:user[k].delivery_address});
+
+            			return res.status(200).send({sucess:true, delivery_address:data.delivery_address});
           		}
           	});
         }
@@ -232,8 +232,7 @@ router.get('/getaddress', passport.authenticate('jwt', { session: false}), funct
         if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
-          	for (var k in user) 
-      			res.status(200).send({sucess:true, data:user[k].delivery_address});
+          return res.status(200).send({sucess:true, delivery_address:user.delivery_address});
           }
     });
   } else {
@@ -261,8 +260,7 @@ router.post('/removeaddress/:address', passport.authenticate('jwt', { session: f
                 return res.status(403).send({success: false, msg: 'Failed to remove address'});
           		}
           		else {
-                 	for (var k in user) 
-            			res.status(200).send({sucess:true, data:user[k].delivery_address});
+            		return res.status(200).send({sucess:true, delivery_address:data.delivery_address});
           		}
           	});
         }

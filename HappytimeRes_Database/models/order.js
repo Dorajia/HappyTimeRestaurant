@@ -14,7 +14,8 @@ var OrderSchema = new Schema({
         state:String,
         zip:Number
     },
-    dishes: []
+    dishes: [],
+    total_price: Number
     });
 
 

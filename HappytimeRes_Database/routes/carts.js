@@ -80,7 +80,7 @@ router.put('/removeitem/:name/:price', passport.authenticate('jwt', { session: f
         } else {
           	var cart_id = {_id:decoded._id};
           	var newprice = cart.total_price - req.params.price;
-            var update = {total_price:newprice,status:'active', $pull:{dish:{dish_name:req.params.name}}};
+            var update = {total_price:newprice, $pull:{dish:{dish_name:req.params.name}}};
             var options = {new: true};
                     
             Cart.findOneAndUpdate(cart_id, update, options, function(err, data){
@@ -130,6 +130,35 @@ router.put('/changenumber/:name/:price/number:', passport.authenticate('jwt', { 
     return res.status(403).send({success: false, msg: 'No token provided.'});
   }
 });
+
+//Place order.
+router.get('/placeorder/:restaurant/:street/:city/:state/:zip/:phone', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    Cart.findOne({
+      _id: decoded._id
+    }, function(err, cart) {
+        if (err)
+        return res.status(500).send({success: false, msg: "Failed to get shopping cart"});
+        if (!cart) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          cart.placeOrder(req.params.restaurant,req.params.street,req.params.city,req.params.state,req.params.zip,req.params.phone,function(err,data)
+          {
+              if(err) 
+                 return res.json(err);
+          	  else{
+          	     return res.status(200).send({success: true, data:data});
+          	  }
+          });
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
+
 
 router.get('/', function(req, res,next) {
   Cart.find(function (err, data) {

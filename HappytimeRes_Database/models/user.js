@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
+var Cart = require('./cart')
 
 var DeliverySchema = new mongoose.Schema(
 	{
@@ -43,6 +44,22 @@ UserSchema.pre('save', function (next) {
         return next();
     }
 });
+
+UserSchema.post('save', function(next) {
+   var user = this;
+   var newCart = new Cart({
+    _id: user._id,
+    status: 'Empty',
+    total_price:0
+    });
+    newCart.save(function(err) {
+      if (err) {
+        return next(err);
+      }
+        return next();
+    });
+});
+
  
 UserSchema.methods.comparePassword = function (passw, cb) {
     bcrypt.compare(passw, this.password, function (err, isMatch) {
