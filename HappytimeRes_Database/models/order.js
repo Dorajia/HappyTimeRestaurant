@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var OrderSchema = new Schema({
-    order_id: String,
+    _id: String,
     user: String,
     order_time: { type: Date, required: true, default: Date.now },
     confirm_time: { type: Date, default:null},

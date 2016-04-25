@@ -59,7 +59,7 @@ router.post('/login/:name/:password', function(req, res) {
 });
 
 //authenticate user with token 
-router.put('/updatepassword/:oldpassword/:newpassword', passport.authenticate('jwt', { session: false}), function(req, res) {
+router.post('/updatepassword/:oldpassword/:newpassword', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);

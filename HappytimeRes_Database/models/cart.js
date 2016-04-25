@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Order = require('./order')
+var shortid = require('shortid');
 
 var OrderDishSchema = new mongoose.Schema(
     {
-    	dish_name: String,
+    	_id: String,
     	dish_price: Number,
     	dish_number:{type: Number, default:1}
     });
@@ -18,7 +19,7 @@ var CartSchema = new Schema({
 
 CartSchema.methods.placeOrder = function (restaurant,street,city,state,zip,phone,cb) {
     var newOrder = new Order({
-    order_id: '',
+    _id: shortid.generate(),
     user: this._id,
     restaurant_name:restaurant,
     $push:{delivery_address:{street:street,city:city,state:state,zip:zip}},
@@ -26,12 +27,11 @@ CartSchema.methods.placeOrder = function (restaurant,street,city,state,zip,phone
     dishes:[this.dish],
     total_price:this.total_price
     });
-    newOrder.save(function(data,err) {
+    newOrder.save(function(err,data) {
       if (err) {
-          return cb(err);
+        return cb(err);
       }
       else{
-         this.findOneAndRemove({_id:this._id});
          return cb(null, data);
       }
     });

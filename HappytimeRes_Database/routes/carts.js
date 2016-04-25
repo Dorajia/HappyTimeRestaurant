@@ -32,7 +32,7 @@ router.get('/getitems', passport.authenticate('jwt', { session: false}), functio
 
 
 //add item in shopping cart, if the frontend can send the information, it is great, otherwise, need to find the price from dish first.
-router.put('/additem/:name/:price/:number', passport.authenticate('jwt', { session: false}), function(req, res) {
+router.post('/additem/:name/:price/:number/:total_price', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
@@ -44,9 +44,8 @@ router.put('/additem/:name/:price/:number', passport.authenticate('jwt', { sessi
         if (!cart) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
-            var newprice = cart.total_price + req.params.price;
           	var cart_id = {_id:decoded._id};
-            var update = {total_price:newprice,status:'active', $push:{dish:{dish_name:req.params.name, dish_price:req.params.price, dish_number:req.params.number}}};
+            var update = {total_price:req.params.total_price,status:'active', $push:{dish:{_id:req.params.name, dish_price:req.params.price, dish_number:req.params.number}}};
             var options = {new: true};
                     
             Cart.findOneAndUpdate(cart_id, update, options, function(err, data){
@@ -54,7 +53,7 @@ router.put('/additem/:name/:price/:number', passport.authenticate('jwt', { sessi
                     return res.status(403).send({success: false, msg: 'Failed add item'});
                     }
                 else {
-                    return res.status(200).send({success: true, msg: 'Update successful'});
+                    return res.status(200).send({success: true, msg: 'Add item in shopping cart successful',data:data});
                     }
                 });
         }
@@ -66,7 +65,7 @@ router.put('/additem/:name/:price/:number', passport.authenticate('jwt', { sessi
 
 
 //remove the whole item in shopping cart
-router.put('/removeitem/:name/:price', passport.authenticate('jwt', { session: false}), function(req, res) {
+router.post('/removeitem/:name/:newtotal_price', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
@@ -79,8 +78,7 @@ router.put('/removeitem/:name/:price', passport.authenticate('jwt', { session: f
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
           	var cart_id = {_id:decoded._id};
-          	var newprice = cart.total_price - req.params.price;
-            var update = {total_price:newprice, $pull:{dish:{dish_name:req.params.name}}};
+            var update = {total_price:req.params.newtotal_price, $pull:{dish:{_id:req.params.name}}};
             var options = {new: true};
                     
             Cart.findOneAndUpdate(cart_id, update, options, function(err, data){
@@ -88,7 +86,7 @@ router.put('/removeitem/:name/:price', passport.authenticate('jwt', { session: f
                     return res.status(403).send({success: false, msg: 'Failed remove item from shopping cart'});
                     }
                 else {
-                    return res.status(200).send({success: true, msg: 'Remove items from shopping cart successful'});
+                    return res.status(200).send({success: true, msg: 'Remove items from shopping cart successful',data:data});
                     }
                 });
         }
@@ -98,8 +96,8 @@ router.put('/removeitem/:name/:price', passport.authenticate('jwt', { session: f
   }
 });
 
-//change the number of items in shopping cart
-router.put('/changenumber/:name/:price/number:', passport.authenticate('jwt', { session: false}), function(req, res) {
+//change the number of one item in shopping cart
+router.post('/changenumber/:name/:newprice/:newnumber/:newtotal_price', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
@@ -111,17 +109,17 @@ router.put('/changenumber/:name/:price/number:', passport.authenticate('jwt', { 
         if (!cart) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
-          	var cart_id = {_id:decoded._id};
-          	var newprice = cart.total_price - req.params.price;
-            var update = {total_price:newprice,status:'active', $pull:{dish:{dish_name:req.params.name}}};
+          //$set: {'dish.$.dish_number':2
+          	var cart_id = {_id:decoded._id,"dish._id":req.params.name};
+            var update = {total_price:req.params.newtotal_price,status:'active', $set:{'dish.$.dish_number':req.params.newnumber,'dish.$.dish_price':req.params.newprice}};
             var options = {new: true};
                     
             Cart.findOneAndUpdate(cart_id, update, options, function(err, data){
                 if (err) {
-                    return res.status(403).send({success: false, msg: 'Failed remove item from shopping cart'});
+                    return res.status(403).send({success: false, msg: 'Failed add the number of item in shopping cart'});
                     }
                 else {
-                    return res.status(200).send({success: true, msg: 'Remove items from shopping cart successful'});
+                    return res.status(200).send({success: true, msg: 'Add the number of item in shopping cart successful',data:data});
                     }
                 });
         }
@@ -144,12 +142,25 @@ router.get('/placeorder/:restaurant/:street/:city/:state/:zip/:phone', passport.
         if (!cart) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
-          cart.placeOrder(req.params.restaurant,req.params.street,req.params.city,req.params.state,req.params.zip,req.params.phone,function(err,data)
+          cart.placeOrder(req.params.restaurant,req.params.street,req.params.city,req.params.state,req.params.zip,req.params.phone,function(err,order)
           {
               if(err) 
                  return res.json(err);
           	  else{
-          	     return res.status(200).send({success: true, data:data});
+                  	var cart_id = {_id:decoded._id};
+                    var update = {total_price:0,status:'Empty', dish:[]};
+                    var options = {new: true};
+                  	Cart.findOneAndUpdate(cart_id, update, options,function(err, cart){
+                  		if (err) {
+                      return res.status(500).send({success: false, msg: "Failed to remove items from shopping cart"});
+                  		}
+                  		else if (cart.length===0) {
+                      return res.status(500).send({success: false, msg: "Can't find shopping cart"});
+                  		}
+                  		else {
+                      return res.status(200).send({success: true, msg: "place order successful", data:order});
+                  		}
+                  	});
           	  }
           });
         }
@@ -159,12 +170,5 @@ router.get('/placeorder/:restaurant/:street/:city/:state/:zip/:phone', passport.
   }
 });
 
-
-router.get('/', function(req, res,next) {
-  Cart.find(function (err, data) {
-    if (err) return next(err);
-    res.json(data);
-  });
-});
  
 module.exports = router;

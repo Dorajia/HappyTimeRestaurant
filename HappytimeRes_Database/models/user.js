@@ -56,7 +56,6 @@ UserSchema.post('save', function(next) {
       if (err) {
         return next(err);
       }
-        return next();
     });
 });
 

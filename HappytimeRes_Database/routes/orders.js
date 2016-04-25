@@ -12,45 +12,7 @@ var Order = require('../models/order.js');
 /*Confirm order*/
 
 
-/* GET /Dish listing. */
-router.get('/', function(req, res, next) {
-  Order.find(function (err, data) {
-    if (err) return next(err);
-    res.json(data);
-  });
-});
-
 //POST
-router.post('/', function(req, res, next) {
-	var newItem = new Order(
-	{order_id: req.body.id,
-	user_name:req.body.name,
-	order_time:'Date',
-	confirm_time:'Date',
-	restaurant_name:req.body.restaurant,
-	delivery_address:
-	{
-	    street:req.body.street,
-	    city:req.body.city,
-	    state:req.body.state,
-	    zip:req.body.zip
-	},
-	dishes: [{
-	dish_name:req.body.dish,
-	dish_pic:'',
-	dish_price:req.body.price,
-	number:req.body.number}]
-		
-	});
-	newItem.save(function(err, data){
-		if (err) {
-			res.json(err);
-		}
-		else {
-			res.json(data);
-		}
-	});
-});
 
 /* GET one item */
 router.get('/:id', function(req, res, next) {
