@@ -269,12 +269,5 @@ router.post('/removeaddress/:address', passport.authenticate('jwt', { session: f
     return res.status(403).send({success: false, msg: 'No token provided.'});
   }
 });
-
-router.get('/', function(req, res,next) {
-  User.find(function (err, data) {
-    if (err) return next(err);
-    res.json(data);
-  });
-});
  
 module.exports = router;

@@ -1,65 +1,72 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require('jwt-simple');
+var config = require('../config/secretkey');
+var gettoken = require ('../models/gettoken');
+var passport = require('passport');
+// bundle our routes
 
-var Order = require('../models/order.js');
+require('../config/passport')(passport);
+
+var Order = require('../models/order');
+var User = require('../models/user');
 
 /*GET order by user_name*/
+router.get('/getorders', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.find({_id: decoded._id}, function(err, user) {
+        if (err) throw err;
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+         Order.find({user:decoded.id},function(err, data){
+         	if (err)
+         	return res.status(403).send({success: false, msg: 'Failed to get orders'});
+         	else{
+        	return res.status(200).send({sucess:true, data:data});
+         	}
+         })
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
 
-/*GET order by user_name and order_time*/
-
-/*DELETE order by user_name and order_time*/
-
-/*Confirm order*/
-
-
-//POST
-
-/* GET one item */
-router.get('/:id', function(req, res, next) {
-	Order.find({order_id: req.params.id}, function(err, data){
-		if (err) {
-			res.json(err.message);
-		}
-		else if (data.length===0) {
-			res.json({message: 'An item with that name does not exist in this database.'});
-		}
-		else {
-			res.json(data);
-		}
-	});
+/*Confirm order by order id*/
+router.post('/confirm/:id', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({
+      _id: decoded._id
+    }, function(err, cart) {
+        if (err)
+        return res.status(500).send({success: false, msg: err});
+        if (!cart) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          	var order_id = {_id:req.params.id};
+            var update = {confirm_time:Date.now};
+            var options = {new: true};
+                    
+            Order.findOneAndUpdate(order_id, update, options, function(err, data){
+                if (err) {
+                    return res.status(403).send({success: false, msg: 'Failed add item'});
+                    }
+                else {
+                    return res.status(200).send({success: true, msg: 'Confirm Order succeed!',data:data});
+                    }
+                });
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
 });
 
 
-/* UPDATE one item */
-router.put('/:id', function(req, res, next) {
-	var id = {order_id: req.params.id};
-	var update = {dish: req.body.dish};
-	var options = {new: true};
-
-	Order.findOneAndUpdate(id, update, options, function(err, data){
-		if (err) {
-			res.json(err.message);
-		}
-		else {
-			res.json(data);
-		}
-	});
-});
-
-
-/* DELETE one item */
-router.delete('/:id', function(req, res, next) {
-	Order.findOneAndRemove({order_id: req.params.id}, function(err, data){
-		if (err) {
-			res.json(err.message);
-		}
-		else if (data.length===0) {
-			res.json({message: 'An item with that id does not exist in this database.'});
-		}
-		else {
-			res.json({message: 'Success. Item deleted.'});
-		}
-	});
-});
 
 module.exports = router;
