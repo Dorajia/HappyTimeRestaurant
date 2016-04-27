@@ -28,7 +28,7 @@ router.post('/:dish/:recommendDish', function(req, res, next) {
 });
 
 /* GET one item */
-router.get('/:dishName', function(req, res, next) {
+/*router.get('/:dishName', function(req, res, next) {
 	Recommendation.find({dish_name: req.params.dishName}, function(err, data){
 		if (err) {
 			res.json(err.message);
@@ -40,7 +40,7 @@ router.get('/:dishName', function(req, res, next) {
 			res.json(data);
 		}
 	});
-});
+});*/
 
 
 /* UPDATE one item */
@@ -73,6 +73,25 @@ router.delete('/:dish', function(req, res, next) {
 			res.json({message: 'Success. Item deleted.'});
 		}
 	});
+});
+
+/* GET recommendation list according to the order */
+router.get('/:order', function(req, res, next) {
+	var list = req.params.order.toString().split(",");
+	console.log("list is:" + list);
+	var recommend_arr = [];
+	var count = list.length;
+	for (var k in list){
+		console.log("dish is:" + list[k]);
+		Recommendation.find({dish_name:list[k]})
+		.populate('recommend_dish') // <--
+		.exec(function (err, data) {
+			if(err) return next(err);
+			recommend_arr.push(data[0].recommend_dish);
+			count--;
+			if(count == 0) res.json(recommend_arr);
+		});
+	} 
 });
 
 module.exports = router;
