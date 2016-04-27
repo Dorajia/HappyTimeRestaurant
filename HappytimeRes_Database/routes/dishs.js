@@ -92,7 +92,7 @@ router.put('/:name', function(req, res, next) {
 
 /* DELETE one item */
 router.delete('/:name', function(req, res, next) {
-	Dish.findOneAndRemove({dish_name: req.params.name}, function(err, data){
+	Dish.findOneAndRemove({_id: req.params.name}, function(err, data){
 		if (err) {
 			res.json(err.message);
 		}

@@ -54,7 +54,16 @@ app.get('/new' , handle_get);
 app.get('/getShoppingCart' , function(req , res){
     res.json(items);
 });
-
+app.post('/decrementItem', function(req, res){
+    console.log(req.body);
+    //items[req].amount --;
+});
+app.post('/incrementItem', function(req, res){
+    items[req].amount ++;
+});
+app.delete('/deleteItem' , function(req, res){
+    items.splice(index);
+});
 console.log( "Server running on Port 8080..." ) ;
 
 app.listen(8080);

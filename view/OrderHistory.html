@@ -22,7 +22,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-    <title>HappyTimeRestaurant Template Page</title>
+    <title>HappyTimeRestaurant User Account Page</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -40,7 +40,7 @@
     <![endif]-->
 
     <!-- Custom styles for this template -->
-    <link href="../css/carousel.css" rel="stylesheet">
+    <link href="../css/user-account.css" rel="stylesheet">
 
     <!-- Latest compiled and minified CSS -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
@@ -123,9 +123,55 @@
     </div>
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+<div class="carousel-content">
+    <div ng-controller="Order.IndexController" class="form-container">
+        <form name="orderForm">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th><p style="color:white;">Order Number</p></th>
+                    <th><p style="color:white;">Order Date</p></th>
+                    <th><p style="color:white;">Order Status</p></th>
+                    <th><p style="color:white;">Action</p></th>
+                    <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="order in vm.orders">
+                    <td><p style="color:white;">{{order.ordernum}}</p></td>
+                    <td><p style="color:white;">{{order.orderdate}}</p></td>
+                    <td><p style="color:white;">{{order.status}}</p></td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" ng-click="vm.showModal()">Comment</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+
+
+        <modal id="modalForm" title="Login form" ng-show="vm.modalFlag">
+            <form role="form">
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" />
+                </div>
+                <button class="btn btn-primary" ng-click="vm.saveUser()">Save Comments</button>
+                <button class="btn btn-danger" ng-click="vm.hideModal()">Cancel</button>
+
+            </form>
+        </modal>
+
+    </div>
+
+</div><!-- /.container -->
+
 
 </body>
 </html>

@@ -19,8 +19,6 @@ var specials = require('./routes/specials');
 var cart = require('./routes/carts');
 var inventorys = require('./routes/inventorys');
 
-
-
 var dbConfig = require('./db');
 
 var app = express();
@@ -42,8 +40,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
-app.use(passport.initialize());
-
 app.use('/', routes);
 app.use('/user', users);
 app.use('/branch', branchs);
@@ -51,11 +47,10 @@ app.use('/catalog',catalogs);
 app.use('/dish',dishs);
 app.use('/order',orders);
 app.use('/comment',comments);
-app.use('/special',specials)
+app.use('/special',specials);
 app.use('/recommendation', recommendations);
 app.use('/inventory', inventorys);
-
-//app.use('/cart',cart);
+app.use('/cart',cart);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

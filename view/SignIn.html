@@ -22,7 +22,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-    <title>HappyTimeRestaurant Template Page</title>
+    <title>HappyTimeRestaurant User Account Page</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -40,7 +40,7 @@
     <![endif]-->
 
     <!-- Custom styles for this template -->
-    <link href="../css/carousel.css" rel="stylesheet">
+    <link href="../css/order-history.css" rel="stylesheet">
 
     <!-- Latest compiled and minified CSS -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
@@ -123,9 +123,32 @@
     </div>
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+<div class="carousel-content">
+    <div class="form-container">
+        <h2 style="color:white;">Login</h2>
+        <% if(locals.error) { %>
+            <div class="alert alert-danger"><%= error %></div>
+        <% } %>
+        <% if(locals.success) { %>
+            <div class="alert alert-success"><%= success %></div>
+        <% } %>
+        <form method="post">
+            <div class="form-group">
+                <label for="username" style="color:white;">Username</label>
+                <input type="text" name="username" id="username" value="<%= locals.username || '' %>" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="password" style="color:white;">Password</label>
+                <input type="password" name="password" id="password" class="form-control" />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a href="/register" class="btn btn-primary">Register</a>
+            </div>
+        </form>
+    </div>
+</div><!-- /.container -->
+
 
 </body>
 </html>
