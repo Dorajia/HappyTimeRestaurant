@@ -5,10 +5,16 @@ var Special = require('../models/special.js');
 
 //Get All
 router.get('/', function(req, res, next) {
-  Special.find(function (err, data) {
-    if (err) return next(err);
-    res.json(data);
-  });
+  Special.find()
+  	.populate('special_dish') // <--
+	.exec(function (err, data) {
+			if (err) return next(err);
+			var special_arr = [];
+		  	for (var k in data){
+                special_arr.push(data[k]);
+		  	}    
+		  	res.json(special_arr);
+	});
 });
 
 //POST
