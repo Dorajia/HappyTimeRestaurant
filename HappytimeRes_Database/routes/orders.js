@@ -21,10 +21,11 @@ router.get('/getorders', passport.authenticate('jwt', { session: false}), functi
         if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
-         Order.find({user:decoded.id},function(err, data){
+          Order.find({user:decoded._id},function(err, data){
          	if (err)
          	return res.status(403).send({success: false, msg: 'Failed to get orders'});
          	else{
+         	  console.log();
         	return res.status(200).send({sucess:true, data:data});
          	}
          })
@@ -42,22 +43,22 @@ router.post('/confirm/:id', passport.authenticate('jwt', { session: false}), fun
     var decoded = jwt.decode(token, config.secret);
     User.findOne({
       _id: decoded._id
-    }, function(err, cart) {
+    }, function(err, order) {
         if (err)
         return res.status(500).send({success: false, msg: err});
-        if (!cart) {
+        if (!order) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
           	var order_id = {_id:req.params.id};
-            var update = {confirm_time:Date.now};
+            var update = {confirm_time:Date.now()};
             var options = {new: true};
                     
             Order.findOneAndUpdate(order_id, update, options, function(err, data){
                 if (err) {
-                    return res.status(403).send({success: false, msg: 'Failed add item'});
+                    return res.status(403).send({success: false, msg: 'Failed comfirm order'});
                     }
                 else {
-                    return res.status(200).send({success: true, msg: 'Confirm Order succeed!',data:data});
+                    return res.status(200).send({success: true, msg: 'Confirm Order successful!',data:data});
                     }
                 });
         }
