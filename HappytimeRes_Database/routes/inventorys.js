@@ -33,25 +33,22 @@ router.post('/create/:branchId/:dishName/:isSoldout', function(req, res, next) {
 
 /* GET one branch inventory details by its branch id*/
 router.get('/:branchId', function(req, res, next) {
-	Inventory.find({branch_id: req.params.branchId}, function(err, data){
-		if (err) {
-			res.json(err.message);
-		}
-		else if (data.length===0) {
-			res.json({message: 'An item with that branch id does not exist in this database.'});
-		}
-		else {
-			res.json(data);
-		}
+	var dish_arr = [];
+	Inventory.find({branch_id: req.params.branchId})
+		.populate('dish_inventory.dish_name') // <--
+		.exec(function (err, data) {
+			if (err) return next(err);
+//			console.log("data is: " + data);
+		  	for (var k in data){
+                for(var i in data[k].dish_inventory){
+                	dish_arr.push(data[k].dish_inventory[i]);
+                }
+		  	}    
+		  	res.json(dish_arr);
 	});
 });
 
 
-
-/* UPDATE one dish sold status in specific branch restaurant  */
-router.put('/:name', function(req, res, next) {
-
-});
 
 
 /* DELETE one branch's inventory */

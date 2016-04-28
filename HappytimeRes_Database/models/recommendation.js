@@ -7,4 +7,4 @@ var RecommendationSchema = new Schema({
 		recommend_dish:{type:String, ref:'dish'}
 });
 
-module.exports = mongoose.model('recommendation', RecommendationSchema);
+module.exports = mongoose.model('recommendation', RecommendationSchema, 'recommendation');

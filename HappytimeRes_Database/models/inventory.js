@@ -7,10 +7,10 @@ var inventorySchema = new Schema(
     branch_id: Number,
 	dish_inventory: 
 	[
-		{dish_name:String,
+		{dish_name:{type:String, ref:'dish'},
 		dish_soldout:Boolean}
 	]
 	
 });
 
-module.exports = mongoose.model('inventory', inventorySchema);
+module.exports = mongoose.model('inventory', inventorySchema, 'inventory');
