@@ -83,7 +83,7 @@ router.get('/:order', function(req, res, next) {
 	var count = list.length;
 	for (var k in list){
 		console.log("dish is:" + list[k]);
-		Recommendation.find({dish_name:list[k]})
+		Recommendation.find({dish_name:list[k].trim()})
 		.populate('recommend_dish') // <--
 		.exec(function (err, data) {
 			if(err) return next(err);
