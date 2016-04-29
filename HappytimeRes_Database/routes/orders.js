@@ -43,10 +43,10 @@ router.post('/confirm/:id', passport.authenticate('jwt', { session: false}), fun
     var decoded = jwt.decode(token, config.secret);
     User.findOne({
       _id: decoded._id
-    }, function(err, order) {
+    }, function(err, user) {
         if (err)
         return res.status(500).send({success: false, msg: err});
-        if (!order) {
+        if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
           	var order_id = {_id:req.params.id};

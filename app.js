@@ -5,6 +5,8 @@ var http = require('http');
 var fs = require('fs');
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }));
 require('rootpath')();
 app.use("/css",  express.static(__dirname + '/css'));
 app.use("/js", express.static(__dirname + '/js'));
@@ -49,20 +51,33 @@ var handle_get = function (req, res) {
     res.writeHead(200);
     res.end(body);
 }
+var queryString = require( "querystring" );
+var url = require( "url" );
 
 app.get('/new' , handle_get);
-app.get('/getShoppingCart' , function(req , res){
+
+app.get('/cart/getitems' , function(req , res){
     res.json(items);
 });
-app.post('/decrementItem', function(req, res){
-    console.log(req.body);
-    //items[req].amount --;
+
+app.delete('/cart/removeitem/:name/:newtotal_price' , function(req, res){
+    console.log(req.params.name);
+    console.log(req.params.newtotal_price);
+    //items.splice(req.body.index, 1);
+    //console.log(items);
 });
-app.post('/incrementItem', function(req, res){
-    items[req].amount ++;
+app.post('/cart/changenumber/:name/:newprice/:newnumber/:newtotal_price',function(req, res){
+    console.log(req.params.name);
+    console.log(req.params.newprice);
+    console.log(req.params.newnumber);
+    console.log(req.params.newtotal_price);
+
 });
-app.delete('/deleteItem' , function(req, res){
-    items.splice(index);
+
+app.post('/generateOrder', function(req, res){
+    console.log(req.body.orderItems);
+    console.log(req.body.Address);
+    console.log(req.body.card);
 });
 console.log( "Server running on Port 8080..." ) ;
 

@@ -3,14 +3,11 @@ var router = express.Router();
 var jwt = require('jwt-simple');
 var config = require('../config/secretkey');
 var gettoken = require ('../models/gettoken');
-
+var shortid = require('shortid');
 var passport = require('passport');
-// bundle our routes
-
 require('../config/passport')(passport);
 var Cart = require('../models/cart.js');
-//check dish sold out.
-var Dish = require ('../models/dish.js');
+var Order = require('../models/order');
 
 //get items in shopping cart
 router.get('/getitems', passport.authenticate('jwt', { session: false}), function(req, res) {
@@ -130,7 +127,7 @@ router.post('/changenumber/:name/:newprice/:newnumber/:newtotal_price', passport
 });
 
 //Place order.
-router.get('/placeorder/:restaurant/:street/:city/:state/:zip/:phone', passport.authenticate('jwt', { session: false}), function(req, res) {
+/*router.get('/placeorder/:restaurant/:street/:city/:state/:zip/:phone', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
@@ -168,7 +165,65 @@ router.get('/placeorder/:restaurant/:street/:city/:state/:zip/:phone', passport.
   } else {
     return res.status(403).send({success: false, msg: 'No token provided.'});
   }
+});*/
+
+router.post('/placeorder', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    Cart.findOne({
+      _id: decoded._id
+    }, function(err, cart) {
+        if (err)
+        return res.status(500).send({success: false, msg: "Failed to get shopping cart"});
+        if (!cart) {
+           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+            var newOrder = new Order({
+            _id: shortid.generate(),
+            user:decoded._id,
+            restaurant_name:req.body.restaurant,
+            delivery_address:req.body.address,
+            phone:req.body.phone,
+            dishes:req.body.orderItems,
+            card:req.body.card,
+            total_price:req.body.totalprice
+            });
+            newOrder.save(function(err,order) {
+              if(err) 
+                    return res.status(500).send({success: false, msg: "Failed to place order"});
+          	  else{
+                   var cart_id = {_id:decoded._id};
+                   var cb =	function (err, data) {
+                    	 if (err) {
+                        return res.status(500).send({success: false, msg: "Failed to remove items from shopping cart"});
+                    		}
+                    		else if (data.length===0) {
+                        return res.status(500).send({success: false, msg: "Can't find shopping cart"});
+                    		}
+                    		else {
+                        return;
+                    		}
+                    };
+                    var deleteitems=function (callback) {
+                  	  for(var i = 0; i < req.body.orderItems.length; i++){
+                        var update = {total_price:cart.total_price-req.body.totalprice,$pull:{dish:{_id:req.body.orderItems[i].name}}};
+                        var options = {new: true};
+                      	Cart.findOneAndUpdate(cart_id, update, options,cb);
+                  	  }
+                  	  callback();
+                    };
+                  var returnResult =function() {
+                      return res.status(200).send({success: true, msg: "place order successful", data:order});
+                  };
+                   deleteitems(returnResult);
+          	  }
+        });
+      }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
 });
 
- 
 module.exports = router;
