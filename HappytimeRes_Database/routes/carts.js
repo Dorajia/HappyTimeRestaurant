@@ -179,22 +179,19 @@ router.post('/generateOrder', passport.authenticate('jwt', { session: false}), f
             'description':'This is a traditional sichuan food',
             'price':10.00,
             'amount':1,
-            'total':10.00,
-            'checked':false},
+            'total':10.00,},
     {'image':'../images/shopping_cart_pink.png',
         'name':'Wudong Noodle',
         'description':'This is a traditional noodle',
         'price':13.00,
         'amount':1,
-        'total':13.00,
-        'checked':false},
+        'total':13.00,},
     {'image':'../images/shopping_cart_pink.png',
         'name':'Kungpo Chicken',
         'description':'This is a delicious sichuan food',
         'price':15.00,
         'amount':3,
-        'total':45.00,
-        'checked':false}]
+        'total':45.00}]
     */
     console.log(req.body.address);
     /*
