@@ -12,6 +12,7 @@ var Cart = require('../models/cart.js');
 //check dish sold out.
 var Dish = require ('../models/dish.js');
 
+
 //get items in shopping cart
 router.get('/getitems', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
@@ -170,5 +171,49 @@ router.get('/placeorder/:restaurant/:street/:city/:state/:zip/:phone', passport.
   }
 });
 
- 
+//added by xiaotong
+router.post('/generateOrder', passport.authenticate('jwt', { session: false}), function(req , res){
+    console.log(req.body.orderItems);
+    /*req.body.orderItems = [{'image':'../images/shopping_cart_pink.png',
+        'name':'Yu Xiang Rou Si',
+            'description':'This is a traditional sichuan food',
+            'price':10.00,
+            'amount':1,
+            'total':10.00,
+            'checked':false},
+    {'image':'../images/shopping_cart_pink.png',
+        'name':'Wudong Noodle',
+        'description':'This is a traditional noodle',
+        'price':13.00,
+        'amount':1,
+        'total':13.00,
+        'checked':false},
+    {'image':'../images/shopping_cart_pink.png',
+        'name':'Kungpo Chicken',
+        'description':'This is a delicious sichuan food',
+        'price':15.00,
+        'amount':3,
+        'total':45.00,
+        'checked':false}]
+    */
+    console.log(req.body.address);
+    /*
+    * req.body.address = {
+     "address": "Howold street",
+     "state": "CA",
+     "zipcode": 44444,
+     "_id": "5719a7164cf09c803238781a"
+     }
+     * */
+    console.log(req.body.card);
+    /*
+    * req.body.card = {
+    * 'cardType': 'Credit',
+    * 'cardHolder': 'Judy',
+    * 'ExpireDate': 'mm/yy',
+    * 'bankName': 'Discover'
+    * }
+    * */
+});
+
 module.exports = router;
