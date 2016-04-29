@@ -36,7 +36,8 @@
 
     function run($http, $rootScope, $window) {
         // add JWT token as default auth header
-        $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
+        //$http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
+        $http.defaults.headers.common['Authorization'] = $window.jwtToken;
 
         // update active tab on state change
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {

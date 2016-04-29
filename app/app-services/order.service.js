@@ -5,10 +5,13 @@
         .module('app')
         .factory('OrderService', Service);
 
-    function Service($http, $q) {
+    function Service($http, $q, $window) {
+        //$http.defaults.headers.common.Authorization = $window.jwtToken;
+
         var service = {};
 
         service.GetAll = GetAll;
+        service.ConfirmOrder = ConfirmOrder;
         service.GetById = GetById;
         service.GetByUsername = GetByUsername;
         service.Create = Create;
@@ -18,7 +21,14 @@
         return service;
 
         function GetAll() {
-            return $http.get('/api/orders').then(handleSuccess, handleError);
+            //return $http.get('/api/orders').then(handleSuccess, handleError);
+            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/order/getorders').then(handleSuccess, handleError);
+        }
+
+        function ConfirmOrder(order_id) {
+            //$http.defaults.headers.common.Authorization = $window.jwtToken;
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/order/confirm/' + order_id).then(handleSuccess, handleError);
+
         }
 
         function GetById(_id) {

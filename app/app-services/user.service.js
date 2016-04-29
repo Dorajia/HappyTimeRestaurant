@@ -5,8 +5,16 @@
         .module('app')
         .factory('UserService', Service);
 
-    function Service($http, $q) {
+    angular.module('app').config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }
+    ]);
+
+    function Service($http, $q, $window) {
         var service = {};
+
+        //$http.defaults.headers.common.Authorization = $window.jwtToken;
 
         service.GetCurrent = GetCurrent;
         service.GetAll = GetAll;
@@ -19,7 +27,11 @@
         return service;
 
         function GetCurrent() {
-            return $http.get('/api/users/current').then(handleSuccess, handleError);
+            //return $http.get('/api/users/current').then(handleSuccess, handleError);
+            //$http.defaults.headers.common.Authorization = 'Bearer ' + $window.jwtToken;
+
+            //$http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
+            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/userprofile').then(handleSuccess, handleError);
         }
 
         function GetAll() {

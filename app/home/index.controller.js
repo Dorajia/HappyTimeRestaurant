@@ -14,8 +14,11 @@
 
         function initController() {
             // get current user
-            UserService.GetCurrent().then(function (user) {
-                vm.user = user;
+            //UserService.GetCurrent().then(function (user) {
+            //    vm.user = user;
+            //});
+            UserService.GetCurrent().then(function (result) {
+                vm.user = result.data;
             });
         }
     }
