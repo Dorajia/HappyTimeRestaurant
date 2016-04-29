@@ -193,9 +193,9 @@ router.post('/generateOrder', passport.authenticate('jwt', { session: false}), f
         'amount':3,
         'total':45.00}]
     */
-    console.log(req.body.address);
+    console.log(req.body.Address);
     /*
-    * req.body.address = {
+    * req.body.Address = {
      "address": "Howold street",
      "state": "CA",
      "zipcode": 44444,

@@ -72,7 +72,13 @@ app.post('/cart/changenumber/:name/:newprice/:newnumber/:newtotal_price',functio
     console.log(req.params.newnumber);
     console.log(req.params.newtotal_price);
 
-})
+});
+
+app.post('/generateOrder', function(req, res){
+    console.log(req.body.orderItems);
+    console.log(req.body.Address);
+    console.log(req.body.card);
+});
 console.log( "Server running on Port 8080..." ) ;
 
 app.listen(8080);
