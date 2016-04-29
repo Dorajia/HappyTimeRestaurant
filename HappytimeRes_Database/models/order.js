@@ -7,14 +7,9 @@ var OrderSchema = new Schema({
     order_time: { type: Date, required: true, default: Date.now },
     confirm_time: { type: Date, default:null},
     restaurant_name: String,
-    delivery_address:
-    {
-        street:String,
-        city:String,
-        state:String,
-        zip:Number
-    },
+    delivery_address:[],
     dishes: [],
+    card:[],
     total_price: Number
     });
 
