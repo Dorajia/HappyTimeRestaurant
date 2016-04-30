@@ -167,3 +167,5 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
     };
 }]);
 
+
+
