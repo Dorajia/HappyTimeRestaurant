@@ -1,26 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="GradleLocalSettings">
-    <option name="modificationStamps">
-      <map>
-        <entry key="$USER_HOME$/git/gs-accessing-mongodb-data-rest/complete" value="1457139869000" />
-        <entry key="$USER_HOME$/git/gs-accessing-mongodb-data-rest/initial" value="1457139869000" />
-        <entry key="$USER_HOME$/git/gs-rest-service2/initial" value="1455943629000" />
-        <entry key="$USER_HOME$/git/iot" value="1457156943000" />
-        <entry key="$USER_HOME$/git/iot-assignment2" value="1457376312000" />
-        <entry key="$USER_HOME$/git/nosql" value="1458755411000" />
-        <entry key="$USER_HOME$/git/refrig-chenglong" value="5798172864000" />
-        <entry key="$USER_HOME$/git/refrig-chenglong/bsserver" value="5798172864000" />
-        <entry key="$USER_HOME$/git/userProfile" value="1458844291000" />
-        <entry key="$USER_HOME$/git/userProfile 2" value="1459707738000" />
-        <entry key="$USER_HOME$/git/userProfile-2.0" value="1459707738000" />
-        <entry key="$USER_HOME$/workspace/userProfile" value="1458844291000" />
-      </map>
-    </option>
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
-  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>

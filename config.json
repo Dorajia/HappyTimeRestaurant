@@ -1,5 +1,6 @@
 ﻿{
     "connectionString": "localhost:27017/mean-stack-registration-login-example",
     "apiUrl":  "http://localhost:3000/api",
-    "secret": "REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING"
+    "awsApiUrl": "http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com",
+    "secret": "devdacticIsAwesome"
 }
