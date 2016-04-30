@@ -21,6 +21,7 @@
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
 
     <script type = text/javascript src = "../controller/payment_controller.js"></script>
+    <!--<script type = text/javascript src = "../controller/shopping_cart_controller.js"></script>-->
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <title>Payment</title>
@@ -43,7 +44,8 @@
     <!-- Custom styles for this template -->
     <link href="../css/carousel.css" rel="stylesheet">
 </head>
-<body ng-controller = 'payment_controller as pc'>
+<body ng-controller = 'payment_controller as pc' ng-init = 'getSelectedItems()'>
+{{variable1}}
 <div class="navbar-wrapper">
     <div class="container">
 
@@ -56,7 +58,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Happy Time Restaurant</a>
+                    <a class="navbar-brand" href="#">Happy Time Restaurant {{variable1}}</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -106,70 +108,78 @@
 
 <div class = payment-content>
     <!--<div class="progress" ng-hide = "complete">-->
-        <!--<div  class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{{progressStyle}}">-->
-        <!--{{progress}}-->
-        <!--</div>-->
+    <!--<div  class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{{progressStyle}}">-->
+    <!--{{progress}}-->
+    <!--</div>-->
     <!--</div>-->
     <div class="panel panel-default" ng-show = "pageCtrl == 0">
         <div class="panel-heading">
+            <span class = 'pull-right' ng-click = "addNewAddress = true"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp Use New Address</span>
             <h3 class="panel-title">Select a Shipping Address</h3>
+
+
+            <!--glyphicon glyphicon-plus-->
         </div>
         <div class="panel-body">
-            <br>Judy Hops
-            <br>34 Union Sq Apt 666
-            <br>Union City, California 94169
-            <br>United States
-            <br>Phone: 4081234567
-            <br>
-            <br><button type="button" class="btn btn-default" ng-click = "pageCtrl = pageCtrl + 1">Ship to this Address</button>
-            <button type="button" class="btn btn-default">Edit</button>
-            <br>
+            <span ng-hide = 'addNewAddress'>
+            <ul class="list-group" >
+                <li class="list-group-item" ng-repeat = 'address in pc.addresses track by $index'>
+                    <span class = 'pull-right'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+                    <input type="radio" name = 'anything' ng-model="anynum" ng-value = '$index' ng-change = 'debug()'>
+                    &nbsp {{address.receiver}}
+                    &nbsp {{address.address}}
+                    &nbsp {{address.state}}
+                    &nbsp {{address.zipcode}}
+                    &nbsp {{address.phone}}
+                </li>
+            </ul>
+                <br><button type="button" class="btn btn-default" ng-click = "pageCtrl = pageCtrl + 1">Ship to this Address</button>
 
-            <br>
-            <br>
-            <div class = address-editor>
-                <button type="button" class="btn btn-default" ng-click = "addNewAddress = true">Add a new address</button>
+            </span>
+
+            <div>
+                <!--<button type="button" class="btn btn-default" ng-click = "addNewAddress = true">Add a new address</button>-->
 
                 <form ng-show = "addNewAddress">
                     <h4>Add a new address</h4>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Full Name</span>
-                <input type="text" class="form-control"  aria-describedby="basic-addon1">
-            </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon2">Address line 1</span>
-                    <input type="text" class="form-control" placeholder="Street address, P.O.box, company name, c/o " aria-describedby="basic-addon1">
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon3">Address line 2</span>
-                    <input type="text" class="form-control" placeholder="Appartement, suite, unit, buliding, floor, etc" aria-describedby="basic-addon1">
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon4">City</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon5">State/Province/Region</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon7">ZIP</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon6">Phone-Number</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1">
-                </div>
-                <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1" >Full Name</span>
+                        <input type="text" ng-model = 'newAddress.receiver' class="form-control"  aria-describedby="basic-addon1" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon2">Address line 1</span>
+                        <input type="text" ng-model = 'newAddress.address1' class="form-control" placeholder="Street address, P.O.box, company name, c/o " aria-describedby="basic-addon1" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">Address line 2</span>
+                        <input type="text" ng-model = 'newAddress.address2' class="form-control" placeholder="Appartement, suite, unit, buliding, floor, etc" aria-describedby="basic-addon1">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon4">City</span>
+                        <input type="text" ng-model = 'newAddress.city' class="form-control" aria-describedby="basic-addon1" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon5">State/Province/Region</span>
+                        <input type="text" ng-model = 'newAddress.state'  class="form-control" aria-describedby="basic-addon1" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon7">ZIP</span>
+                        <input type="text" ng-model = 'newAddress.zip' class="form-control" aria-describedby="basic-addon1" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon6">Phone-Number</span>
+                        <input type="text" ng-model = 'newAddress.phone' class="form-control" aria-describedby="basic-addon1" required>
+                    </div>
+                    <br>
 
-                <button type="button" class="btn btn-default" >Ship to this Address</button>
-                    <button type="button" class="btn btn-default" ng-click = "">Cancel</button>
+                    <button type="button" class="btn btn-default" ng-click = 'addAddress()' >Ship to this Address</button>
+                    <button type="button" class="btn btn-default" ng-click = "cancelAddNewAddress()">Cancel</button>
                 </form>
             </div>
         </div>
@@ -177,7 +187,7 @@
     <br>
     <br>
 
-    <div class="panel panel-default" ng-show = "pageCtrl == 1">
+    <div class="panel panel-default" ng-show = "pageCtrl == 2">
         <div class="panel-heading">
             <h3 class="panel-title">Select a Payment Method</h3>
         </div>
@@ -206,24 +216,24 @@
             <button type="button" class="btn btn-default" ng-click = "addCart = true" >Add a new Card</button>
             <br>
             <form ng-show = "addCart" >
-            <table class="table" >
-                <thead>
-                <tr>
-                    <th>Name on card</th>
-                    <th>Card Number</th>
-                    <th>Expiration date</th>
-                </tr>
-                </thead>
-                <tbody>
+                <table class="table" >
+                    <thead>
+                    <tr>
+                        <th>Name on card</th>
+                        <th>Card Number</th>
+                        <th>Expiration date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-                <tr>
+                    <tr>
 
-                    <td><input type="text"  style = "width: 300px" aria-describedby="basic-addon1"></td>
-                    <td><input type="text"  style = "width: 300px" aria-describedby="basic-addon1"></td>
-                    <td><input type="text"  style = "width: 300px" placeholder="mm/yyyy" aria-describedby="basic-addon1"></td>
-                </tr>
-                </tbody>
-            </table>
+                        <td><input type="text"  style = "width: 300px" aria-describedby="basic-addon1"></td>
+                        <td><input type="text"  style = "width: 300px" aria-describedby="basic-addon1"></td>
+                        <td><input type="text"  style = "width: 300px" placeholder="mm/yyyy" aria-describedby="basic-addon1"></td>
+                    </tr>
+                    </tbody>
+                </table>
             <span class = "pull-right">
                 <button type="button" class="btn btn-default">Cancel</button>
                  &nbsp
@@ -234,7 +244,7 @@
     </div>
 
 
-    <div class="panel panel-default" ng-show = "pageCtrl == 2">
+    <div class="panel panel-default" ng-show = "pageCtrl == 1">
         <div class="panel-heading">
             <h3 class="panel-title">Verify Your Order</h3>
         </div>
@@ -312,8 +322,8 @@
 <!--<hr class="featurette-divider">-->
 <!-- FOOTER -->
 <!--<footer >-->
-    <!--<p style = "position: absolute; bottom: 30px; left: 30px">&copy; CMPE281 Group 6 Team Project. &middot;<a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>-->
-    <!--<p style = "position: absolute; bottom: 30px; right: 70px"><a href="#">Back to top</a></p>-->
+<!--<p style = "position: absolute; bottom: 30px; left: 30px">&copy; CMPE281 Group 6 Team Project. &middot;<a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>-->
+<!--<p style = "position: absolute; bottom: 30px; right: 70px"><a href="#">Back to top</a></p>-->
 <!--</footer>-->
 <!-- /.container -->
 
