@@ -150,5 +150,20 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
         });
     }
 
+    $scope.checkOut = function(){
+        //console.log(parent.items.length)
+        for(i = 0; i < parent.items.length; i ++){
+            //console.log(parent.items[i].checked);
+            if(parent.items[i].checked){
+                selectedItems.push(parent.items[i]);
+            }
+        }
+        //console.log(selectedItems.length);
+        $http.post('/cart/checkout', selectedItems).success(function(data){
+            console.log('check out success');
+        }).error(function(err){
+            console.log('Err: ' + err);
+        })
+    };
 }]);
 
