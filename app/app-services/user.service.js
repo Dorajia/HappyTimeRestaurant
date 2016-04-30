@@ -17,6 +17,7 @@
         //$http.defaults.headers.common.Authorization = $window.jwtToken;
 
         service.GetCurrent = GetCurrent;
+        service.UpdatePwd = UpdatePwd;
         service.GetAll = GetAll;
         service.GetById = GetById;
         service.GetByUsername = GetByUsername;
@@ -26,12 +27,20 @@
 
         return service;
 
+        function UpdatePwd(old_password, new_password) {
+            return $http.post(
+                'http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/updatepassword/'
+                + old_password + '/' + new_password)
+                .then(handleSuccess, handleError);
+        }
+
         function GetCurrent() {
             //return $http.get('/api/users/current').then(handleSuccess, handleError);
             //$http.defaults.headers.common.Authorization = 'Bearer ' + $window.jwtToken;
 
             //$http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
-            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/userprofile').then(handleSuccess, handleError);
+            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/userprofile')
+                .then(handleSuccess, handleError);
         }
 
         function GetAll() {
