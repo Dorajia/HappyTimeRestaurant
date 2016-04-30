@@ -3,7 +3,7 @@
  */
 var app = angular.module('payment',[]);
 //var hostname = 'http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
-var hostname = 'http://localhost:8080';
+var hostname = 'http://localhost:3000';
 app.controller('payment_controller',['$scope','$http',function($scope, $http){
     this.orders = [{'name':'Yu Xiang Rou Si',
         'amount': 2,
@@ -12,6 +12,7 @@ app.controller('payment_controller',['$scope','$http',function($scope, $http){
             'amount':4,
             'price':9}];
     var parent = this;
+    $scope.anynum = 0;
     this.addresses = [];
     $scope.complete = false;
     $scope.progressStyle = "{width:'33%'}";
@@ -19,9 +20,17 @@ app.controller('payment_controller',['$scope','$http',function($scope, $http){
     $scope.pageCtrl = 0;
     $scope.addNewAddress = false;
     $scope.previousClass = "previous disabled";
-    this.shipAddress = '';
+    this.shipAddress = this.addresses[0];
     this.shipCard = '';
-
+    $scope.newAddress = {
+        'receiver':'',
+        'address1':'',
+        'address2':'',
+        'city':'',
+        'state':'',
+        'zip':'',
+        'phone':'',
+    };
     $scope.continue = function(){
         if($scope.pageCtrl < 3){
             $scope.pageCtrl += 1;
@@ -75,6 +84,8 @@ app.controller('payment_controller',['$scope','$http',function($scope, $http){
             .success(function(data){
                 console.log(data);
                 parent.addresses = data.delivery_address;
+                parent.shipAddress = parent.addresses[0];
+                console.log(parent.shipAddress)
                 //$scope.badgeNum = this.items.length;
             }).error(function(err){
             console.log('Err: ' + err);
@@ -93,10 +104,23 @@ app.controller('payment_controller',['$scope','$http',function($scope, $http){
         tmp.state =  $scope.newAddress.state;
         tmp.zipcode = $scope.newAddress.zip;
         tmp.phone = $scope.newAddress.phone;
-        $scope.anynum = 1;
         parent.addresses.push(tmp);
+        parent.shipAddress = tmp;
+        $scope.anynum = parent.addresses.length - 1;
         $scope.addNewAddress = false;
-        $scope.newAddress = {};
+        $scope.newAddress = {
+            'receiver':'',
+            'address1':'',
+            'address2':'',
+            'city':'',
+            'state':'',
+            'zip':'',
+            'phone':'',
+        };
+    };
+
+    $scope.changeShippingAddress = function(){
+        parent.shipAddress = parent.addresses[$scope.anynum];
     };
 
 }]);

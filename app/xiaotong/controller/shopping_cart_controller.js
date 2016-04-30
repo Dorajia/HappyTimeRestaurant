@@ -163,7 +163,9 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
             console.log('check out success');
         }).error(function(err){
             console.log('Err: ' + err);
-        })
+        });
+
+        $window.location.href = '/cart/checkout';
     };
 }]);
 

@@ -109,6 +109,7 @@ app.post('/cart/checkout', function(req,  res){
     console.log(selectedItems.length)
     //console.log(req.body);
     //console.log(req.params);
+    //res.redirect('/cart/checkout');
 });
 
 app.get('/cart/checkout', function(req,  res){
@@ -128,6 +129,7 @@ app.get('/user/getaddress' , function(req , res){
                 "zipcode": 44444,
                 "receiver":"Judy Hops",
                 "phone":"(408)1234567",
+                "default": true,
                 "_id": "5719a7164cf09c803238781a"
             },
             {
@@ -135,6 +137,7 @@ app.get('/user/getaddress' , function(req , res){
                 "state": "CA",
                 "zipcode": 123456,
                 "receiver":"Nick White",
+                "default": false,
                 "phone":"(408)1234569",
                 "_id": "5719a7164cf09c803238781b"
             }

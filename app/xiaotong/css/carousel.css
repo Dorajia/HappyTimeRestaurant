@@ -264,3 +264,6 @@ div.back-up{
   vertical-align: middle;
   width: 80px;
 }
+.red {
+  border: solid 1px red;
+}

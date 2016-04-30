@@ -125,7 +125,7 @@
             <ul class="list-group" >
                 <li class="list-group-item" ng-repeat = 'address in pc.addresses track by $index'>
                     <span class = 'pull-right'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
-                    <input type="radio" name = 'anything' ng-model="anynum" ng-value = '$index' ng-change = 'debug()'>
+                    <input type="radio" name = 'anything' ng-model="anynum" ng-value = '$index' ng-change = 'changeShippingAddress()'>
                     &nbsp {{address.receiver}}
                     &nbsp {{address.address}}
                     &nbsp {{address.state}}
@@ -140,11 +140,15 @@
             <div>
                 <!--<button type="button" class="btn btn-default" ng-click = "addNewAddress = true">Add a new address</button>-->
 
-                <form ng-show = "addNewAddress">
+                <form data-toggle="validator" role="form" ng-show = "addNewAddress" novalidate>
                     <h4>Add a new address</h4>
+                    <!--<input  type="text"  class="form-control"  ng-model = 'newAddress.receiver' ng-required = '!newAddress.receiver.length'  aria-describedby="basic-addon1" required>-->
+                    <!--<div class="form-group">-->
+                        <!--<button type="submit" class="btn btn-primary">Submit</button>-->
+                    <!--</div>-->
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1" >Full Name</span>
-                        <input type="text" ng-model = 'newAddress.receiver' class="form-control"  aria-describedby="basic-addon1" required>
+                        <input  type="text"  ng-model = 'newAddress.receiver' class="form-control"  aria-describedby="basic-addon1" required>
                     </div>
                     <br>
                     <div class="input-group">
@@ -177,15 +181,41 @@
                         <input type="text" ng-model = 'newAddress.phone' class="form-control" aria-describedby="basic-addon1" required>
                     </div>
                     <br>
-
-                    <button type="button" class="btn btn-default" ng-click = 'addAddress()' >Ship to this Address</button>
+                    <div class="form-group">
+                    <button type = 'submit'  class="btn btn-default" ng-click = 'addAddress()' >Ship to this Address</button>
                     <button type="button" class="btn btn-default" ng-click = "cancelAddNewAddress()">Cancel</button>
+                        </div>
                 </form>
+                <!--<form data-toggle="validator" role="form">-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="inputName" class="control-label">Name</label>-->
+                        <!--<input type="text" class="form-control" id="inputName" placeholder="Cina Saffary" required>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<button type="submit" class="btn btn-primary">Submit</button>-->
+                    <!--</div>-->
+                <!--</form>-->
             </div>
         </div>
     </div>
     <br>
     <br>
+    <!--<form data-toggle="validator" role="form">-->
+        <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+            <!--&lt;!&ndash;<label for="inputName" class="control-label">Name</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="text" class="form-control" placeholder="Cina Saffary" required>&ndash;&gt;-->
+        <!--<input  type="text"  class="form-control"  ng-model = 'newAddress.receiver' ng-required = '!newAddress.receiver.length'  aria-describedby="basic-addon1" required>-->
+
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+            <!--&lt;!&ndash;<button type="submit" class="btn btn-primary">Submit</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<div class="form-group">-->
+            <!--<button  type = 'submit'  class="btn btn-default"  >Ship to this Address</button>-->
+            <!--<button type="button" class="btn btn-default" >Cancel</button>-->
+        <!--</div>-->
+    <!--</form>-->
+
 
     <div class="panel panel-default" ng-show = "pageCtrl == 2">
         <div class="panel-heading">
@@ -258,27 +288,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Yu Xiang Rou Si</td>
-                    <td>1</td>
-                    <td>$ 10.00</td>
+                <tr ng-repeat = 'order in pc.orders'>
+                    <td>{{order.name}}</td>
+                    <td>{{order.amount}}</td>
+                    <td>$ {{order.price * order.amount}}</td>
                 </tr>
                 </tbody>
             </table>
             <br>
             <h5>Ship To:</h5>
-            <br>Judy Hops
-            <br>34 Union Sq Apt 666
-            <br>Union City, California 94169
+            <br>{{pc.shipAddress.receiver}}
+            <br>{{pc.shipAddress.address}}
+            <br>{{pc.shipAddress.state}} &nbsp {{pc.shipAddress.zipcode}}
             <br>United States
-            <br>Phone: 4081234567
+            <br>Phone: {{pc.shipAddress.phone}}
 
 
-            <span class = "pull-right">
-            <button type="button" class="btn btn-default">Cancel</button>
-            &nbsp
-            <button type="button" class="btn btn-default">Finish</button>
-                </span>
+            <!--<span class = "pull-right">-->
+            <!--&lt;!&ndash;<button type="button" class="btn btn-default">Cancel</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;&nbsp&ndash;&gt;-->
+            <!--&lt;!&ndash;<button type="button" class="btn btn-default">Finish</button>&ndash;&gt;-->
+                <!--</span>-->
         </div>
     </div>
 
