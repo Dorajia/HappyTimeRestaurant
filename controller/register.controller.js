@@ -37,7 +37,7 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res) {
     // register using api to maintain clean separation between layers
     request.post({
-        url: config.awsApiUrl + '/user/signup/' + req.body.username + '/' + req.body.password + '/' + req.body.phonenum + '/' + req.body.email + '/',
+        url: config.awsApiUrl + '/user/signup/' + req.body.username + '/' + req.body.password + '/' + req.body.email + '/' + req.body.phonenum + '/',
         form: req.body,
         json: true
     }, function (error, response, body) {
