@@ -29,6 +29,12 @@ app.get('/', function (req, res) {
 
 
 //Xiaotong Part Start : 04/28/2016
+var fs = require('fs');
+app.use("/css",  express.static(__dirname + '/app/xiaotong/css'));
+app.use("/js", express.static(__dirname + '/app/xiaotong/js'));
+app.use("/images",  express.static(__dirname + '/app/xiaotong/images'));
+app.use("/controller",  express.static(__dirname + '/app/xiaotong/controller'));
+
 var items = [{'image':'../images/shopping_cart_pink.png',
     'name':'Yu Xiang Rou Si',
     'description':'This is a traditional sichuan food',
@@ -63,7 +69,7 @@ var items = [{'image':'../images/shopping_cart_pink.png',
 var selectedItems = []
 var handle_get = function (req, res) {
     console.log( "Get: ..." ) ;
-    body = fs.readFileSync(__dirname + '/view/ShoppingCart.html');
+    body = fs.readFileSync(__dirname + '/app/xiaotong/view/ShoppingCart.html');
     res.setHeader('Content-Type', 'text/html');
     res.writeHead(200);
     res.end(body);
@@ -106,7 +112,7 @@ app.post('/cart/checkout', function(req,  res){
 });
 
 app.get('/cart/checkout', function(req,  res){
-    body = fs.readFileSync(__dirname + '/view/Payment.html');
+    body = fs.readFileSync(__dirname + '/app/xiaotong/view/Payment.html');
     res.setHeader('Content-Type', 'text/html');
     res.writeHead(200);
     res.end(body);
