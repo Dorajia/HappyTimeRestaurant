@@ -104,6 +104,7 @@ router.post('/updatepassword/:oldpassword/:newpassword', passport.authenticate('
   }
 });
 
+//get user profile
 
 router.get('/userprofile', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
@@ -126,7 +127,7 @@ router.get('/userprofile', passport.authenticate('jwt', { session: false}), func
   }
 });
 
-
+//add a phone number
 router.post('/addphone/:phone', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
@@ -192,7 +193,7 @@ router.post('/removephone/:phone', passport.authenticate('jwt', { session: false
 
 
 //add one delivery address
-router.post('/addaddress/:state/:zipcode/:address', passport.authenticate('jwt', { session: false}), function(req, res) {
+router.post('/addaddress', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
@@ -203,12 +204,12 @@ router.post('/addaddress/:state/:zipcode/:address', passport.authenticate('jwt',
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
           	var name = {_id: decoded._id};
-          	var update = {$push:{delivery_address:{zipcode:req.params.zipcode, state:req.params.state,address:req.params.address}}};
+          	var update = {$push:{delivery_address:{zipcode:req.body.zipcode, state:req.body.state,address:req.body.address,receiver:req.body.receiver,phone:req.body.phone,isdefault:req.body.isdefault}}};
           	var options = {new: true};
           
           	User.findOneAndUpdate(name, update, options, function(err, data){
           		if (err) {
-                return res.status(403).send({success: false, msg: 'Failed to add address'});
+                return res.status(403).send({success: false, msg: "Failed to add address"});
           		}
           		else {
 
@@ -229,11 +230,17 @@ router.get('/getaddress', passport.authenticate('jwt', { session: false}), funct
     var decoded = jwt.decode(token, config.secret);
     User.findOne({_id: decoded._id},function(err, user) {
         if (err)
-          return res.send({success: false, msg: err});
+          return res.send({success: false, msg: "failed to get address"});
         if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
-          return res.status(200).send({sucess:true, delivery_address:user.delivery_address});
+                    return res.status(200).send({sucess:true, delivery_address:user.delivery_address});
+/*                    if (user.delivery_address != null) {
+                			return res.status(200).send({sucess:true, delivery_address:user.delivery_address});
+                    }
+                    else {
+                    return res.statues(400).send({sucess:false, msg:"Please add delivery address"});
+                    }*/
           }
     });
   } else {
@@ -242,7 +249,7 @@ router.get('/getaddress', passport.authenticate('jwt', { session: false}), funct
 });
 
 //Remove one delivery address
-router.post('/removeaddress/:address', passport.authenticate('jwt', { session: false}), function(req, res) {
+router.post('/removeaddress/:id', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
@@ -253,7 +260,7 @@ router.post('/removeaddress/:address', passport.authenticate('jwt', { session: f
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
           	var name = {_id: decoded._id};
-          	var update = {$pull:{delivery_address:{address:req.params.address}}};
+          	var update = {$pull:{delivery_address:{_id:req.params.id}}};
           	var options = {new: true};
           
           	User.findOneAndUpdate(name, update, options, function(err, data){
@@ -271,4 +278,44 @@ router.post('/removeaddress/:address', passport.authenticate('jwt', { session: f
   }
 });
  
+ 
+//edit one delivery address
+router.post('/editaddress/:id', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({_id: decoded._id},function(err, user) {
+        if (err)
+          return res.send({success: false, msg: err});
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          	var name = {_id: decoded._id,'delivery_address._id':req.params.id};
+          	var update = {$set:{'delivery_address.$.zipcode':req.body.zipcode, 'delivery_address.$.state':req.body.state,'delivery_address.$.address':req.body.address,'delivery_address.$.receiver':req.body.receiver,'delivery_address.$.phone':req.body.phone,'delivery_address.$.isdefault':req.body.isdefault}};
+          	var options = {new: true};
+          
+          	User.findOneAndUpdate(name, update, options, function(err, data){
+          		if (err) {
+                return res.status(403).send({success: false, msg: 'Failed to edit address'});
+          		}
+          		else {
+
+//                    if (data.delivery_address != null) {
+                			return res.status(200).send({sucess:true, delivery_address:data.delivery_address});
+//                    }//
+//                    else {
+//                    return res.statues(400).send({sucess:false, msg:"Fialed to edit address"});
+//                    }
+  
+          		}
+          	});
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
+
+
+
 module.exports = router;
