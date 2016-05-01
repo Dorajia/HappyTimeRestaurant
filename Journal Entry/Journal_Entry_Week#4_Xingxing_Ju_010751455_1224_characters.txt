@@ -1,0 +1,21 @@
+Group #6 Team Project 
+Week #4 Journal
+
+Name: Xingxing Ju
+SID: 010751455
+
+1. The work I did last week:
+- Meet twice with team members to push the progress of the project.
+- Finish the development of User-related modules frontend/backend; fix the issue of Register/User Password Reset; add the image display for orders; improve the UI design and page layout, add copyright information, etc.
+- Code Merge with Backend: start calling real working backend API as data service. Found issues of backend APIs for Address Management and Order History; discuss the API issues and provide improvement solution. 
+- Code Merge with Frontend: finish the merge with Place Order/Payment module.
+- Finish the test plan and carry out the testing of User-related modules.
+
+2. The problems I encountered:
+- We encountered some issues of github submission with regarding to the IntelliJ Idea related configuration files inconsistency. This stopped our team members from submitting code regularly for some time. Found the solution and the issue has been fixed already.
+
+3. The work I plan to do next week:
+- Code Merge: Finish the merge with Menu Display module.
+- Testing: Carry out complete testing after code merge.
+- Deployment: Deploy the whole web service onto Heroku.
+- Demo: Prepare the project demo and slides.
