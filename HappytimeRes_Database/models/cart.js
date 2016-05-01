@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Order = require('./order')
+var Order = require('./order');
 var shortid = require('shortid');
 
 var OrderDishSchema = new mongoose.Schema(
