@@ -19,8 +19,12 @@ app.controller('payment_controller',['$scope','$http',function($scope, $http){
     $scope.progress = 33;
     $scope.pageCtrl = 0;
     $scope.addNewAddress = false;
+    $scope.addCard = false;
     $scope.previousClass = "previous disabled";
+    $scope.cardChoice = 0;
+    this.cards =[];
     this.shipAddress = this.addresses[0];
+    this.payCard = this.cards[0];
     this.shipCard = '';
     $scope.newAddress = {
         'receiver':'',
@@ -31,6 +35,7 @@ app.controller('payment_controller',['$scope','$http',function($scope, $http){
         'zip':'',
         'phone':'',
     };
+    $scope.finalPrice = 0;
     $scope.continue = function(){
         if($scope.pageCtrl < 3){
             $scope.pageCtrl += 1;
@@ -75,6 +80,9 @@ app.controller('payment_controller',['$scope','$http',function($scope, $http){
                 parent.orders = data;
                 //$scope.badgeNum = this.items.length;
                 console.log(parent.orders);
+                for(i = 0 ; i < parent.orders.length ; i ++){
+                    $scope.finalPrice += parent.orders[i].amount * parent.orders[i].price;
+                }
 
             }).error(function(err){
             console.log('Err: ' + err);
@@ -90,6 +98,19 @@ app.controller('payment_controller',['$scope','$http',function($scope, $http){
             }).error(function(err){
             console.log('Err: ' + err);
         });
+
+        $http.get(hostname + '/paycard/' + 'Dora')
+            .success(function(data){
+                console.log(data);
+                parent.cards= data;
+                console.log((parent.cards[0].card_number + '').substring(-4));
+                //parent.shipAddress = parent.addresses[0];
+                //console.log(parent.shipAddress)
+                //$scope.badgeNum = this.items.length;
+            }).error(function(err){
+            console.log('Err: ' + err);
+        });
+
     };
 
     $scope.cancelAddNewAddress = function(){
@@ -119,8 +140,54 @@ app.controller('payment_controller',['$scope','$http',function($scope, $http){
         };
     };
 
-    $scope.changeShippingAddress = function(){
-        parent.shipAddress = parent.addresses[$scope.anynum];
+    $scope.changeShippingAddress = function(index){
+        console.log(index);
+        parent.shipAddress = parent.addresses[index];
+        console.log(parent.shipAddress)
     };
 
+    $scope.addNewCard = function(){
+        var tmp = {};
+        tmp.card_holder = $scope.newCard.card_holder;
+        tmp.card_number = $scope.newCard.card_number;
+        tmp.card_type = $scope.newCard.card_type;
+        tmp.expire_date = $scope.newCard.expire_date;
+        tmp.bank_name = $scope.newCard.bank_name;
+        parent.cards.push(tmp);
+        $scope.cardChoice = parent.cards.length - 1;
+        $scope.addCard = false;
+        $scope.newCard = {};
+    }
+
+    $scope.cancelAddCard = function(){
+        $scope.addCard = false;
+        $scope.newCard = {};
+    }
+
+    $scope.deleteCard = function(index){
+        parent.cards.splice(index , 1);
+    }
+
+    $scope.generateOrder = function(){
+        var data = {
+            'address': parent.shipAddress,
+            'card': parent.payCard,
+            'orderItems': parent.orders,
+            'totalprice': $scope.finalPrice
+        }
+        $http.post(hostname + '/cart/placeorder', data)
+            .success(function(data){
+                console.log(data);
+                parent.addresses = data.delivery_address;
+                parent.shipAddress = parent.addresses[0];
+                console.log(parent.shipAddress)
+                //$scope.badgeNum = this.items.length;
+            }).error(function(err){
+            console.log('Err: ' + err);
+        });
+    }
+    $scope.changePayCard= function(index){
+        parent.payCard = parent.cards[index];
+        console.log(index);
+    };
 }]);

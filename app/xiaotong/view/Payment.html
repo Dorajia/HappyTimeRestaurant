@@ -125,7 +125,7 @@
             <ul class="list-group" >
                 <li class="list-group-item" ng-repeat = 'address in pc.addresses track by $index'>
                     <span class = 'pull-right'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
-                    <input type="radio" name = 'anything' ng-model="anynum" ng-value = '$index' ng-change = 'changeShippingAddress()'>
+                    <input type="radio" name = 'anything' ng-model="anynum" value = '$index' ng-value = '$index' ng-click = 'changeShippingAddress($index)'>
                     &nbsp {{address.receiver}}
                     &nbsp {{address.address}}
                     &nbsp {{address.state}}
@@ -219,55 +219,64 @@
 
     <div class="panel panel-default" ng-show = "pageCtrl == 2">
         <div class="panel-heading">
+            <span class = 'pull-right' ng-click = "addCard = true"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbspNew Card</span>
             <h3 class="panel-title">Select a Payment Method</h3>
         </div>
         <div class="panel-body">
             <br>
-            <h4>Current Total is $ 10.00</h4>
+            <h4>Current Total is $ {{finalPrice}}</h4>
             <br>
-            <table class="table table-bordered">
+            <table class="table table-hover">
                 <thead>
                 <tr>
-
-                    <th>Your credit and debit cards</th>
+                    <th></th>
+                    <th>Your Card</th>
+                    <th>Type</th>
                     <th>Name on card</th>
                     <th>Expires on</th>
+                    <th>Operation</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td><input type="radio" aria-label="...">&nbsp &nbsp<b>Discover</b> ending in 1234</td>
-                    <td>Judy Hops</td>
-                    <td>judy.hops@sjsu.edu</td>
+                <tr ng-repeat = 'card in pc.cards track by $index'>
+                    <td><input type="radio" name = 'cardChoice' ng-model = 'cardChoice' ng-value = '$index'  aria-label="..." ng-click = 'changePayCard($index)'></td>
+                    <td><b>{{card.bank_name}}</b> ending in&nbsp {{card.card_number % 10000}}</td>
+                    <td>{{card.card_type}}</td>
+                    <td>{{card.card_holder}}</td>
+                    <td>{{card.expire_date}}</td>
+                    <td><span class="glyphicon glyphicon-trash" ng-click = 'deleteCard($index) ' aria-hidden="false"></span></td>
                 </tr>
                 </tbody>
             </table>
             <br>
-            <button type="button" class="btn btn-default" ng-click = "addCart = true" >Add a new Card</button>
+            <!--<button type="button" class="btn btn-default" ng-click = "addCart = true" >Add a new Card</button>-->
             <br>
-            <form ng-show = "addCart" >
+            <form ng-show = "addCard" >
                 <table class="table" >
                     <thead>
                     <tr>
                         <th>Name on card</th>
+                        <th>Bank Name</th>
                         <th>Card Number</th>
+                        <th>Card Type</th>
                         <th>Expiration date</th>
                     </tr>
                     </thead>
                     <tbody>
 
                     <tr>
-
-                        <td><input type="text"  style = "width: 300px" aria-describedby="basic-addon1"></td>
-                        <td><input type="text"  style = "width: 300px" aria-describedby="basic-addon1"></td>
-                        <td><input type="text"  style = "width: 300px" placeholder="mm/yyyy" aria-describedby="basic-addon1"></td>
+                        <td><input type="text"  ng-model = 'newCard.card_holder' style = "width: 150px" aria-describedby="basic-addon1"></td>
+                        <td><input type="text"  ng-model = 'newCard.bank_name' style = "width: 150px" aria-describedby="basic-addon1"></td>
+                        <td><input type="text"  ng-model = 'newCard.card_number' style = "width: 150px" aria-describedby="basic-addon1"></td>
+                        <td><input type="text"  ng-model = 'newCard.card_type' style = "width: 150px" aria-describedby="basic-addon1"></td>
+                        <td><input type="text"  ng-model = 'newCard.expire_date' style = "width: 150px" placeholder="mm/yyyy" aria-describedby="basic-addon1"></td>
                     </tr>
                     </tbody>
                 </table>
             <span class = "pull-right">
-                <button type="button" class="btn btn-default">Cancel</button>
+                <button type="button" class="btn btn-default" ng-click = 'cancelAddCard()'>Cancel</button>
                  &nbsp
-            <button type="button" class="btn btn-default">Add Your Card</button>
+            <button type="button" class="btn btn-default" ng-click = 'addNewCard()'>Add Your Card</button>
             </span>
             </form>
         </div>

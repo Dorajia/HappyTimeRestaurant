@@ -119,6 +119,31 @@ app.get('/cart/checkout', function(req,  res){
     res.end(body);
 });
 
+app.get('/paycard/:userName', function(req, res){
+    var data = [
+        {
+            "_id": "572396f606484fcb75d90fa4",
+            "user_name": "Dora",
+            "card_type": "Debit",
+            "card_holder": "YuanYuan Jia",
+            "card_number": 329883942322,
+            "expire_date": "09/2019",
+            "bank_name": "Citi"
+        },
+        {
+            "_id": "572396fd06484fcb75d90fa5",
+            "user_name": "Dora",
+            "card_type": "credit",
+            "card_holder": "YuanYuan Jia",
+            "card_number": 365678654492,
+            "expire_date": "01/2020",
+            "bank_name": "BOA"
+        }
+    ]
+
+    res.json(data);
+
+});
 app.get('/user/getaddress' , function(req , res){
     var data = {
         "sucess": true,
