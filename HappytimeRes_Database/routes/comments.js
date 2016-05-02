@@ -12,7 +12,7 @@ var User = require('../models/user');
 var Comment = require('../models/comment.js');
 
 /*Add one comment*/
-router.post('/addcomments/:dish/:score/:description', passport.authenticate('jwt', { session: false}), function(req, res, next) {
+router.post('/addcomments/:order_id/:dish/:score/:description', passport.authenticate('jwt', { session: false}), function(req, res, next) {
   var token = gettoken(req.headers);
 	  if (token) {
 	    var decoded = jwt.decode(token, config.secret);
@@ -23,6 +23,7 @@ router.post('/addcomments/:dish/:score/:description', passport.authenticate('jwt
 	        } else {
 				var newItem = new Comment(
 				{user_name: decoded._id, 
+				order_id:req.params.order_id,
 				dish_name:req.params.dish,
 				score:req.params.score,
 				comment_description:req.params.description
@@ -47,13 +48,13 @@ router.get('/findbyuser/:user', function(req, res, next) {
 	query.populate('dish_name');
  	query.exec(function(err, data){
 		if (err) {
-			res.json(err.message);
+		    return res.status(403).send({success: false, msg: 'Failed to get comment'});
 		}
 		else if (data.length===0) {
-			res.json({message: 'An item with that name does not exist in this database.'});
+			return res.status(403).send({success: false, msg:'An item with that name does not exist in this database.'});
 		}
 		else {
-			res.json(data);
+	        return res.status(200).send({sucess:true, msg:'Get comment successful',data:data});
 		}
 	});
 });
@@ -73,13 +74,13 @@ router.get('/findbydate/:user/:topdate/:buttomdate', function(req, res, next) {
 	query.populate('dish_name');
  	query.exec(function(err, data){
 		if (err) {
-			res.json(err.message);
+		    return res.status(403).send({success: false, msg: 'Failed to get comment'});
 		}
 		else if (data.length===0) {
-			res.json({message: 'An item with that name does not exist in this database.'});
+			return res.status(403).send({success: false, msg:'An item with that name does not exist in this database.'});
 		}
 		else {
-			res.json(data);
+	        return res.status(200).send({sucess:true, msg:'Get comment successful',data:data});
 		}
 	});
 });
@@ -88,17 +89,33 @@ router.get('/findbydate/:user/:topdate/:buttomdate', function(req, res, next) {
 router.get('/findbyuseranddish/:user/:dish', function(req, res, next) {
 	Comment.find({user_name: req.params.user,dish_name:req.params.dish}, function(err, data){
 		if (err) {
-			res.json(err.message);
+		    return res.status(403).send({success: false, msg: 'Failed to get comment'});
 		}
 		else if (data.length===0) {
-			res.json({message: 'An item with that name does not exist in this database.'});
+			return res.status(403).send({success: false, msg:'An item with that name does not exist in this database.'});
 		}
 		else {
-			res.json(data);
+	        return res.status(200).send({sucess:true, msg:'Get comment successful',data:data});
 		}
 	});
 });
 
+/*GET comment by order_id*/
+router.get('/findbyorder/:order_id', function(req, res, next) {
+	var query = Comment.find({order_id:req.params.order_id});
+	query.sort('-publish_time');
+ 	query.exec(function(err, data){
+		if (err) {
+		    return res.status(403).send({success: false, msg: 'Failed to get comment'});
+		}
+		else if (data.length===0) {
+			return res.status(403).send({success: false, msg:'An item with that name does not exist in this database.'});
+		}
+		else {
+	        return res.status(200).send({sucess:true, msg:'Get comment successful',data:data});
+		}
+	});
+});
 
 /*GET comment by dish, sort by time, return dish_name and score only*/
 router.get('/:dish', function(req, res, next) {
@@ -107,13 +124,13 @@ router.get('/:dish', function(req, res, next) {
 	query.select('dish_name score');
  	query.exec(function(err, data){
 		if (err) {
-			res.json(err.message);
+		    return res.status(403).send({success: false, msg: 'Failed to get comment'});
 		}
 		else if (data.length===0) {
-			res.json({message: 'An item with that name does not exist in this database.'});
+			return res.status(403).send({success: false, msg:'An item with that name does not exist in this database.'});
 		}
 		else {
-			res.json(data);
+	        return res.status(200).send({sucess:true, msg:'Get comment successful',data:data});
 		}
 	});
 });
@@ -125,13 +142,13 @@ router.get('/findbydish/:dish', function(req, res, next) {
 	query.sort('-publish_time');
  	query.exec(function(err, data){
 		if (err) {
-			res.json(err.message);
+		    return res.status(403).send({success: false, msg: 'Failed to get comment'});
 		}
 		else if (data.length===0) {
-			res.json({message: 'An item with that name does not exist in this database.'});
+			return res.status(403).send({success: false, msg:'An item with that name does not exist in this database.'});
 		}
 		else {
-			res.json(data);
+	        return res.status(200).send({sucess:true, msg:'Get comment successful',data:data});
 		}
 	});
 });

@@ -10,6 +10,7 @@ require('../config/passport')(passport);
 
 var Order = require('../models/order');
 var User = require('../models/user');
+var Comment = require('../models/comment.js');
 
 /*GET order by user_name*/
 router.get('/getorders', passport.authenticate('jwt', { session: false}), function(req, res) {
@@ -25,10 +26,41 @@ router.get('/getorders', passport.authenticate('jwt', { session: false}), functi
          	if (err)
          	return res.status(403).send({success: false, msg: 'Failed to get orders'});
          	else{
-         	  console.log();
         	return res.status(200).send({sucess:true, data:data});
          	}
          })
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
+
+
+/*GET order by order_id*/
+router.get('/getorders/:id', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.find({_id: decoded._id}, function(err, user) {
+        if (err) throw err;
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          Order.find({_id:req.params.id},function(err, data){
+         	if (err)
+         	return res.status(403).send({success: false, msg: 'Failed to get orders'});
+         	else{
+/*         	  Comment.find({order_id:req.params.id}, function(err,comment){
+           	if (err)
+           	return res.status(403).send({success: false, msg: 'Failed to return comment'});
+           	else{
+         	    result = result + comment;
+           	}
+         	  })*/
+        	return res.status(200).send({sucess:true, data:data});
+         	}
+         });
         }
     });
   } else {
