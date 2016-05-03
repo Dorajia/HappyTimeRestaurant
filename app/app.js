@@ -25,6 +25,13 @@
                 controllerAs: 'vm',
                 data: { activeTab: 'account' }
             })
+            .state('address', {
+                url: '/address',
+                templateUrl: 'address/index.html',
+                controller: 'Address.IndexController',
+                controllerAs: 'vm',
+                data: { activeTab: 'address' }
+            })
             .state('order', {
             url: '/order',
             templateUrl: 'order/index.html',

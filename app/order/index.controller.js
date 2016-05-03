@@ -5,7 +5,7 @@
         .module('app')
         .controller('Order.IndexController', Controller);
 
-    function Controller($window, $scope, UserService, OrderService, FlashService) {
+    function Controller($window, $scope, $dialogs, UserService, OrderService, FlashService) {
         var vm = this;
 
         vm.user = null;
@@ -17,6 +17,7 @@
         vm.showModal = showModal;
         vm.hideModal = hideModal;
         vm.confirmOrder = confirmOrder;
+        vm.submitComment = submitComment;
 
 
         initController();
@@ -50,9 +51,22 @@
 
         function confirmOrder(order_id) {
             OrderService.ConfirmOrder(order_id).then(function (orderResult) {
-                vm.confirmOrderData = orderResult.data;
+                vm.orders = orderResult.data;
             });
         }
+
+        function submitComment(order_id, dish_id, comment) {
+            OrderService.SubmitComment(order_id, dish_id, comment).then(function (result) {
+                if (result.sucess == true) {
+                    //return FlashService.Success("Comment post successfully!");
+                    $dialogs.notify('Something Happened!','Comment post successfully!');
+                }
+                else {
+                    return FlashService.Error("Comment post failed!");
+                }
+            });
+        }
+
     }
 
 })();

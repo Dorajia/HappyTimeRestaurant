@@ -1,4 +1,4 @@
-﻿<h1>My Account</h1>
+﻿<h1>My Orders</h1>
 <div ng-controller="Order.IndexController" class="form-container">
     <form name="orderForm">
         <table class="table">
@@ -17,7 +17,7 @@
                 <!--<td>{{order.ordernum}}</td>-->
                 <!--<td>{{order.orderdate}}</td>-->
                 <!--<td>{{order.status}}</td>-->
-                <td id = "order_id">{{order.order_id}}</td>
+                <td id = "order_id">{{order._id}}</td>
                 <td id = "order_time">{{order.order_time}}</td>
                 <td id = "confirm_time">{{order.confirm_time}}</td>
                 <td>
@@ -70,8 +70,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="dish in vm.commentOrderData.dishes[0]">
-                        <td id = "dish_id">{{dish._id}}</td>
+                    <tr ng-repeat="dish in vm.commentOrderData.dishes">
+                        <td id = "dish_id">{{dish.name}}</td>
                         <td><img src="image/01-MapoTofu.jpg" alt="Mapo Tofu" style="width:200px;height:150px;"></td>
                         <td>
                             <input type = "text" id = "comment" placeholder="Share your comment" style="width:200px;height:150px;">
@@ -79,7 +79,7 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-primary" ng-click="vm.submitComment(order.order_id, dish_id)">Comment</button>
+                                <button class="btn btn-primary" ng-click="vm.submitComment(order.order_id, dish_id, comment)">Comment</button>
                             </div>
                         </td>
                     </tr>
