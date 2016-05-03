@@ -13,6 +13,7 @@
         vm.currentDate = null;
         vm.showModal = showModal;
         vm.hideModal = hideModal;
+        vm.setDefault = setDefault;
         vm.confirmOrder = confirmOrder;
 
 
@@ -36,7 +37,7 @@
         }
 
         function setDefault(addr_id) {
-            UserService.SetDefaultAddr(addr_id).then(function (result) {
+            UserService.SetDefaultAddress(addr_id).then(function (result) {
                 vm.confirmOrderData = result.data;
             });
         }

@@ -20,6 +20,7 @@
         service.AddAddress = AddAddress;
         service.EditAddress = EditAddress;
         service.DeleteAddress = DeleteAddress;
+        service.SetDefaultAddress = SetDefaultAddress;
 
         service.GetAll = GetAll;
         service.GetById = GetById;
@@ -61,6 +62,12 @@
             return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/removeaddress/' + addr_id)
                 .then(handleSuccess, handleError);
         }
+
+        function SetDefaultAddress(addr_id) {
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/removeaddress/' + addr_id)
+                .then(handleSuccess, handleError);
+        }
+
 
         function GetAll() {
             return $http.get('/api/users').then(handleSuccess, handleError);

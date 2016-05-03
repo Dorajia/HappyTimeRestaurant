@@ -33,12 +33,12 @@
                 data: { activeTab: 'address' }
             })
             .state('order', {
-            url: '/order',
-            templateUrl: 'order/index.html',
-            controller: 'Order.IndexController',
-            controllerAs: 'vm',
-            data: { activeTab: 'order' }
-        });
+                url: '/order',
+                templateUrl: 'order/index.html',
+                controller: 'Order.IndexController',
+                controllerAs: 'vm',
+                data: { activeTab: 'order' }
+            });
     }
 
     function run($http, $rootScope, $window) {
