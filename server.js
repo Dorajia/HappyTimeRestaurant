@@ -34,6 +34,8 @@ app.use("/css",  express.static(__dirname + '/app/xiaotong/css'));
 app.use("/js", express.static(__dirname + '/app/xiaotong/js'));
 app.use("/images",  express.static(__dirname + '/app/xiaotong/images'));
 app.use("/controller",  express.static(__dirname + '/app/xiaotong/controller'));
+app.use("/fonts",  express.static(__dirname + '/app/xiaotong/fonts'));
+app.use("/img",  express.static(__dirname + '/app/xiaotong/img'));
 
 var items = [{'image':'../images/shopping_cart_pink.png',
     'name':'Yu Xiang Rou Si',
@@ -69,7 +71,9 @@ var items = [{'image':'../images/shopping_cart_pink.png',
 var selectedItems = []
 var handle_get = function (req, res) {
     console.log( "Get: ..." ) ;
-    body = fs.readFileSync(__dirname + '/app/xiaotong/view/ShoppingCart.html');
+    //body = fs.readFileSync(__dirname + '/app/xiaotong/view/ShoppingCart.html');
+    body = fs.readFileSync(__dirname + '/app/xiaotong/view/blog.html');
+
     res.setHeader('Content-Type', 'text/html');
     res.writeHead(200);
     res.end(body);
