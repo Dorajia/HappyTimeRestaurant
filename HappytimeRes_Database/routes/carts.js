@@ -44,7 +44,7 @@ router.post('/additem', passport.authenticate('jwt', { session: false}), functio
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
           	var cart_id = {_id:decoded._id};
-            var update = {total_price:req.body.total_price,status:'active', $push:{dish:{_id:req.body.name, description:req.body.desciption, dish_price:req.body.price, dish_number:req.body.amount,checked:req.body.checked,total:req.body.total}}};
+            var update = {total_price:req.body.total_price,status:'active', $push:{dish:{_id:req.body.name, description:req.body.description, dish_price:req.body.price, dish_number:req.body.amount,checked:req.body.checked,total:req.body.total}}};
             var options = {new: true};
                     
             Cart.findOneAndUpdate(cart_id, update, options, function(err, data){
