@@ -5,7 +5,7 @@
         .module('app')
         .controller('Order.IndexController', Controller);
 
-    function Controller($window, $scope, $dialogs, UserService, OrderService, FlashService) {
+    function Controller(OrderService, FlashService) {
         var vm = this;
 
         vm.user = null;
@@ -23,18 +23,8 @@
         initController();
 
         function initController() {
-            // get current user
-            //UserService.GetCurrent().then(function (user) {
-            //    vm.user = user;
-            //    OrderService.GetByUsername(vm.user.username).then(function (orders) {
-            //        vm.orders = orders;
-            //    });
-            //});
-            UserService.GetCurrent().then(function (userResult) {
-                vm.user = userResult.data;
-                OrderService.GetAll().then(function (orderResult) {
-                    vm.orders = orderResult.data;
-                });
+            OrderService.GetAll().then(function (orderResult) {
+                vm.orders = orderResult.data;
             });
 
         }
