@@ -2,13 +2,14 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 var Cart = require('./cart');
-var shortid = require('shortid');
 
 var DeliverySchema = new mongoose.Schema(
 	{
+		address1:String,
+		address2:String,
+		city: String,
 		state:String,
 		zipcode:Number,
-		address:String,
 	    receiver:String,
 	    phone:Number,
 	    isdefault: Boolean, default:0

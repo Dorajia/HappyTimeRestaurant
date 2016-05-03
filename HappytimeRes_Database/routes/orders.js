@@ -90,9 +90,10 @@ router.post('/confirm/:id', passport.authenticate('jwt', { session: false}), fun
                     return res.status(403).send({success: false, msg: 'Failed comfirm order'});
                     }
                 else {
-                    return res.status(200).send({success: true, msg: 'Confirm Order successful!',data:data});
-                    }
-                });
+                      return res.status(200).send({success: true, msg: 'Confirm Order successful!',data:data});
+
+                  }
+              });
         }
     });
   } else {

@@ -204,7 +204,7 @@ router.post('/addaddress', passport.authenticate('jwt', { session: false}), func
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
           	var name = {_id: decoded._id};
-          	var update = {$push:{delivery_address:{zipcode:req.body.zipcode, state:req.body.state,address:req.body.address,receiver:req.body.receiver,phone:req.body.phone,isdefault:req.body.isdefault}}};
+          	var update = {$push:{delivery_address:{address1:req.body.address1, address2:req.body.address2, city:req.body.city, zipcode:req.body.zipcode, state:req.body.state,receiver:req.body.receiver,phone:req.body.phone,isdefault:req.body.isdefault}}};
           	var options = {new: true};
           
           	User.findOneAndUpdate(name, update, options, function(err, data){
@@ -212,7 +212,6 @@ router.post('/addaddress', passport.authenticate('jwt', { session: false}), func
                 return res.status(403).send({success: false, msg: "Failed to add address"});
           		}
           		else {
-
             			return res.status(200).send({sucess:true, delivery_address:data.delivery_address});
           		}
           	});
@@ -291,7 +290,7 @@ router.post('/editaddress/:id', passport.authenticate('jwt', { session: false}),
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
           	var name = {_id: decoded._id,'delivery_address._id':req.params.id};
-          	var update = {$set:{'delivery_address.$.zipcode':req.body.zipcode, 'delivery_address.$.state':req.body.state,'delivery_address.$.address':req.body.address,'delivery_address.$.receiver':req.body.receiver,'delivery_address.$.phone':req.body.phone,'delivery_address.$.isdefault':req.body.isdefault}};
+          	var update = {$set:{'delivery_address.$.address1':req.body.address1,'delivery_address.$.address2':req.body.address2, 'delivery_address.$.city':req.body.city,'delivery_address.$.zipcode':req.body.zipcode, 'delivery_address.$.state':req.body.state,'delivery_address.$.receiver':req.body.receiver,'delivery_address.$.phone':req.body.phone,'delivery_address.$.isdefault':req.body.isdefault}};
           	var options = {new: true};
           
           	User.findOneAndUpdate(name, update, options, function(err, data){
