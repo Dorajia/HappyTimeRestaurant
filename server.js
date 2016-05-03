@@ -117,7 +117,9 @@ app.post('/cart/checkout', function(req,  res){
 });
 
 app.get('/cart/checkout', function(req,  res){
-    body = fs.readFileSync(__dirname + '/app/xiaotong/view/Payment.html');
+    //body = fs.readFileSync(__dirname + '/app/xiaotong/view/Payment.html');
+    body = fs.readFileSync(__dirname + '/app/xiaotong/view/checkOut.html');
+
     res.setHeader('Content-Type', 'text/html');
     res.writeHead(200);
     res.end(body);

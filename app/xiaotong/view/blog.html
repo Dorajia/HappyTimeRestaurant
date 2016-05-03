@@ -157,13 +157,12 @@
                                 </thead>
                                 <tbody>
                                 <tr   ng-repeat = "item in manager.items track by $index" >
-                                    <td><input type="checkbox" ng-model = "item.checked" ng-change = 'updatePrice()' aria-label="..."></td>
-                                    <td><img style = "max-width:100px; height: auto" class = img ng-src="{{item.image}}"></td>
-                                    <td>{{item.name}}</td>
-                                    <td style="max-width: 200px">{{item.description}}</td>
-                                    <td>${{item.price}}</td>
-                                    <td class = amount>
-
+                                    <td><input  type="checkbox" ng-model = "item.checked" ng-change = 'updatePrice()' style = 'vertical-align: middle;'  aria-label="..."></td>
+                                    <td><img style = "max-width:100px; height: auto; vertical-align: middle;" class = img ng-src="{{item.image}}"></td>
+                                    <td style = 'vertical-align: middle;'>{{item.name}}</td>
+                                    <td style="max-width: 200px; vertical-align: middle;">{{item.description}}</td>
+                                    <td style = 'vertical-align: middle;'>${{item.price}}</td>
+                                    <td style = 'vertical-align: middle;' class = amount>
                                         <div class="input-group input-group-sm" style = "width: 100px">
 
                     <span class="input-group-btn">
@@ -175,8 +174,8 @@
                     </span>
 
                                         </div></td>
-                                    <td>${{item.price * item.amount}}</td>
-                                    <td><span>
+                                    <td style = 'vertical-align: middle;'>${{item.price * item.amount}}</td>
+                                    <td style = 'vertical-align: middle;'><span>
                         <span class="glyphicon glyphicon-trash" aria-hidden="false" ng-click="delete($index)"></span>
                     </span></td>
                                 </tr>
