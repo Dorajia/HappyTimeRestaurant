@@ -19,6 +19,7 @@ var specials = require('./routes/specials');
 var cart = require('./routes/carts');
 var inventorys = require('./routes/inventorys');
 var paycards = require('./routes/paycards');
+var deliverys = require('./routes/deliverys');
 
 var dbConfig = require('./db');
 
@@ -53,6 +54,7 @@ app.use('/recommendation', recommendations);
 app.use('/inventory', inventorys);
 app.use('/cart',cart);
 app.use('/paycard',paycards);
+app.use('/delivery',deliverys);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
