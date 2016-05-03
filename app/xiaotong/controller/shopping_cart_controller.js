@@ -158,7 +158,7 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
                 selectedItems.push(parent.items[i]);
             }
         }
-        //console.log(selectedItems.length);
+        console.log(selectedItems.length);
         $http.post('/cart/checkout', selectedItems).success(function(data){
             console.log('check out success');
         }).error(function(err){
