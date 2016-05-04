@@ -5,17 +5,16 @@
         .module('app')
         .controller('Address.IndexController', Controller);
 
-    function Controller($window, $scope, UserService, OrderService, FlashService) {
+    function Controller(UserService) {
         var vm = this;
 
         vm.addresses = null;
         vm.modalFlag = false;
-        vm.currentDate = null;
-        vm.showModal = showModal;
-        vm.hideModal = hideModal;
+        vm.editAddr = null;
+        vm.showEditModal = showEditModal;
+        vm.hideEditModal = hideEditModal;
         vm.setDefault = setDefault;
-        vm.confirmOrder = confirmOrder;
-
+        vm.deleteAddr = deleteAddr;
 
         initController();
 
@@ -26,19 +25,24 @@
 
         }
 
-        function showModal(order) {
-            vm.commentOrderData = order;
+        function showEditModal(addr) {
+            vm.editAddr = addr;
             vm.modalFlag = true;
         }
 
-        function hideModal() {
-            vm.commentOrderData = null;
+        function hideEditModal() {
+            vm.editAddr = null;
             vm.modalFlag = false;
         }
 
         function setDefault(addr_id) {
             UserService.SetDefaultAddress(addr_id).then(function (result) {
-                vm.confirmOrderData = result.data;
+            });
+        }
+
+        function deleteAddr(addr_id) {
+            UserService.DeleteAddress(addr_id).then(function (result) {
+
             });
         }
     }

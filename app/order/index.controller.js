@@ -5,7 +5,7 @@
         .module('app')
         .controller('Order.IndexController', Controller);
 
-    function Controller($scope, OrderService, FlashService) {
+    function Controller(OrderService, FlashService) {
         var vm = this;
 
         vm.user = null;
