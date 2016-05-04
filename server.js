@@ -202,14 +202,14 @@ var options = {
     cert: fs.readFileSync('cert/cert.pem')
 };
 
-http.createServer(app).listen(3000);
+http.createServer(app).listen(process.env.PORT || 3000);
 
 // Option 1
 //var server = https.createServer(options, app).listen(process.env.PORT || 3000, function() {
-var server = https.createServer(options, app).listen(process.env.PORT, function() {
-    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
-});
-
+//var server = https.createServer(options, app).listen(process.env.PORT, function() {
+//    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
+//});
+//
 
 
 
