@@ -25,9 +25,9 @@ router.get('/', passport.authenticate('jwt', { session: false}), function(req, r
 					if (err) {
 						res.json(err.message);
 					}
-					else if (data.length===0) {
+/*					else if (data.length===0) {
 						res.json({message: 'An item with that name does not exist in this database.'});
-					}
+					} */
 					else {
 						res.json(data);
 					}
