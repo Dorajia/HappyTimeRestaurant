@@ -141,7 +141,7 @@
                     <span class = 'pull-right'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
                     <input type="radio" name = 'anything' ng-model="anynum" value = '$index' ng-value = '$index' ng-click = 'changeShippingAddress($index)'>
                     &nbsp {{address.receiver}}
-                    &nbsp {{address.address}}
+                    &nbsp {{address.address1}} &nbsp {{address.address2}} &nbsp {{address.city}}
                     &nbsp {{address.state}}
                     &nbsp {{address.zipcode}}
                     &nbsp {{address.phone}}
@@ -279,17 +279,17 @@
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat = 'order in pc.orders'>
-                                    <td>{{order.name}}</td>
-                                    <td>{{order.amount}}</td>
-                                    <td>$ {{order.price * order.amount}}</td>
+                                    <td>{{order._id}}</td>
+                                    <td>{{order.dish_number}}</td>
+                                    <td>$ {{order.dish_price * order.dish_number}}</td>
                                 </tr>
                                 </tbody>
                             </table>
                             <br>
                             <h5>Ship To:</h5>
                             <br>{{pc.shipAddress.receiver}}
-                            <br>{{pc.shipAddress.address}}
-                            <br>{{pc.shipAddress.state}} &nbsp {{pc.shipAddress.zipcode}}
+                            <br>{{pc.shipAddress.address1}} &nbsp {{pc.shipAddress.address2}}
+                            <br> {{pc.shipAddress.city}} &nbsp {{pc.shipAddress.state}} &nbsp {{pc.shipAddress.zipcode}}
                             <br>United States
                             <br>Phone: {{pc.shipAddress.phone}}
                         </div>

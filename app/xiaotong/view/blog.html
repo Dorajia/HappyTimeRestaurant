@@ -129,8 +129,13 @@
                     </h2>
                     <hr>
                 </div>
-                <div class="carousel-content">
-                    <span style = 'position:absolute; top: 487px; right: 255px' class = pull-left><h3> $ {{totalPrice}}</h3></span>
+                <div ng-show = 'empty' class="panel panel-default">
+
+                    <div class="panel-body" >Your Shopping Cart is Empty</div>
+
+                </div>
+                <div ng-hide = 'empty' class="carousel-content">
+                    <span style = 'position:absolute; top: 567px; right: 255px' class = pull-left><h3> $ {{totalPrice}}</h3></span>
                     <br>
                     <div class="btn-group pull-right" role="group">
                         <button type="button" class="btn btn-default" ng-click = 'checkOut()'>Check Out</button>
@@ -158,23 +163,23 @@
                                 <tbody>
                                 <tr   ng-repeat = "item in manager.items track by $index" >
                                     <td><input  type="checkbox" ng-model = "item.checked" ng-change = 'updatePrice()' style = 'vertical-align: middle;'  aria-label="..."></td>
-                                    <td><img style = "max-width:100px; height: auto; vertical-align: middle;" class = img ng-src="{{item.image}}"></td>
-                                    <td style = 'vertical-align: middle;'>{{item.name}}</td>
+                                    <td><img style = "max-width:100px; height: auto; vertical-align: middle;" class = img ng-src="../images/shopping_cart_pink.png"></td>
+                                    <td style = 'vertical-align: middle;'>{{item._id}}</td>
                                     <td style="max-width: 200px; vertical-align: middle;">{{item.description}}</td>
-                                    <td style = 'vertical-align: middle;'>${{item.price}}</td>
+                                    <td style = 'vertical-align: middle;'>${{item.dish_price}}</td>
                                     <td style = 'vertical-align: middle;' class = amount>
                                         <div class="input-group input-group-sm" style = "width: 100px">
 
                     <span class="input-group-btn">
                          <button class="btn btn-default" type="button" ng-click="decrement($index)">-</button>
                     </span>
-                                            <input type="text" class="form-control" ng-change = "updatePrice()" ng-model = "item.amount" placeholder='{{item.amount}}'>
+                                            <input type="text" class="form-control" ng-change = "updatePrice()" ng-model = "item.dish_number" placeholder='{{item.dish_number}}'>
                      <span class="input-group-btn">
                          <button class="btn btn-default" type="button" ng-click="increment($index)">+</button>
                     </span>
 
                                         </div></td>
-                                    <td style = 'vertical-align: middle;'>${{item.price * item.amount}}</td>
+                                    <td style = 'vertical-align: middle;'>${{item.dish_price * item.dish_number}}</td>
                                     <td style = 'vertical-align: middle;'><span>
                         <span class="glyphicon glyphicon-trash" aria-hidden="false" ng-click="delete($index)"></span>
                     </span></td>
