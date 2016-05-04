@@ -184,7 +184,7 @@ app.get('/selectedItems' , function(req , res){
 });
 //Xiaotong Part End : 04/28/2016
 // start server
-var server = app.listen(3000, function () {
+var server = app.listen(process.env.PORT || 3000, function () {
     console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
 });
 
