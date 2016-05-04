@@ -2,7 +2,7 @@
  * Created by xiaotong on 4/14/16.
  */
 var app = angular.module('payment',[]);
-var hostname = 'http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
+var hostname = 'https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
 //var hostname = 'http://localhost:3000';
 app.controller('payment_controller',['$scope','$http', '$window',function($scope, $http, $window){
     $http.defaults.headers.common.Authorization = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiJ0ZXN0dXNlciIsInBhc3N3b3JkIjoiJDJhJDEwJC8wYW5TT1pKbVAyRXJaV2V0d1lZTS5tMktKcjZHOW9rQ3lJTTBWcWJucGpOMTdodkZmL2UyIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiZGVsaXZlcnlfYWRkcmVzcyI6W10sIl9fdiI6MCwiX2RlbGl2ZXJ5X2FkZHJlc3MiOltdLCJwaG9uZSI6W3siX2lkIjoxMjM0NX1dfQ.urk51-SRuYecTycrzwYjgSbkh7_q6yHfCQduTnUo7eg";
@@ -204,16 +204,16 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
             'orderItems': parent.orders,
             'totalprice': $scope.finalPrice
         }
-        $http.post(hostname + '/cart/placeorder', data)
-            .success(function(data){
-                console.log(data);
-                //parent.addresses = data.delivery_address;
-                //parent.shipAddress = parent.addresses[0];
-                console.log(parent.shipAddress)
-                //$scope.badgeNum = this.items.length;
-            }).error(function(err){
-            console.log('Err: ' + err);
-        });
+        //$http.post(hostname + '/cart/placeorder', data)
+        //    .success(function(data){
+        //        console.log(data);
+        //        //parent.addresses = data.delivery_address;
+        //        //parent.shipAddress = parent.addresses[0];
+        //        console.log(parent.shipAddress)
+        //        //$scope.badgeNum = this.items.length;
+        //    }).error(function(err){
+        //    console.log('Err: ' + err);
+        //});
     }
     $scope.changePayCard= function(index){
         parent.payCard = parent.cards[index];

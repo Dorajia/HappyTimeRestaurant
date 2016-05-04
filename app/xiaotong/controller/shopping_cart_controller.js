@@ -3,7 +3,7 @@
  */
 
 var app = angular.module('shopping_cart',[]);
-var hostname = 'http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
+var hostname = 'https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
 //var hostname = 'http://localhost:3000';
 
 app.config(function($httpProvider){
