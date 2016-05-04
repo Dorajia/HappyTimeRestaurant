@@ -44,7 +44,7 @@
         }
 
         function GetAllAddress() {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/getaddress/')
+            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/getaddress/')
                 .then(handleSuccess, handleError);
         }
 
