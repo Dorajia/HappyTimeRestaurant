@@ -87,7 +87,8 @@ router.get('/:order', function(req, res, next) {
 		.populate('recommend_dish') // <--
 		.exec(function (err, data) {
 			if(err) return next(err);
-			recommend_arr.push(data[0].recommend_dish);
+			if(data[0].recommend_dish !== null)
+				recommend_arr.push(data[0].recommend_dish);
 			count--;
 			if(count == 0) res.json(recommend_arr);
 		});
