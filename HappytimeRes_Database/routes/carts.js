@@ -186,7 +186,6 @@ router.post('/placeorder', passport.authenticate('jwt', { session: false}), func
             user:decoded._id,
             restaurant_name:req.body.restaurant,
             delivery_address:req.body.address,
-            phone:req.body.phone,
             dishes:req.body.orderItems,
             card:req.body.card,
             total_price:req.body.totalprice
