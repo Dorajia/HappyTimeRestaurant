@@ -13,6 +13,7 @@
 
     function Service($http, $q, $window) {
         var service = {};
+        var apiServer = 'https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
 
         service.GetCurrent = GetCurrent;
         service.UpdatePwd = UpdatePwd;
@@ -33,44 +34,44 @@
         return service;
 
         function GetCurrent() {
-            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/userprofile')
+            return $http.get(apiServer + '/user/userprofile')
                 .then(handleSuccess, handleError);
         }
 
         function UpdatePwd(old_password, new_password) {
             return $http.post(
-                    'http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/updatepassword/'
+                    apiServer + '/user/updatepassword/'
                     + old_password + '/' + new_password)
                 .then(handleSuccess, handleError);
         }
 
         function GetAllAddress() {
-            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/getaddress/')
+            return $http.get(apiServer + '/delivery/getaddress/')
                 .then(handleSuccess, handleError);
         }
 
         function AddAddress(addr) {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/addaddress/', addr)
+            return $http.post(apiServer + '/delivery/addaddress/', addr)
                 .then(handleSuccess, handleError);
         }
 
         function EditAddress(addr_id, addr) {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/editaddress/' + addr_id, addr)
+            return $http.post(apiServer + '/delivery/editaddress/' + addr_id, addr)
                 .then(handleSuccess, handleError);
         }
 
         function DeleteAddress(addr_id) {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/removeaddress/' + addr_id)
+            return $http.post(apiServer + '/delivery/removeaddress/' + addr_id)
                 .then(handleSuccess, handleError);
         }
 
         function GetDefaultAddress() {
-            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/getdefault')
+            return $http.get(apiServer + '/delivery/getdefault')
                 .then(handleSuccess, handleError);
         }
 
         function SetDefaultAddress(addr_id) {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/setdefault/' + addr_id)
+            return $http.post(apiServer + '/delivery/setdefault/' + addr_id)
                 .then(handleSuccess, handleError);
         }
 

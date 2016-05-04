@@ -9,6 +9,7 @@
         //$http.defaults.headers.common.Authorization = $window.jwtToken;
 
         var service = {};
+        var apiServer = 'https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
 
         service.GetAll = GetAll;
         service.ConfirmOrder = ConfirmOrder;
@@ -23,20 +24,20 @@
 
         function GetAll() {
             //return $http.get('/api/orders').then(handleSuccess, handleError);
-            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/order/getorders')
+            return $http.get(apiServer + '/order/getorders')
                 .then(handleSuccess, handleError);
         }
 
         function ConfirmOrder(order_id) {
             //$http.defaults.headers.common.Authorization = $window.jwtToken;
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/order/confirm/' + order_id)
+            return $http.post(apiServer + '/order/confirm/' + order_id)
                 .then(handleSuccess, handleError);
 
         }
 
         function SubmitComment(order_id, dish_id, comment) {
             //$http.defaults.headers.common.Authorization = $window.jwtToken;
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/comment/addcomments/'
+            return $http.post(apiServer + '/comment/addcomments/'
                 + order_id + '/' + dish_id + '/5/' + comment)
                 .then(handleSuccess, handleError);
 
