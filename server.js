@@ -204,7 +204,9 @@ var options = {
 
 
 // Option 1
-https.createServer(options, app).listen(process.env.PORT || 3000);
+var server = https.createServer(options, app).listen(process.env.PORT || 3000, function() {
+    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
+});
 
 // Option 2
 //var server = https.createServer(options);
