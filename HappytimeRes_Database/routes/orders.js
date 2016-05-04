@@ -10,7 +10,7 @@ require('../config/passport')(passport);
 
 var Order = require('../models/order');
 var User = require('../models/user');
-var Comment = require('../models/comment.js');
+//var Comment = require('../models/comment.js');
 
 /*GET order by user_name*/
 router.get('/getorders', passport.authenticate('jwt', { session: false}), function(req, res) {
@@ -51,13 +51,6 @@ router.get('/getorders/:id', passport.authenticate('jwt', { session: false}), fu
          	if (err)
          	return res.status(403).send({success: false, msg: 'Failed to get orders'});
          	else{
-/*         	  Comment.find({order_id:req.params.id}, function(err,comment){
-           	if (err)
-           	return res.status(403).send({success: false, msg: 'Failed to return comment'});
-           	else{
-         	    result = result + comment;
-           	}
-         	  })*/
         	return res.status(200).send({sucess:true, data:data});
          	}
          });
