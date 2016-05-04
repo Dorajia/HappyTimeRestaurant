@@ -208,7 +208,7 @@ router.post('/placeorder', passport.authenticate('jwt', { session: false}), func
                     };
                     var deleteitems=function (callback) {
                   	  for(var i = 0; i < req.body.orderItems.length; i++){
-                        var update = {total_price:cart.total_price-req.body.totalprice,$pull:{dish:{_id:req.body.orderItems[i].name}}};
+                        var update = {total_price:cart.total_price-req.body.totalprice,$pull:{dish:{_id:req.body.orderItems[i]._id}}};
                         var options = {new: true};
                       	Cart.findOneAndUpdate(cart_id, update, options,cb);
                   	  }

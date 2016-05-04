@@ -85,13 +85,6 @@ router.get('/getaddress', passport.authenticate('jwt', { session: false}), funct
                   	return res.status(200).send({sucess:true, delivery_address:alldelivery});
                   }
                });          
-//          return res.status(200).send({sucess:true, delivery_address:user.delivery_address});
-/*                    if (user.delivery_address != null) {
-                			return res.status(200).send({sucess:true, delivery_address:user.delivery_address});
-                    }
-                    else {
-                    return res.statues(400).send({sucess:false, msg:"Please add delivery address"});
-                    }*/
           }
     });
   } else {
@@ -117,7 +110,7 @@ router.post('/removeaddress/:id', passport.authenticate('jwt', { session: false}
               else{
               Delivery.find({_user:decoded._id},function(err,alldelivery){
                   if (err){
-                    return res.status(403).send({success: false, msg: "Add address failed"});
+                    return res.status(403).send({success: false, msg: "Remove address failed"});
                   }
                   else{
                   	return res.status(200).send({sucess:true, delivery_address:alldelivery});
@@ -125,18 +118,6 @@ router.post('/removeaddress/:id', passport.authenticate('jwt', { session: false}
                });
               }            
           });
-/*          var name = {_id: decoded._id};
-          	var update = {$pull:{delivery_address:{_id:req.params.id}}};
-          	var options = {new: true};
-          
-          	User.findOneAndUpdate(name, update, options, function(err, data){
-          		if (err) {
-                return res.status(403).send({success: false, msg: 'Failed to remove address'});
-          		}
-          		else {
-            		return res.status(200).send({sucess:true, delivery_address:data.delivery_address});
-          		}
-          	});*/
         }
     });
   } else {
@@ -200,10 +181,10 @@ router.post('/setdefault/:id', passport.authenticate('jwt', { session: false}), 
                     
                   Delivery.findOneAndUpdate(name, update, options, function(err, data){
                   		if (err) {
-                        return res.status(403).send({success: false, msg: 'Failed to edit address'});
+                        return res.status(403).send({success: false, msg: 'Failed to set default address'});
                   		}
                       else if (data == null) {
-                        return res.status(403).send({success: false, msg:'Failed to edit address'});
+                        return res.status(403).send({success: false, msg:'Failed to set default address'});
                       }            		
                   		else {
                         return res.status(200).send({sucess:true, delivery_address:data});
@@ -213,10 +194,10 @@ router.post('/setdefault/:id', passport.authenticate('jwt', { session: false}), 
                  else{
                         Delivery.findOneAndUpdate({_id:defaultdelivery[0]._id},{isdefault:false},{new:true}, function(err, data) {
                           if (err){
-                            return res.status(403).send({success: false, msg: 'Failed to edit address'});                        
+                            return res.status(403).send({success: false, msg: 'Failed to set default address'});                        
                           }
                           else if (data == null) {
-                            return res.status(403).send({success: false, msg:'Failed to edit address.'});
+                            return res.status(403).send({success: false, msg:'Failed to set default address.'});
                           }   
                           else{
                             var name2 = {_user:decoded._id,_id:req.params.id};
@@ -224,10 +205,10 @@ router.post('/setdefault/:id', passport.authenticate('jwt', { session: false}), 
                             var options2 = {new:true};
                             Delivery.findOneAndUpdate(name2, update2, options2, function(err, data2){
                           		if (err) {
-                                return res.status(403).send({success: false, msg:'Failed to edit address'});
+                                return res.status(403).send({success: false, msg:'Failed to set default address'});
                           		}
                               else if (data2 == null) {
-                                return res.status(403).send({success: false, msg:'Failed to edit address'});
+                                return res.status(403).send({success: false, msg:'Failed to set default address'});
                               }            		
                           		else {
                                 return res.status(200).send({sucess:true, delivery_address:data2});
@@ -238,33 +219,6 @@ router.post('/setdefault/:id', passport.authenticate('jwt', { session: false}), 
                  
                  }
                });               
-/*          	var name = {_id: decoded._id,'delivery_address.isdefault':1};
-          	var update = {$set:{'delivery_address.$.isdefault':0}};
-          	var options = {new: true};
-          
-          	User.findOneAndUpdate(name, update, options, function(err, data){
-          		if (err) {
-                return res.status(403).send({success: false, msg: 'Failed to edit address'});
-          		}
-              else if (data.delivery_address.length===0) {
-                return res.status(403).send({success: false, msg:'failed to edit address.'});
-              }           		
-          		else if (data.delivery_address !=null){
-          		  var newname = {_id:decoded._id,'delivery_address._id':req.params.id};
-          		  var newupdate = {$set:{'delivery_address.$.isdefault':1}};
-                      User.findOneAndUpdate(newname, newupdate, options, function(err, data){
-                      		if (err) {
-                            return res.status(403).send({success: false, msg: 'Failed to edit address'});
-                      		}
-                          else if (data.delivery_address.length===0) {
-                            return res.status(403).send({success: false, msg:'failed to edit address.'});
-                          }            		
-                      		else {
-                            return res.status(200).send({sucess:true, delivery_address:data.delivery_address});
-                      		}
-                      	});
-          		}
-          	});*/
         }
     });
   } else {
@@ -300,6 +254,5 @@ router.get('/getdefault', passport.authenticate('jwt', { session: false}), funct
     return res.status(403).send({success: false, msg: 'No token provided.'});
   }
 });
-
 
 module.exports = router;
