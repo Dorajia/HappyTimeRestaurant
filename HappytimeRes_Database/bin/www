@@ -6,7 +6,7 @@
 
 var app = require('../app');
 var debug = require('debug')('HTRApp:server');
-//var https = require('https');
+var https = require('https');
 var http = require('http');
 var fs = require('fs');
 var path = require('path')
@@ -28,8 +28,8 @@ var options = {
   cert: fs.readFileSync(path.join(__dirname, '../cert/cert.pem'))
 };
 
-var server = http.createServer(app);
-//var server = https.createServer(options,app);
+//var server = http.createServer(app);
+var server = https.createServer(options,app);
 /**
  * Listen on provided port, on all network interfaces.
  */
