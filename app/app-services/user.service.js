@@ -44,27 +44,27 @@
         }
 
         function GetAllAddress() {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/getaddress/')
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/getaddress/')
                 .then(handleSuccess, handleError);
         }
 
         function AddAddress() {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/addaddress/')
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/addaddress/')
                 .then(handleSuccess, handleError);
         }
 
         function EditAddress(addr_id) {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/editaddress/' + addr_id)
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/editaddress/' + addr_id)
                 .then(handleSuccess, handleError);
         }
 
         function DeleteAddress(addr_id) {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/removeaddress/' + addr_id)
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/removeaddress/' + addr_id)
                 .then(handleSuccess, handleError);
         }
 
         function SetDefaultAddress(addr_id) {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/removeaddress/' + addr_id)
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/setdefault/' + addr_id)
                 .then(handleSuccess, handleError);
         }
 

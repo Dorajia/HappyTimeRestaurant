@@ -25,6 +25,13 @@
                 controllerAs: 'vm',
                 data: { activeTab: 'account' }
             })
+            .state('order', {
+                url: '/order',
+                templateUrl: 'order/index.html',
+                controller: 'Order.IndexController',
+                controllerAs: 'vm',
+                data: { activeTab: 'order' }
+            })
             .state('address', {
                 url: '/address',
                 templateUrl: 'address/index.html',
@@ -32,13 +39,7 @@
                 controllerAs: 'vm',
                 data: { activeTab: 'address' }
             })
-            .state('order', {
-                url: '/order',
-                templateUrl: 'order/index.html',
-                controller: 'Order.IndexController',
-                controllerAs: 'vm',
-                data: { activeTab: 'order' }
-            });
+        ;
     }
 
     function run($http, $rootScope, $window) {
