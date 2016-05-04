@@ -1,4 +1,5 @@
 ﻿require('rootpath')();
+
 var express = require('express');
 var app = express();
 var session = require('express-session');
@@ -183,13 +184,31 @@ app.get('/selectedItems' , function(req , res){
     res.json(selectedItems);
 });
 //Xiaotong Part End : 04/28/2016
+
+
+
 // start server
-var server = app.listen(process.env.PORT || 3000, function () {
-    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
-});
+//var server = app.listen(process.env.PORT || 3000, function () {
+//    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
+//});
 
 
+// Add support for Https
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+var options = {
+    key: fs.readFileSync('cert/key.pem'),
+    cert: fs.readFileSync('cert/cert.pem')
+};
 
+
+// Option 1
+https.createServer(options, app).listen(process.env.PORT || 3000);
+
+// Option 2
+//var server = https.createServer(options);
+//https.
 
 
 
