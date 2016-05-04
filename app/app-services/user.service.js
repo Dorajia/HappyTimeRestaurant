@@ -20,6 +20,7 @@
         service.AddAddress = AddAddress;
         service.EditAddress = EditAddress;
         service.DeleteAddress = DeleteAddress;
+        service.GetDefaultAddress = GetDefaultAddress;
         service.SetDefaultAddress = SetDefaultAddress;
 
         service.GetAll = GetAll;
@@ -48,18 +49,23 @@
                 .then(handleSuccess, handleError);
         }
 
-        function AddAddress() {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/addaddress/')
+        function AddAddress(addr) {
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/addaddress/', addr)
                 .then(handleSuccess, handleError);
         }
 
-        function EditAddress(addr_id) {
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/editaddress/' + addr_id)
+        function EditAddress(addr_id, addr) {
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/editaddress/' + addr_id, addr)
                 .then(handleSuccess, handleError);
         }
 
         function DeleteAddress(addr_id) {
             return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/removeaddress/' + addr_id)
+                .then(handleSuccess, handleError);
+        }
+
+        function GetDefaultAddress() {
+            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/getdefault')
                 .then(handleSuccess, handleError);
         }
 
