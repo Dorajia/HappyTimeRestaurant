@@ -5,12 +5,18 @@ require('../models/catalog.js');
 var Dish = require('../models/dish.js');
 
 /* GET all dish. */
-router.get('/', function(req, res, next) {
-  Dish.find(function (err, data) {
-    if (err) return next(err);
-    res.json(data);
-  });
+router.get('/getalldish', function(req, res, next) {
+    Dish.find().limit(15).exec(
+		function (err, data) {
+		    if (err){
+			  return res.status(403).send({success:false, msg:"Failed to get dishes"});
+		    }
+		       return res.status(200).send(data);
+		  });
 });
+
+
+
 
 //POST
 router.post('/', function(req, res, next) {
