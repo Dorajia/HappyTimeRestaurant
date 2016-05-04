@@ -1,18 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
 var bcrypt = require('bcrypt');
 var Cart = require('./cart');
-var shortid = require('shortid');
-
-var DeliverySchema = new mongoose.Schema(
-	{
-		state:String,
-		zipcode:Number,
-		address:String,
-	    receiver:String,
-	    phone:Number,
-	    isdefault: Boolean, default:0
-	});
 
 var UserSchema = new Schema({
    _id: {
@@ -25,7 +15,7 @@ var UserSchema = new Schema({
     },
   email:String,
   phone:[{_id: Number}],
-  delivery_address:[DeliverySchema]
+  _delivery_address:[{type: Schema.Types.ObjectId, ref:'delivery'}]
 });
 
 
@@ -87,4 +77,4 @@ UserSchema.methods.encrptPassword = function(newpass,cb){
         });
 };
  
-module.exports = mongoose.model('User', UserSchema, 'user');
+module.exports = mongoose.model('user', UserSchema, 'user');

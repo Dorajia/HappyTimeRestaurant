@@ -26,12 +26,20 @@
                 data: { activeTab: 'account' }
             })
             .state('order', {
-            url: '/order',
-            templateUrl: 'order/index.html',
-            controller: 'Order.IndexController',
-            controllerAs: 'vm',
-            data: { activeTab: 'order' }
-        });
+                url: '/order',
+                templateUrl: 'order/index.html',
+                controller: 'Order.IndexController',
+                controllerAs: 'vm',
+                data: { activeTab: 'order' }
+            })
+            .state('address', {
+                url: '/address',
+                templateUrl: 'address/index.html',
+                controller: 'Address.IndexController',
+                controllerAs: 'vm',
+                data: { activeTab: 'address' }
+            })
+        ;
     }
 
     function run($http, $rootScope, $window) {

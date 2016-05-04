@@ -1,4 +1,4 @@
-﻿<h1>My Account</h1>
+﻿<h1>My Orders</h1>
 <div ng-controller="Order.IndexController" class="form-container">
     <form name="orderForm">
         <table class="table">
@@ -14,15 +14,12 @@
             </thead>
             <tbody>
             <tr ng-repeat="order in vm.orders">
-                <!--<td>{{order.ordernum}}</td>-->
-                <!--<td>{{order.orderdate}}</td>-->
-                <!--<td>{{order.status}}</td>-->
-                <td id = "order_id">{{order.order_id}}</td>
+                <td id = "order_id">{{order._id}}</td>
                 <td id = "order_time">{{order.order_time}}</td>
                 <td id = "confirm_time">{{order.confirm_time}}</td>
                 <td>
                     <div class="btn-group">
-                        <button class="btn btn-primary" ng-disabled="order.confirm_time != null" ng-click="vm.confirmOrder(order.order_id)">Confirm</button>
+                        <button class="btn btn-primary" ng-disabled="order.confirm_time != null" ng-click="vm.confirmOrder(order._id)">Confirm</button>
                     </div>
 
                 </td>
@@ -70,16 +67,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="dish in vm.commentOrderData.dishes[0]">
-                        <td id = "dish_id">{{dish._id}}</td>
+                    <tr ng-repeat="dish in vm.commentOrderData.dishes">
+                        <td id = "dish_id">{{dish.name}}</td>
                         <td><img src="image/01-MapoTofu.jpg" alt="Mapo Tofu" style="width:200px;height:150px;"></td>
                         <td>
-                            <input type = "text" id = "comment" placeholder="Share your comment" style="width:200px;height:150px;">
+                            <input type = "text" name = "comment{{$index}}" placeholder="Share your comment" style="width:200px;height:150px;" ng-model="vm.comments[$index]">
                             </input>
                         </td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-primary" ng-click="vm.submitComment(order.order_id, dish_id)">Comment</button>
+                                <button class="btn btn-primary" ng-click="vm.submitComment(dish, $index)">Comment</button>
                             </div>
                         </td>
                     </tr>
@@ -88,7 +85,7 @@
             </div>
         </div>
 
-        <button class="btn btn-danger" ng-click="vm.hideModal()">Cancel</button>
+        <button class="btn btn-danger" ng-click="vm.hideModal()">Done</button>
 
     </modal>
 

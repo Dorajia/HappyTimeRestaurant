@@ -14,12 +14,14 @@ router.get('/getitems', passport.authenticate('jwt', { session: false}), functio
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
-    Cart.findOne({_id: decoded._id}, function(err, cart) {
+    Cart.findOne({_id: decoded._id})
+    .select('dish')
+    .exec(function(err, cart) {
         if (err) throw err;
         if (!cart) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
-          return res.status(200).send({sucess:true, data:cart});
+          return res.status(200).json(cart);
         }
     });
   } else {
@@ -28,8 +30,8 @@ router.get('/getitems', passport.authenticate('jwt', { session: false}), functio
 });
 
 
-//add item in shopping cart, if the frontend can send the information, it is great, otherwise, need to find the price from dish first.
-router.post('/additem/:name/:price/:number/:total_price', passport.authenticate('jwt', { session: false}), function(req, res) {
+//add item in shopping cart
+router.post('/additem', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
@@ -42,7 +44,7 @@ router.post('/additem/:name/:price/:number/:total_price', passport.authenticate(
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
           	var cart_id = {_id:decoded._id};
-            var update = {total_price:req.params.total_price,status:'active', $push:{dish:{_id:req.params.name, dish_price:req.params.price, dish_number:req.params.number}}};
+            var update = {total_price:req.body.total_price,status:'active', $push:{dish:{_id:req.body.name, description:req.body.description, dish_price:req.body.price, dish_number:req.body.amount,checked:req.body.checked,total:req.body.total}}};
             var options = {new: true};
                     
             Cart.findOneAndUpdate(cart_id, update, options, function(err, data){
@@ -184,7 +186,6 @@ router.post('/placeorder', passport.authenticate('jwt', { session: false}), func
             user:decoded._id,
             restaurant_name:req.body.restaurant,
             delivery_address:req.body.address,
-            phone:req.body.phone,
             dishes:req.body.orderItems,
             card:req.body.card,
             total_price:req.body.totalprice

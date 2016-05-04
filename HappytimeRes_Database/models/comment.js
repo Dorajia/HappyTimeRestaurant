@@ -8,7 +8,8 @@ var CommentSchema = new Schema(
 	user_name:String,
 	dish_name:{type:String, ref:'dish'},
 	score:Number,
-	comment_description: String
+	comment_description: String,
+	order_id: String
 });
 
 //automaticall add createdat and updateat in the schema.

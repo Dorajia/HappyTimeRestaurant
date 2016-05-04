@@ -14,10 +14,14 @@
     function Service($http, $q, $window) {
         var service = {};
 
-        //$http.defaults.headers.common.Authorization = $window.jwtToken;
-
         service.GetCurrent = GetCurrent;
         service.UpdatePwd = UpdatePwd;
+        service.GetAllAddress = GetAllAddress;
+        service.AddAddress = AddAddress;
+        service.EditAddress = EditAddress;
+        service.DeleteAddress = DeleteAddress;
+        service.SetDefaultAddress = SetDefaultAddress;
+
         service.GetAll = GetAll;
         service.GetById = GetById;
         service.GetByUsername = GetByUsername;
@@ -27,21 +31,43 @@
 
         return service;
 
-        function UpdatePwd(old_password, new_password) {
-            return $http.post(
-                'http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/updatepassword/'
-                + old_password + '/' + new_password)
-                .then(handleSuccess, handleError);
-        }
-
         function GetCurrent() {
-            //return $http.get('/api/users/current').then(handleSuccess, handleError);
-            //$http.defaults.headers.common.Authorization = 'Bearer ' + $window.jwtToken;
-
-            //$http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
             return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/userprofile')
                 .then(handleSuccess, handleError);
         }
+
+        function UpdatePwd(old_password, new_password) {
+            return $http.post(
+                    'http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/user/updatepassword/'
+                    + old_password + '/' + new_password)
+                .then(handleSuccess, handleError);
+        }
+
+        function GetAllAddress() {
+            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/getaddress/')
+                .then(handleSuccess, handleError);
+        }
+
+        function AddAddress() {
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/addaddress/')
+                .then(handleSuccess, handleError);
+        }
+
+        function EditAddress(addr_id) {
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/editaddress/' + addr_id)
+                .then(handleSuccess, handleError);
+        }
+
+        function DeleteAddress(addr_id) {
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/removeaddress/' + addr_id)
+                .then(handleSuccess, handleError);
+        }
+
+        function SetDefaultAddress(addr_id) {
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/delivery/setdefault/' + addr_id)
+                .then(handleSuccess, handleError);
+        }
+
 
         function GetAll() {
             return $http.get('/api/users').then(handleSuccess, handleError);

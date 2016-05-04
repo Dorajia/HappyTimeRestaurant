@@ -12,6 +12,7 @@
 
         service.GetAll = GetAll;
         service.ConfirmOrder = ConfirmOrder;
+        service.SubmitComment = SubmitComment;
         service.GetById = GetById;
         service.GetByUsername = GetByUsername;
         service.Create = Create;
@@ -22,12 +23,22 @@
 
         function GetAll() {
             //return $http.get('/api/orders').then(handleSuccess, handleError);
-            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/order/getorders').then(handleSuccess, handleError);
+            return $http.get('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/order/getorders')
+                .then(handleSuccess, handleError);
         }
 
         function ConfirmOrder(order_id) {
             //$http.defaults.headers.common.Authorization = $window.jwtToken;
-            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/order/confirm/' + order_id).then(handleSuccess, handleError);
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/order/confirm/' + order_id)
+                .then(handleSuccess, handleError);
+
+        }
+
+        function SubmitComment(order_id, dish_id, comment) {
+            //$http.defaults.headers.common.Authorization = $window.jwtToken;
+            return $http.post('http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/comment/addcomments/'
+                + order_id + '/' + dish_id + '/5/' + comment)
+                .then(handleSuccess, handleError);
 
         }
 

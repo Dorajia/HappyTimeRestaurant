@@ -3,54 +3,46 @@
 
     angular
         .module('app')
-        .controller('Order.IndexController', Controller);
+        .controller('Address.IndexController', Controller);
 
-    function Controller($window, $scope, UserService, OrderService, FlashService) {
+    function Controller(UserService) {
         var vm = this;
 
-        vm.user = null;
-        vm.orders = null;
+        vm.addresses = null;
         vm.modalFlag = false;
-        vm.currentDate = null;
-        vm.confirmOrderData = null;
-        vm.commentOrderData = null;
-        vm.showModal = showModal;
-        vm.hideModal = hideModal;
-        vm.confirmOrder = confirmOrder;
-
+        vm.editAddr = null;
+        vm.showEditModal = showEditModal;
+        vm.hideEditModal = hideEditModal;
+        vm.setDefault = setDefault;
+        vm.deleteAddr = deleteAddr;
 
         initController();
 
         function initController() {
-            // get current user
-            //UserService.GetCurrent().then(function (user) {
-            //    vm.user = user;
-            //    OrderService.GetByUsername(vm.user.username).then(function (orders) {
-            //        vm.orders = orders;
-            //    });
-            //});
-            UserService.GetCurrent().then(function (userResult) {
-                vm.user = userResult.data;
-                OrderService.GetAll().then(function (orderResult) {
-                    vm.orders = orderResult.data;
-                });
+            UserService.GetAllAddress().then(function (addrResult) {
+                vm.addresses = addrResult.delivery_address;
             });
 
         }
 
-        function showModal(order) {
-            vm.commentOrderData = order;
+        function showEditModal(addr) {
+            vm.editAddr = addr;
             vm.modalFlag = true;
         }
 
-        function hideModal() {
-            vm.commentOrderData = null;
+        function hideEditModal() {
+            vm.editAddr = null;
             vm.modalFlag = false;
         }
 
-        function confirmOrder(order_id) {
-            OrderService.ConfirmOrder(order_id).then(function (orderResult) {
-                vm.confirmOrderData = orderResult.data;
+        function setDefault(addr_id) {
+            UserService.SetDefaultAddress(addr_id).then(function (result) {
+            });
+        }
+
+        function deleteAddr(addr_id) {
+            UserService.DeleteAddress(addr_id).then(function (result) {
+
             });
         }
     }
