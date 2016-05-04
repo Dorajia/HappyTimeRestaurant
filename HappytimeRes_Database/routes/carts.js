@@ -49,7 +49,7 @@ router.post('/additem', passport.authenticate('jwt', { session: false}), functio
                     
             Cart.findOneAndUpdate(cart_id, update, options, function(err, data){
                 if (err) {
-                    return res.status(403).send({success: false, msg: 'Failed add item'});
+                    return res.status(403).send({success: false, msg: 'Failed add item in shopping cart'});
                     }
                 else {
                     return res.status(200).send({success: true, msg: 'Add item in shopping cart successful',data:data});

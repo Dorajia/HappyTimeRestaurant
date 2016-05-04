@@ -241,7 +241,7 @@ router.get('/getdefault', passport.authenticate('jwt', { session: false}), funct
           		if (err) {
                 return res.status(403).send({success: false, msg: 'Failed to get default address'});
           		}
-              else if (data.length === 0) {
+              else if (data.length===0) {
                 return res.status(403).send({success: true, msg: 'No default address'});
               }            		
           		else {
