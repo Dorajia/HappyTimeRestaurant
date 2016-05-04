@@ -13,6 +13,7 @@
 
     function Service($http, $q, $window) {
         var service = {};
+        //var apiServer = 'https://team6lbt-1160515858.us-west-2.elb.amazonaws.com';
         var apiServer = 'https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
 
         service.GetCurrent = GetCurrent;
