@@ -32,12 +32,12 @@ app.get('/', function (req, res) {
 
 //Xiaotong Part Start : 04/28/2016
 var fs = require('fs');
-app.use("/css",  express.static(__dirname + '/app/xiaotong/css'));
-app.use("/js", express.static(__dirname + '/app/xiaotong/js'));
-app.use("/images",  express.static(__dirname + '/app/xiaotong/images'));
-app.use("/controller",  express.static(__dirname + '/app/xiaotong/controller'));
-app.use("/fonts",  express.static(__dirname + '/app/xiaotong/fonts'));
-app.use("/img",  express.static(__dirname + '/app/xiaotong/img'));
+app.use("/css",  express.static(__dirname + '/app/css'));
+app.use("/js", express.static(__dirname + '/app/js'));
+app.use("/images",  express.static(__dirname + '/app/images'));
+app.use("/controller",  express.static(__dirname + '/app/controller'));
+app.use("/fonts",  express.static(__dirname + '/app/fonts'));
+app.use("/img",  express.static(__dirname + '/app/img'));
 
 var items = [{'image':'../images/shopping_cart_pink.png',
     'name':'Yu Xiang Rou Si',
@@ -188,9 +188,9 @@ app.get('/selectedItems' , function(req , res){
 
 
 // start server
-//var server = app.listen(process.env.PORT || 3000, function () {
-//    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
-//});
+var server = app.listen(process.env.PORT || 3000, function () {
+    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
+});
 
 
 // Add support for Https
@@ -202,7 +202,7 @@ var options = {
     cert: fs.readFileSync('cert/cert.pem')
 };
 
-http.createServer(app).listen(process.env.PORT || 3000);
+//http.createServer(app).listen(process.env.PORT || 3000);
 
 // Option 1
 //var server = https.createServer(options, app).listen(process.env.PORT || 3000, function() {
