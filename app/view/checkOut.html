@@ -107,10 +107,10 @@
 
                     </li>
                     <li>
-                        <a href="blog.html">Shopping Cart</a>
+                        <a href="/shoppingCart">Shopping Cart</a>
                     </li>
                     <li>
-                        <a href="contact.html">Profile</a>
+                        <a href="/app">Profile</a>
                     </li>
                 </ul>
             </div>
@@ -297,22 +297,45 @@
                     </div>
 
                     <div class="panel panel-default" ng-show = "pageCtrl == 3">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Payment Accepted!</h3>
-                        </div>
+                        <!--<div class="panel-heading">-->
+                            <!--<h3 class="panel-title"></h3>-->
+                        <!--</div>-->
                         <div class="panel-body">
-                            <h3>Your Food is on its way! Thank you !</h3>
+                            <h3>Payment Accepted! Your Food is on its way! Thank you !</h3>
                             <br>
                             <br>
                             <!--<a>make another order</a>-->
                             <br>
+                            <h5 style = 'text-align: center;'>Dishes Recommended To You</h5>
                             <hr>
                             <div class="row">
-                                <div class="col-xs-6 col-md-3">
+                                <div ng-repeat = 'recommendation in recommendations' class="col-xs-6 col-md-3">
                                     <a href="#" class="thumbnail">
-                                        <img src="../images/shopping_cart_pink.png" alt="...">
+                                        <img style = 'height: 150px; width: auto' ng-src="{{'../image/'+recommendation._id + '.jpg'}}" alt="...">
                                     </a>
+                                    <h6 style = 'text-align: center;'>{{recommendation._id}}</h6>
                                 </div>
+                                <!--<div ng-repeat = 'recommendation in recommendations' class="col-xs-6 col-md-3">-->
+                                    <!--<a href="#" class="thumbnail">-->
+                                        <!--<img style = 'height: 150px; width: auto' ng-src="{{'../image/'+recommendation._id + '.jpg'}}" alt="...">-->
+                                    <!--</a>-->
+                                    <!--<h6 style = 'text-align: center;'>{{recommendation._id}}</h6>-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-6 col-md-3">-->
+                                    <!--<a href="#" class="thumbnail">-->
+                                        <!--<img src="../images/shopping_cart_pink.png" alt="...">-->
+                                    <!--</a>-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-6 col-md-3">-->
+                                    <!--<a href="#" class="thumbnail">-->
+                                        <!--<img src="../images/shopping_cart_pink.png" alt="...">-->
+                                    <!--</a>-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-6 col-md-3">-->
+                                    <!--<a href="#" class="thumbnail">-->
+                                        <!--<img src="../images/shopping_cart_pink.png" alt="...">-->
+                                    <!--</a>-->
+                                <!--</div>-->
                             </div>
                         </div>
                     </div>

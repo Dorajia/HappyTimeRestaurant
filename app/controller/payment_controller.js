@@ -23,6 +23,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
     $scope.addCard = false;
     $scope.previousClass = "previous disabled";
     $scope.cardChoice = 0;
+    $scope.recommendations = []
     this.cards =[];
     this.shipAddress = this.addresses[0];
     this.payCard = this.cards[0];
@@ -48,7 +49,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
             $scope.generateOrder();
         }else{
             $scope.progress = ($scope.pageCtrl + 1) * 33;
-            console.log($scope.progressStyle);
+            //console.log($scope.progressStyle);
         }
         if($scope.pageCtrl == 0){
             $scope.progressStyle = "{width:'33%'}";
@@ -81,7 +82,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
                 //console.log(data);
                 parent.orders = data;
                 //$scope.badgeNum = this.items.length;
-                console.log(parent.orders);
+                //console.log(parent.orders);
                 for(i = 0 ; i < parent.orders.length ; i ++){
                     $scope.finalPrice += parent.orders[i].amount * parent.orders[i].price;
                 }
@@ -92,7 +93,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
 
         $http.get(hostname + '/delivery/getaddress')
             .success(function(data){
-                console.log(data);
+                //console.log(data);
                 parent.addresses = data.delivery_address;
                 parent.shipAddress = parent.addresses[0];
                 for(i = 0 ; i < parent.addresses.length ; i ++){
@@ -100,7 +101,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
                         parent.shipAddress = parent.addresses[i];
                     }
                 }
-                console.log(parent.shipAddress)
+                //console.log(parent.shipAddress)
                 //$scope.badgeNum = this.items.length;
             }).error(function(err){
             console.log('Err: ' + err);
@@ -108,11 +109,11 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
 
         $http.get(hostname + '/paycard/')
             .success(function(data){
-                console.log(data);
+                //console.log(data);
                 parent.cards= data;
-                console.log((parent.cards[0].card_number + '').substring(-4));
+                //console.log((parent.cards[0].card_number + '').substring(-4));
                 //parent.shipAddress = parent.addresses[0];
-                //console.log(parent.shipAddress)
+                //f(parent.shipAddress)
                 //$scope.badgeNum = this.items.length;
             }).error(function(err){
             console.log('Err: ' + err);
@@ -156,9 +157,9 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
     };
 
     $scope.changeShippingAddress = function(index){
-        console.log(index);
+        //console.log(index);
         parent.shipAddress = parent.addresses[index];
-        console.log(parent.shipAddress)
+        //console.log(parent.shipAddress)
     };
 
     $scope.addNewCard = function(){
@@ -214,9 +215,32 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
         //    }).error(function(err){
         //    console.log('Err: ' + err);
         //});
+        var path = '';
+        for(i = 0 ; i < parent.orders.length ; i ++){
+            path += parent.orders[i]._id + ',';
+        }
+        if(path.length > 0){
+            path = path.substring(0, path.length - 1);
+        }
+        //console.log(path);
+        //console.log(parent.orders.length);
+        $http.get(hostname + '/recommendation/' + path).success(function(data){
+        //$http.get(hostname + '/recommendation/Ramen,Beef Noodle').success(function(data){
+                if(data.length != 0){
+                    for(i = 0 ; i < Math.min(data.length , 4) ; i ++){
+                        $scope.recommendations.push(data[i]);
+                    }
+                    console.log($scope.recommendations)
+                }else{
+                    console.log('no recommendation');
+                }
+            }).error(function(err){
+                console.log('Err: ' + err);
+            });
+        //}
     }
     $scope.changePayCard= function(index){
         parent.payCard = parent.cards[index];
-        console.log(index);
+        //console.log(index);
     };
 }]);

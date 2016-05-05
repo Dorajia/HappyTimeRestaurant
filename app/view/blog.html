@@ -164,7 +164,7 @@
                                 <tbody>
                                 <tr   ng-repeat = "item in manager.items track by $index" >
                                     <td><input  type="checkbox" ng-model = "item.checked" ng-change = 'updatePrice()' style = 'vertical-align: middle;'  aria-label="..."></td>
-                                    <td><img style = "max-width:100px; height: auto; vertical-align: middle;" class = img ng-src="../images/shopping_cart_pink.png"></td>
+                                    <td><img style = "max-width:100px; height: auto; vertical-align: middle;" class = img ng-src="{{'../image/'+ item._id +'.jpg'}}"></td>
                                     <td style = 'vertical-align: middle;'>{{item._id}}</td>
                                     <td style="max-width: 200px; vertical-align: middle;">{{item.description}}</td>
                                     <td style = 'vertical-align: middle;'>${{item.dish_price}}</td>

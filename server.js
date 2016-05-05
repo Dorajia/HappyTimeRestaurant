@@ -44,6 +44,8 @@ var fs = require('fs');
 app.use("/css",  express.static(__dirname + '/app/css'));
 app.use("/js", express.static(__dirname + '/app/js'));
 app.use("/images",  express.static(__dirname + '/app/images'));
+app.use("/image",  express.static(__dirname + '/app/image'));
+
 app.use("/controller",  express.static(__dirname + '/app/controller'));
 app.use("/fonts",  express.static(__dirname + '/app/fonts'));
 app.use("/img",  express.static(__dirname + '/app/img'));
