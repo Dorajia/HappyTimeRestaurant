@@ -42,7 +42,7 @@
         ;
     }
 
-    function run($http, $rootScope, $window, $session) {
+    function run($http, $rootScope, $window) {
         // add JWT token as default auth header
         //$http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
         $http.defaults.headers.common['Authorization'] = $window.jwtToken;
