@@ -31,7 +31,7 @@ router.get('/getitems', passport.authenticate('jwt', { session: false}), functio
 
 
 //add item in shopping cart
-router.post('/additem', passport.authenticate('jwt', { session: false}), function(req, res) {
+/*router.post('/additem', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
@@ -60,8 +60,56 @@ router.post('/additem', passport.authenticate('jwt', { session: false}), functio
   } else {
     return res.status(403).send({success: false, msg: 'No token provided.'});
   }
-});
+});*/
 
+
+//add item in shopping cart
+router.post('/additem', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    Cart.findOne({
+      _id: decoded._id
+    }, function(err, cart) {
+        if (err)
+        return res.status(500).send({success: false, msg: err});
+        if (!cart) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          var found = cart.dish.id(req.body.name);
+          if (found != null){
+                var query={_id:decoded._id,'dish._id':req.body.name};
+                var update2 = {status:'active', $set:{'dish.$.dish_number':found.dish_number+1, 'dish.$.total':found.total+req.body.price}};
+                var options2 = {new: true};
+                Cart.findOneAndUpdate(query, update2, options2, function(err, data){
+                    if (err) {
+                        return res.status(403).send({success: false, msg: 'Failed add item in shopping cart.',err:err});
+                        }
+                    else {
+                        return res.status(200).send({success: true, msg: 'Add item in shopping cart successful!',data:data});
+                        }
+                    });              
+          }
+          else if (found ==null){
+            var cart_id = {_id:decoded._id};
+            var update = {status:'active', $push:{dish:{_id:req.body.name, description:req.body.description, dish_price:req.body.price,total:req.body.price}}};
+            var options = {new: true};
+                    
+            Cart.findOneAndUpdate(cart_id, update, options, function(err, data){
+                if (err) {
+                    return res.status(403).send({success: false, msg: 'Failed add item in shopping cart!'});
+                    }
+                else {
+                    return res.status(200).send({success: true, msg: 'Add item in shopping cart successful',data:data});
+                    }
+                });              
+          }
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
 
 //remove the whole item in shopping cart
 router.post('/removeitem/:name/:newtotal_price', passport.authenticate('jwt', { session: false}), function(req, res) {

@@ -9,8 +9,8 @@ var OrderDishSchema = new mongoose.Schema(
     	dish_price: Number,
     	dish_number:{type: Number, default:1},
     	description: String,
-    	checked: Boolean,
-    	total: Number
+    	checked: {type:Boolean,default:false},
+    	total: {type: Number,default : 0.0}
     });
 
 var CartSchema = new Schema({
