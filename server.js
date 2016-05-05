@@ -24,6 +24,15 @@ app.use('/login', require('./app/xiaotong/controller/login.controller'));
 app.use('/register', require('./app/xiaotong/controller/register.controller'));
 app.use('/app', require('./app/xiaotong/controller/app.controller'));
 
+
+// 05/05/2016, Jiongfeng
+app.use('/menu', require('./controller/menu.controller'));
+app.use('/menudetail', require('./controller/menudetail.controller'));
+app.use("/image",  express.static(__dirname + '/app/image'));
+app.use("/css2",  express.static(__dirname + '/app/jiongfeng/css'));
+app.use("/js2", express.static(__dirname + '/app/jiongfeng/js'));
+
+
 // make '/app' default route
 app.get('/', function (req, res) {
     return res.redirect('/app');
