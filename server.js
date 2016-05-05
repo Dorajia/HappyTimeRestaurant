@@ -38,7 +38,7 @@ app.use("/js2", express.static(__dirname + '/app/jiongfeng/js'));
 
 // make '/app' default route
 app.get('/', function (req, res) {
-    return res.redirect('/app');
+    return res.redirect('/menu');
 });
 
 
