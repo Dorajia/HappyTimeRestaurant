@@ -6,6 +6,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var expressJwt = require('express-jwt');
 var config = require('config.json');
+var hostname = 'https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/view');
@@ -196,6 +197,30 @@ app.get('/user/getaddress' , function(req , res){
 app.get('/selectedItems' , function(req , res){
     console.log(selectedItems.length);
     res.json(selectedItems);
+});
+
+app.get('/getDishDetail/:dish_name',function(req, res){
+    console.log(req.params.dish_name);
+    //req.get({
+    //        url: hostname + '/dish/findbyname/Egg Drop Soup',
+    //        json: true,
+    //        key: fs.readFileSync('cert/key.pem'),
+    //        cert: fs.readFileSync('cert/cert.pem'),
+    //        requestCert:        true,
+    //        rejectUnauthorized: false
+    //    },
+    //    function (error, response, body) {
+            var data = {
+                "_id": "Egg Drop Soup",
+                "dish_price": 3,
+                "dish_description": "broth and eggs",
+                "_catalog": "soup",
+                "dish_picture": ""
+            };
+            //res.render('menudetail',{dish: data});
+            res.send(data);
+            //res.redirect(returnUrl);
+        //});
 });
 //Xiaotong Part End : 04/28/2016
 

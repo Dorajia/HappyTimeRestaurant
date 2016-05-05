@@ -243,4 +243,13 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
         parent.payCard = parent.cards[index];
         //console.log(index);
     };
+    $scope.getDishDetail = function(index){
+        $http.get('/getDishDetail/' + $scope.recommendations[index]._id).success(function(data){
+            //console.log('get successfully')
+            //$window.location.= '/cart/checkout';
+            $window.location = '/menu2.ejs';
+        }).error(function(err){
+            console.log('Err: ' + err);
+        });
+    }
 }]);

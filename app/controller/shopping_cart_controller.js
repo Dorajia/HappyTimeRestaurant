@@ -140,9 +140,15 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
                 $scope.totalPrice += parent.items[i].dish_price * parent.items[i].dish_number;
             }
         }
+        $scope.totalPrice = $scope.totalPrice.toFixed(2)
     }
 
     $scope.getShoppingCart = function(){
+        $http.get('/app/token').success(function(data){
+            console.log(data);
+        }).error(function(err){
+            console.log(err)
+        });
         $http.get(hostname + '/cart/getitems')
             .success(function(data){
                 console.log(data);
@@ -154,6 +160,7 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
             }).error(function(err){
                 console.log('Err: ' + err);
         });
+
     }
 
     $scope.checkOut = function(){
