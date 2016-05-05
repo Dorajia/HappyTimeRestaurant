@@ -74,7 +74,7 @@ var selectedItems = []
 var handle_get = function (req, res) {
     console.log( "Get: ..." ) ;
     //body = fs.readFileSync(__dirname + '/app/xiaotong/view/ShoppingCart.html');
-    body = fs.readFileSync(__dirname + '/app/xiaotong/view/blog.html');
+    body = fs.readFileSync(__dirname + '/app/view/blog.html');
 
     res.setHeader('Content-Type', 'text/html');
     res.writeHead(200);
@@ -120,7 +120,7 @@ app.post('/cart/checkout', function(req,  res){
 
 app.get('/cart/checkout', function(req,  res){
     //body = fs.readFileSync(__dirname + '/app/xiaotong/view/Payment.html');
-    body = fs.readFileSync(__dirname + '/app/xiaotong/view/checkOut.html');
+    body = fs.readFileSync(__dirname + '/app/view/checkOut.html');
 
     res.setHeader('Content-Type', 'text/html');
     res.writeHead(200);
