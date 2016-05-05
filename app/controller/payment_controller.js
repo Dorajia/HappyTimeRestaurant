@@ -244,12 +244,29 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
         //console.log(index);
     };
     $scope.getDishDetail = function(index){
-        $http.get('/getDishDetail/' + $scope.recommendations[index]._id).success(function(data){
-            //console.log('get successfully')
-            //$window.location.= '/cart/checkout';
-            $window.location = '/menu2.ejs';
-        }).error(function(err){
-            console.log('Err: ' + err);
-        });
+        //$http.get('/getDishDetail/' + $scope.recommendations[index]._id).success(function(data){
+        //    //console.log('get successfully')
+        //    //$window.location.= '/cart/checkout';
+        //    $window.location = '/menu2.ejs';
+        //}).error(function(err){
+        //    console.log('Err: ' + err);
+        //});
+        //var dishname = selectDish._id;
+        //var dishname = $scope.showDish._id;
+
+        //alert("push local finished");
+        //alert(dishname);
+        //$scope.pro = {};//empty the modal value
+        $http.post('/menudetail/menudetail',{data: 'Ramen'})
+            .then(function(res){
+                //$location.path('menudetail');
+                if(res.status == "200"){
+                    //alert(res.data);
+                    //alert("_id"+res.data._id);
+                    //alert(res.status);
+                    var resdata= JSON.stringify(res.data); //return project
+                    //alert(resdata);
+                    window.location="/menudetail?dish=1";
+                }});
     }
 }]);
