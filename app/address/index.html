@@ -23,17 +23,17 @@
                 <td id = "default_flag">{{address.isdefault}}</td>
                 <td>
                     <div class="btn-group">
-                        <button class="btn btn-primary" ng-disabled="address.isdefault" ng-click="vm.setDefault(address._id)">Set Default</button>
+                        <button class="btn btn-primary" ng-disabled="address.isdefault" ng-click="vm.setDefault(address._id)" style="background-color:dimgray; border: none">Set Default</button>
                     </div>
                 </td>
                 <td>
                     <div class="btn-group">
-                        <button class="btn btn-primary" ng-click="vm.showEditModal(address)">Edit</button>
+                        <button class="btn btn-primary" ng-click="vm.showEditModal(address)" style="background-color:dimgray; border: none">Edit</button>
                     </div>
                 </td>
                 <td>
                     <div class="btn-group">
-                        <button class="btn btn-primary" ng-click="vm.deleteAddr(address._id)">Delete</button>
+                        <button class="btn btn-primary" ng-click="vm.deleteAddr(address._id)" style="background-color:dimgray; border: none">Delete</button>
                     </div>
                 </td>
             </tr>

@@ -19,13 +19,13 @@
                 <td id = "confirm_time">{{order.confirm_time}}</td>
                 <td>
                     <div class="btn-group">
-                        <button class="btn btn-primary" ng-disabled="order.confirm_time != null" ng-click="vm.confirmOrder(order._id)">Confirm</button>
+                        <button class="btn btn-primary" ng-disabled="order.confirm_time != null" ng-click="vm.confirmOrder(order._id)" style="background-color:dimgray; border: none">Confirm</button>
                     </div>
 
                 </td>
                 <td>
                     <div class="btn-group">
-                        <button class="btn btn-primary" ng-disabled="order.confirm_time == null" ng-click="vm.showModal(order)">Comment</button>
+                        <button class="btn btn-primary" ng-disabled="order.confirm_time == null" ng-click="vm.showModal(order)" style="background-color:dimgray; border: none">Comment</button>
                     </div>
                 </td>
             </tr>
@@ -76,7 +76,7 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-primary" ng-click="vm.submitComment(dish, $index)">Comment</button>
+                                <button class="btn btn-primary" ng-click="vm.submitComment(dish, $index)" style="background-color:dimgray; border: none">Comment</button>
                             </div>
                         </td>
                     </tr>
@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        <button class="btn btn-danger" ng-click="vm.hideModal()">Done</button>
+        <button class="btn btn-danger" ng-click="vm.hideModal()" style="background-color:dimgray; border: none">Done</button>
 
     </modal>
 
