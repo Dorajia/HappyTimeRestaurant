@@ -98,7 +98,8 @@ var handle_get = function (req, res) {
 var queryString = require( "querystring" );
 var url = require( "url" );
 
-app.get('/shoppingCart' , handle_get);
+//app.get('/shoppingCart' , handle_get);
+app.get('/app/shoppingCart' , handle_get);
 
 app.get('/cart/getitems' , function(req , res){
     res.json(items);
@@ -133,7 +134,8 @@ app.post('/cart/checkout', function(req,  res){
     //res.redirect('/cart/checkout');
 });
 
-app.get('/cart/checkout', function(req,  res){
+//app.get('/cart/checkout', function(req,  res){
+app.get('/app/cart/checkout', function(req,  res){
     //body = fs.readFileSync(__dirname + '/app/xiaotong/view/Payment.html');
     body = fs.readFileSync(__dirname + '/app/view/checkOut.html');
 

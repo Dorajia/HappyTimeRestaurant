@@ -98,6 +98,9 @@ router.post('/menudetail', function (req, res) {
 
 
 router.post('/addtocart', function (req, res) {
+    if (req.session.token) {
+
+    }
     // authenticate using api to maintain clean separation between layers
 	console.log("ax---------------")
     request.post({
