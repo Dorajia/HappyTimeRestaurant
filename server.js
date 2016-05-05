@@ -9,7 +9,7 @@ var config = require('config.json');
 var hostname = 'https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
 
 app.set('view engine', 'ejs');
-app.set('views', __dirname + '/view');
+app.set('views', __dirname + '/app/view');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(session({ secret: config.secret, resave: false, saveUninitialized: true }));
