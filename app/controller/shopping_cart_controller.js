@@ -39,7 +39,7 @@ app.config(function($httpProvider){
 //                 'total':36.00,
 //                 'checked':false}
 //            ];
-console.log(items[1]);
+//console.log(items[1]);
 //var total = 104.00;
 app.controller('cartmanager',['$scope','$window', '$http', function($scope , $window , $http){
     //$http.defaults.headers.common.Authorization = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiJ0ZXN0dXNlciIsInBhc3N3b3JkIjoiJDJhJDEwJC8wYW5TT1pKbVAyRXJaV2V0d1lZTS5tMktKcjZHOW9rQ3lJTTBWcWJucGpOMTdodkZmL2UyIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiZGVsaXZlcnlfYWRkcmVzcyI6W10sIl9fdiI6MCwiX2RlbGl2ZXJ5X2FkZHJlc3MiOltdLCJwaG9uZSI6W3siX2lkIjoxMjM0NX1dfQ.urk51-SRuYecTycrzwYjgSbkh7_q6yHfCQduTnUo7eg";
