@@ -20,9 +20,12 @@ app.use('/api', expressJwt({ secret: config.secret }).unless({ path: ['/api/user
 //app.use('/login', require('./controller/login.controller'));
 //app.use('/register', require('./controller/register.controller'));
 //app.use('/app', require('./controller/app.controller'));
-app.use('/login', require('./app/xiaotong/controller/login.controller'));
-app.use('/register', require('./app/xiaotong/controller/register.controller'));
-app.use('/app', require('./app/xiaotong/controller/app.controller'));
+//app.use('/login', require('./app/xiaotong/controller/login.controller'));
+//app.use('/register', require('./app/xiaotong/controller/register.controller'));
+//app.use('/app', require('./app/xiaotong/controller/app.controller'));
+app.use('/login', require('./app/controller/login.controller'));
+app.use('/register', require('./app/controller/register.controller'));
+app.use('/app', require('./app/controller/app.controller'));
 
 
 // 05/05/2016, Jiongfeng
