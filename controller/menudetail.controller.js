@@ -109,7 +109,12 @@ router.post('/addtocart', function (req, res) {
             headers: {
                 Authorization: req.session.token
             },
-            form: {name: req.body.name, price: req.body.price, description: req.body.description, amount: req.body.quantity},
+            form: {
+                name: req.body.name,
+                price: req.body.price,
+                description: req.body.description,
+                amount: req.body.quantity
+            },
             json: true,
             key: fs.readFileSync('cert/key.pem'),
             cert: fs.readFileSync('cert/cert.pem'),
@@ -117,7 +122,7 @@ router.post('/addtocart', function (req, res) {
             rejectUnauthorized: false
 
         }, function (error, response, body) {
-            if (error || body.msg != 'Add item in shopping cart successful') {
+            if (error || !body.success) {
                 return res.render('menu', { error: 'An error occurred' });
             }
 
@@ -131,7 +136,7 @@ router.post('/addtocart', function (req, res) {
             // redirect to returnUrl
             //var returnUrl = req.query.returnUrl && decodeURIComponent(req.query.returnUrl) || '/';
 
-            return;
+            return res.redirect('/app/shoppingcart');
             //res.redirect('menu');
         });
 
