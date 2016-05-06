@@ -9,38 +9,7 @@ var hostname = 'https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
 app.config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
-//
-//var items = [{'image':'../images/shopping_cart_pink.png',
-//              'name':'Yu Xiang Rou Si',
-//              'description':'This is a traditional sichuan food',
-//              'price':10.00,
-//              'amount':1,
-//              'total':10.00,
-//                'checked':false},
-//             {'image':'../images/shopping_cart_pink.png',
-//                 'name':'Wudong Noodle',
-//                 'description':'This is a traditional noodle',
-//                 'price':13.00,
-//                 'amount':1,
-//                 'total':13.00,
-//                 'checked':false},
-//             {'image':'../images/shopping_cart_pink.png',
-//                 'name':'Kungpo Chicken',
-//                 'description':'This is a delicious sichuan food',
-//                 'price':15.00,
-//                 'amount':3,
-//                 'total':45.00,
-//                 'checked':false},
-//             {'image':'../images/shopping_cart_pink.png',
-//                 'name':'QQ Noodle',
-//                 'description':'This is a good noodle...try it',
-//                 'price':9.00,
-//                 'amount':4,
-//                 'total':36.00,
-//                 'checked':false}
-//            ];
-//console.log(items[1]);
-//var total = 104.00;
+
 app.controller('cartmanager',['$scope','$window', '$http', function($scope , $window , $http){
     //$http.defaults.headers.common.Authorization = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiJ0ZXN0dXNlciIsInBhc3N3b3JkIjoiJDJhJDEwJC8wYW5TT1pKbVAyRXJaV2V0d1lZTS5tMktKcjZHOW9rQ3lJTTBWcWJucGpOMTdodkZmL2UyIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiZGVsaXZlcnlfYWRkcmVzcyI6W10sIl9fdiI6MCwiX2RlbGl2ZXJ5X2FkZHJlc3MiOltdLCJwaG9uZSI6W3siX2lkIjoxMjM0NX1dfQ.urk51-SRuYecTycrzwYjgSbkh7_q6yHfCQduTnUo7eg";
     $http.defaults.headers.common.Authorization = '';
@@ -51,9 +20,13 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
     $scope.allCheck = false;
     //var hostname = 'http://demo3227827.mockable.io/'
     var selectedItems = []
-    //for(i = 0; i < this.items.length; i ++){
-    //    $scope.totalPrice += this.items[i].price * this.items[i].amount;
-    //}
+    $scope.menu_list = ['starter',
+        'dumpling',
+        'noodle',
+        'rice',
+        'beverage',
+        'dessert',
+        'soup'];
 
     $scope.increment =function(index){
 
@@ -157,7 +130,7 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
                 .success(function(data){
                     console.log(data);
                     parent.items = data.dish;
-                    $scope.badgeNum = this.items.length;
+                    $scope.badgeNum = parent.items.length;
                     if(parent.items.length == 0){
                         $scope.empty = true
                     }

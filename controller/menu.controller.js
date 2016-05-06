@@ -27,7 +27,7 @@ router.get('/', function (req, res) {
             return console.log("response.statusCode: " + response)
         }
         
-       console.log("response.statusCode: " + response.statusCode);
+       //console.log("response.statusCode: " + response.statusCode);
        
        var jsonob =JSON.parse(response.body)
        for(var indexm in jsonob){
@@ -37,7 +37,7 @@ router.get('/', function (req, res) {
    		}
        
        //var p = JSON.stringify(response.body);
-       console.log("response.body: " + response.body);
+       //console.log("response.body: " + response.body);
    	
        /*for(var indexm in p){
     		for (var indexn in p[indexm]._dish){
@@ -64,13 +64,19 @@ router.get('/', function (req, res) {
 router.get('/:catalog', function (req, res, next) {
     
 	
-	
+	var url = '';
+    var tmp = "\'" + req.params.catalog + "\'";
+
+    if (req.params.catalog != 'alldish'){
+        url = '/dish/findbycatalog/' + req.params.catalog;
+    }else{
+        tmp = "\'" + 'All the Dishes' + "\'";
+        url = '/dish/getalldish';
+    }
 	//http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/dish/findbycatalog/Noodle
 	//console.log(req.params.catalog);
 	request.get({
-        url: awsUrl + '/dish/findbycatalog/' + req.params.catalog,//'Noodle', //req.params.catalog,
-       // form: req.body,
-        //json: true
+        url: awsUrl + url,//'Noodle', //req.params.catalog,
         key: fs.readFileSync('cert/key.pem'),
         cert: fs.readFileSync('cert/cert.pem'),
         requestCert: true,
@@ -84,33 +90,15 @@ router.get('/:catalog', function (req, res, next) {
             return console.log("response.statusCode: " + response)
         }
         //console.log(url);
-       console.log("response.statusCode: " + response.statusCode);
-       
-       /*var jsonob =JSON.parse(response.body)
-       for(var indexm in jsonob){
-    	   //output catalog list
-    	   var strm = JSON.stringify(jsonob[indexm]);
-    	   console.log("dish: " + strm); 
-    	   //output dishes list in one catalog
-   		   for (var indexn in jsonob[indexm]._dish){
-   				console.log("dish: " + JSON.stringify(jsonob[indexm]._dish[indexn]));
-   			}
-   		}*/
+       //console.log("response.statusCode: " + response.statusCode);
+
        
        var p = JSON.stringify(response.body);
-       console.log("response.body0-new: " + response.body);
-       console.log("response.body1-new: " + p);
-   	
-       /*for(var indexm in p){
-    		for (var indexn in p[indexm]._dish){
-    			console.log("dish: " + p[indexm]._dish[indexn]);
-    		}
-    	}*/
+       //console.log("response.body0-new: " + response.body);
+       //console.log("response.body1-new: " + p);
+		//
 
-       return res.render('menu2', {catalog:"empty", dishes: response.body});
-
-      // res.render('menudetail', {dish: response.body});
-      // return;
+       return res.render('menu_list', {catalog:"empty", dishes: response.body,  dish_list_headline: tmp});
     });
 	
 	
@@ -118,6 +106,29 @@ router.get('/:catalog', function (req, res, next) {
 });
 
 
+//router.get('/all', function (req, res, next) {
+//	request.get({
+//		url: awsUrl + '/dish/getalldish',
+//		key: fs.readFileSync('cert/key.pem'),
+//		cert: fs.readFileSync('cert/cert.pem'),
+//		requestCert: true,
+//		rejectUnauthorized: false
+//	}, function (error, response, body) {
+//		if (error) {
+//			return console.log("error1");
+//		}
+//
+//		if (response.statusCode !== 200 ) {
+//			return console.log("response.statusCode: " + response)
+//		}
+//        var p = JSON.stringify(response.body);
+//        console.log(res.body.length);
+//		return res.render('menu_list', {catalog:"empty", dishes: response.body,  dish_list_headline: "\'ALL THE DISHES\'"});
+//	});
+//
+//
+//
+//});
 
 router.get('/menu', function (req, res) {
     

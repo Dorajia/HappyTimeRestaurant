@@ -15,6 +15,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
     var parent = this;
     $scope.anynum = 0;
     this.addresses = [];
+
     $scope.complete = false;
     $scope.progressStyle = "{width:'33%'}";
     $scope.progress = 33;

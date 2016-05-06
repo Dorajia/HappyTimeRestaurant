@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="menu" >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="myApp" >
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,11 +52,80 @@
       <!--<link rel="icon" href="favicon.ico" />-->
       <![endif]-->
 
-      <script type = 'text/javascript' src = '../controller/menu_controller.js'></script>
+      <!--<script type = 'text/javascript' src = '../controller/menu_controller.js'></script>-->
   </head>
+  <!--<script type = text/javascript>-->
+      <script >
+      var app = angular.module('myApp', []);
+      app.controller('menu', function($scope,$http) {
+          this.dishes = [];
+          var parent = this;
+          var productList= [
+              {"_id":"HEL Co","_catalog":"2","price":"3" },
+              {"_id":"2","_catalog":"22","price":"33" },
+              {"_id":"3","_catalog":"2","price":"3" },
+              {"_id":"4","_catalog":"22","price":"33" },
+              {"_id":"5","_catalog":"2","price":"3" },
+              {"_id":"ac bb","_catalog":"22","price":"33" }
+          ]
+          $scope.products = productList;
+          $scope.slidepic1 = "special-beef.jpg"
+          $scope.slidepic2 = "special-Boeuf Bourgignon.jpg"
+          $scope.testvalue = "maincourse beef.jpg";
+          $scope.slidepic2 = "special-Chop Suey.jpg";
+
+          var testp = <%- JSON.stringify(catalog)%>;
+          if (testp !="empty") {
+              //alert("succeed-start parsing");
+              var testp = <%- JSON.stringify(catalog)%>;
+              var p2 = JSON.parse(testp);
+              //alert(':'+p2[0]._id);
+              //alert("succeed");
+          }
+          var testdish = <%- JSON.stringify(dishes)%>;
+          if (testdish !="empty") {
+              //alert("succeed-start parsing");
+              var testp = <%- JSON.stringify(dishes)%>;
+          }
+          parent.dishes = <%-dishes%>;
+
+          $scope.dish_list_headline = <%-dish_list_headline%>;
+
+          $scope.menu_list = ['starter',
+              'dumpling',
+              'noodle',
+              'rice',
+              'beverage',
+              'dessert',
+              'soup'];
+          $scope.viewDetail = function(selectDish){
+
+              var dishname = selectDish._id;
+
+              $http.post('/menudetail/menudetail',{data: dishname})
+                      .then(function(res){
+                          //$location.path('menudetail');
+                          if(res.status == "200"){
+                              //alert(res.data);
+                              //alert("_id"+res.data._id);
+                              //alert(res.status);
+                              var resdata= JSON.stringify(res.data); //return project
+                              //alert(resdata);
+                              window.location="/menudetail?dish=1";
+                          }
+                      });
+          }
+
+//          $scope.setTitle = function(index){
+//              $scope.dish_list_headline = parent.dishes[index]._id;
+//              console.log( $scope.dish_list_headline);
+//          };
+      });
+
+  </script>
 <!-- NAVBAR
 ================================================== -->
-  <body ng-controller="menu_controller as mc">
+  <body ng-controller="menu as mc">
   <div class="brand">Happy Time Restaurant</div>
   <!--<div class="address-bar">3481 Melrose Place | Beverly Hills, CA 90210 | 123.456.7890</div>-->
   <div class="address-bar">1 Washington Sq | San Jose, CA 95192 | 123.456.7890</div>
@@ -84,7 +153,7 @@
                   <li class="dropdown">
                       <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                          <li ng-repeat = 'category in menu_list track by $index'><a ng-href = "{{'/menu/' + category}}" >{{category}}</a></li>
+                          <li  ng-repeat = 'category in menu_list track by $index' ><a ng-click = setTitle($index) ng-href = "{{'/menu/' + category}}" >{{category}}</a></li>
                           <li role="separator" class="divider"></li>
                           <li><a href="/menu/alldish">All</a></li>
                       </ul>
@@ -104,52 +173,8 @@
   </nav>
 
   <div class="container">
-  <div class="row">
-      <div class="box">
-          <div class="col-lg-12 text-center">
-              <div id="carousel-example-generic" class="carousel slide">
-                  <!-- Indicators -->
-                  <ol class="carousel-indicators hidden-xs">
-                      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                  </ol>
 
-                  <!-- Wrapper for slides -->
-                  <div class="carousel-inner">
-                      <div class="item active">
-                          <img class="img-responsive img-full" src="/image/special-beef.jpg" alt="">
-                      </div>
-                      <div class="item">
-                          <img class="img-responsive img-full" src="/image/special-Boeuf Bourgignon.jpg" alt="">
-                      </div>
-                      <div class="item">
-                          <img class="img-responsive img-full" src="/image/special-Chop Suey.jpg" alt="">
-                      </div>
-                  </div>
-
-                  <!-- Controls -->
-                  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                      <span class="icon-prev"></span>
-                  </a>
-                  <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                      <span class="icon-next"></span>
-                  </a>
-              </div>
-              <h2 class="brand-before">
-                  <small>Welcome to</small>
-              </h2>
-              <h1 class="brand-name">Happy Time Restaurant</h1>
-              <hr class="tagline-divider">
-              <!--<h2>-->
-                  <!--<small>By-->
-                      <!--<strong>Start Bootstrap</strong>-->
-                  <!--</small>-->
-              <!--</h2>-->
-          </div>
-      </div>
-  </div>
-      <div ng-show = 'showDishList' class="row">
+      <div  class="row">
           <div class="box">
               <div class="col-lg-12">
                   <hr>
@@ -164,15 +189,15 @@
       <!-- Three columns of text below the carousel -->
        <!--Menu Row1 carousel -->
 
-        <!--<div class="row">-->
-        <!--<div class="col-lg-4" ng-repeat="p in mc.dishes" ng-click="viewDetail(p)" >-->
-          <!--<img class="img-circle" ng-src="{{'/image/' + p._id + '.jpg'}}" alt="Generic placeholder image" width="200" height="200">-->
-          <!--<div class= "div-height-headline"> <h5>{{p._id}}</h5></div>-->
-          <!--&lt;!&ndash;<div class= "div-height-descript"><p>{{p.dish_description}}. .</p></div>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p><a class="btn btn-default" href="" role="button" >View details &raquo;</a></p>&ndash;&gt;-->
-        <!--</div>&lt;!&ndash; /.col-lg-4 &ndash;&gt;-->
+        <div class="row">
+        <div class="col-lg-4" ng-repeat="p in mc.dishes" ng-click="viewDetail(p)" >
+          <img class="img-circle" ng-src="{{'/image/' + p._id + '.jpg'}}" alt="Generic placeholder image" width="200" height="200">
+          <div class= "div-height-headline"> <h5>{{p._id}}</h5></div>
+          <!--<div class= "div-height-descript"><p>{{p.dish_description}}. .</p></div>-->
+          <!--<p><a class="btn btn-default" href="" role="button" >View details &raquo;</a></p>-->
+        </div><!-- /.col-lg-4 -->
 
-     <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
+     </div><!-- /.row -->
 
 
 
