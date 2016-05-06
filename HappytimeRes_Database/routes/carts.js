@@ -29,40 +29,6 @@ router.get('/getitems', passport.authenticate('jwt', { session: false}), functio
   }
 });
 
-
-//add item in shopping cart
-/*router.post('/additem', passport.authenticate('jwt', { session: false}), function(req, res) {
-  var token = gettoken(req.headers);
-  if (token) {
-    var decoded = jwt.decode(token, config.secret);
-    Cart.findOne({
-      _id: decoded._id
-    }, function(err, cart) {
-        if (err)
-        return res.status(500).send({success: false, msg: err});
-        if (!cart) {
-          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
-        } else {
-          	var cart_id = {_id:decoded._id};
-            var update = {total_price:req.body.total_price,status:'active', $push:{dish:{_id:req.body.name, description:req.body.description, dish_price:req.body.price, dish_number:req.body.amount,checked:req.body.checked,total:req.body.total}}};
-            var options = {new: true};
-                    
-            Cart.findOneAndUpdate(cart_id, update, options, function(err, data){
-                if (err) {
-                    return res.status(403).send({success: false, msg: 'Failed add item in shopping cart'});
-                    }
-                else {
-                    return res.status(200).send({success: true, msg: 'Add item in shopping cart successful',data:data});
-                    }
-                });
-        }
-    });
-  } else {
-    return res.status(403).send({success: false, msg: 'No token provided.'});
-  }
-});*/
-
-
 //add item in shopping cart
 router.post('/additem', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
@@ -77,9 +43,10 @@ router.post('/additem', passport.authenticate('jwt', { session: false}), functio
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
           var found = cart.dish.id(req.body.name);
+          totalprice = Number(req.body.amount) * Number(req.body.price);
           if (found != null){
                 var query={_id:decoded._id,'dish._id':req.body.name};
-                var update2 = {status:'active', $set:{'dish.$.dish_number':found.dish_number+1, 'dish.$.total':found.total+req.body.price}};
+                var update2 = {status:'active', $set:{'dish.$.dish_number':found.dish_number+req.body.amount, 'dish.$.total':found.total+totalprice}};
                 var options2 = {new: true};
                 Cart.findOneAndUpdate(query, update2, options2, function(err, data){
                     if (err) {
@@ -92,7 +59,7 @@ router.post('/additem', passport.authenticate('jwt', { session: false}), functio
           }
           else if (found ==null){
             var cart_id = {_id:decoded._id};
-            var update = {status:'active', $push:{dish:{_id:req.body.name, description:req.body.description, dish_price:req.body.price,total:req.body.price}}};
+            var update = {status:'active', $push:{dish:{_id:req.body.name, description:req.body.description, dish_price:req.body.price,total:totalprice,dish_number:req.body.amount}}};
             var options = {new: true};
                     
             Cart.findOneAndUpdate(cart_id, update, options, function(err, data){
@@ -158,7 +125,7 @@ router.post('/changenumber/:name/:newprice/:newnumber/:newtotal_price', passport
         } else {
           //$set: {'dish.$.dish_number':2
           	var cart_id = {_id:decoded._id,"dish._id":req.params.name};
-            var update = {total_price:req.params.newtotal_price,status:'active', $set:{'dish.$.dish_number':req.params.newnumber,'dish.$.dish_price':req.params.newprice}};
+            var update = {total_price:req.params.newtotal_price,status:'active', $set:{'dish.$.dish_number':req.params.newnumber,'dish.$.total':req.params.newprice}};
             var options = {new: true};
                     
             Cart.findOneAndUpdate(cart_id, update, options, function(err, data){
@@ -175,47 +142,6 @@ router.post('/changenumber/:name/:newprice/:newnumber/:newtotal_price', passport
     return res.status(403).send({success: false, msg: 'No token provided.'});
   }
 });
-
-//Place order.
-/*router.get('/placeorder/:restaurant/:street/:city/:state/:zip/:phone', passport.authenticate('jwt', { session: false}), function(req, res) {
-  var token = gettoken(req.headers);
-  if (token) {
-    var decoded = jwt.decode(token, config.secret);
-    Cart.findOne({
-      _id: decoded._id
-    }, function(err, cart) {
-        if (err)
-        return res.status(500).send({success: false, msg: "Failed to get shopping cart"});
-        if (!cart) {
-          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
-        } else {
-          cart.placeOrder(req.params.restaurant,req.params.street,req.params.city,req.params.state,req.params.zip,req.params.phone,function(err,order)
-          {
-              if(err) 
-                 return res.json(err);
-          	  else{
-                  	var cart_id = {_id:decoded._id};
-                    var update = {total_price:0,status:'Empty', dish:[]};
-                    var options = {new: true};
-                  	Cart.findOneAndUpdate(cart_id, update, options,function(err, cart){
-                  		if (err) {
-                      return res.status(500).send({success: false, msg: "Failed to remove items from shopping cart"});
-                  		}
-                  		else if (cart.length===0) {
-                      return res.status(500).send({success: false, msg: "Can't find shopping cart"});
-                  		}
-                  		else {
-                      return res.status(200).send({success: true, msg: "place order successful", data:order});
-                  		}
-                  	});
-          	  }
-          });
-        }
-    });
-  } else {
-    return res.status(403).send({success: false, msg: 'No token provided.'});
-  }
-});*/
 
 router.post('/placeorder', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = gettoken(req.headers);
