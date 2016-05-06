@@ -15,7 +15,13 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
     var parent = this;
     $scope.anynum = 0;
     this.addresses = [];
-
+    $scope.menu_list = ['starter',
+        'dumpling',
+        'noodle',
+        'rice',
+        'beverage',
+        'dessert',
+        'soup'];
     $scope.complete = false;
     $scope.progressStyle = "{width:'33%'}";
     $scope.progress = 33;

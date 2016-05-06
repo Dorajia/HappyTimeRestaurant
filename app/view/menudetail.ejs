@@ -65,7 +65,13 @@
 		]
 		$scope.products = productList;
 		//alert("succeed222");
-
+        $scope.menu_list = ['starter',
+            'dumpling',
+            'noodle',
+            'rice',
+            'beverage',
+            'dessert',
+            'soup'];
 		$scope.quantity = 1;
 		$scope.clickplus = function(){
 			$scope.quantity = $scope.quantity + 1;
@@ -207,11 +213,11 @@
 				</li>
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li  ng-repeat = 'category in menu_list track by $index' ><a ng-click = setTitle($index) ng-href = "{{'/menu/' + category}}" >{{category}}</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="/menu/alldish">All</a></li>
-					</ul>
+                    <ul class="dropdown-menu">
+                        <li  ng-repeat = 'category in menu_list track by $index' ><a ng-click = setTitle($index) ng-href = "{{'/menu/' + category}}" >{{category}}</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/menu/alldish">All</a></li>
+                    </ul>
 					<!--starter, main course, noodle, rice, beverage, dessert, soup-->
 
 				</li>
