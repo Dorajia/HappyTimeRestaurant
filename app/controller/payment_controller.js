@@ -94,7 +94,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
                 //$scope.badgeNum = this.items.length;
                 //console.log(parent.orders);
                 for(i = 0 ; i < parent.orders.length ; i ++){
-                    $scope.finalPrice += parent.orders[i].amount * parent.orders[i].price;
+                    $scope.finalPrice += parent.orders[i].dish_number * parent.orders[i].dish_price;
                 }
 
             }).error(function(err){
