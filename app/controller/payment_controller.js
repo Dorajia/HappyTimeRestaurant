@@ -210,16 +210,16 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
             'orderItems': parent.orders,
             'totalprice': $scope.finalPrice
         }
-        //$http.post(hostname + '/cart/placeorder', data)
-        //    .success(function(data){
-        //        console.log(data);
-        //        //parent.addresses = data.delivery_address;
-        //        //parent.shipAddress = parent.addresses[0];
-        //        console.log(parent.shipAddress)
-        //        //$scope.badgeNum = this.items.length;
-        //    }).error(function(err){
-        //    console.log('Err: ' + err);
-        //});
+        $http.post(hostname + '/cart/placeorder', data)
+            .success(function(data){
+                console.log(data);
+                //parent.addresses = data.delivery_address;
+                //parent.shipAddress = parent.addresses[0];
+                console.log(parent.shipAddress)
+                //$scope.badgeNum = this.items.length;
+            }).error(function(err){
+            console.log('Err: ' + err);
+        });
         var path = '';
         for(i = 0 ; i < parent.orders.length ; i ++){
             path += parent.orders[i]._id + ',';
