@@ -261,15 +261,75 @@
 					<!--<strong>1 Washington Sq-->
 						<!--<br>San Jose, CA 95192</strong>-->
 				<!--</p>-->
-                <!--<span class = 'text-center'>-->
+                <!--<span class = 'pull-left'>-->
                 <hr>
                 <h2 class="intro-text text-center">{{dishes[0]._id}}
                 </h2>
                 <hr>
+                    <!--</span>-->
                 <div class="row">
-                    <div class="box">
+                    <!--<p >-->
+                         <h6 class = 'text-center'>Shipped by <strong>Happy Time Restaurant</strong>.</h6>
+                    <!--</p>-->
+                </div>
 
+                <div class="row">
+                    <h6 class = 'text-center'>Available by Wednesday</h6>
+                </div>
+                <div class="row">
+                    <p class = 'text-center'>
+
+                    </p>
+                </div>
+                <div class="row">
+                    <p class = 'text-center'>
+
+                    </p>
+                </div>
+                <div class="row">
+                    <p class = 'text-center'>
+
+                    </p>
+                </div>
+                <div class="row">
+                    <p class = 'text-center'>
+
+                    </p>
+                </div>
+                <div class="row">
+                    <p class = 'text-center'>
+
+                    </p>
+                </div>
+                <div class="row">
+                    <p class = 'text-center'>
+
+                    </p>
+                </div>
+                <div class="row" style = 'width: 300px;padding: 25px'>
+
+                </div>
+                <div class="row" style = 'width: 450px;padding: 25px'>
+                    <p class = 'text-left'>
+                        Price : ${{dishes[0].dish_price}}/Count
+                    </p>
+                    <form method="post" class="addToCartForm" action="/menudetail/addtocart" target="shopping-cart">
+                        <span class = 'pull-right'>
+                        <button type="submit" class="btn btn-default" style = 'height: 30px'>Add to Shopping Cart</button>
+                        </span>
+                        <input type="hidden" name="name" value="{{dishes[0]._id}}" />
+                        <input type="hidden" name="description" value="{{dishes[0].dish_description}}" />
+                        <input type="hidden" name="price" value="{{dishes[0].dish_price}}" />
+                    <div class="input-group input-group-sm" style = "width: 90px">
+										<span class="input-group-btn">
+                         				<button class="btn btn-default" type="button" ng-click="clickminus()">-</button>
+                    					</span>
+                        <input type="text" class="form-control" ng-model="quantity" placeholder='1' name="quantity">
+                     					<span class="input-group-btn">
+                         				<button class="btn btn-default" type="button" ng-click="clickplus()">+</button>
+                    					</span>
                     </div>
+                        </form>
                 </div>
                     <!--</span>-->
 			</div>
@@ -290,7 +350,7 @@
 	<div class="buying" ng-repeat="dish in dishes">
 		<h1>{{dish._id}}</h1>
 		<div class="byline">
-			<h4>This dish is original and made by <a href="/menu">Happy Restaurant</a> </h4>
+			<h4>This dish is original and made by <a href="/menu">Happy Time Restaurant</a> </h4>
 		</div>
 
 		<div class="moreDetails">
