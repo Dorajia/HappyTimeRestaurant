@@ -41,9 +41,12 @@
         }
 
         function confirmOrder(order_id) {
-            OrderService.ConfirmOrder(order_id).then(function (orderResult) {
+            OrderService.ConfirmOrder(order_id).then(function (result) {
+                OrderService.GetAll().then(function (orderResult) {
+                    vm.orders = orderResult.data;
+                    return FlashService.Success("Confirm Delivery successfully!");
+                });
                 //vm.orders = orderResult.data;
-                return FlashService.Success("Confirm Delivery successfully!");
             });
         }
 

@@ -69,7 +69,12 @@
                     <tbody>
                     <tr ng-repeat="dish in vm.commentOrderData.dishes">
                         <td id = "dish_id">{{dish.name}}</td>
-                        <td><img src="image/01-MapoTofu.jpg" alt="Mapo Tofu" style="width:200px;height:150px;"></td>
+                        <!--<td><img src="image/01-MapoTofu.jpg" alt="Mapo Tofu" style="width:200px;height:150px;"></td>-->
+                        <td>
+                            <img ng-src="{{'image/' + dish.name + '.jpg'}}" width="200" height="150">
+                        </td>
+
+
                         <td>
                             <input type = "text" name = "comment{{$index}}" placeholder="Share your comment" style="width:200px;height:150px;" ng-model="vm.comments[$index]">
                             </input>
@@ -87,9 +92,13 @@
 
         <button class="btn btn-danger" ng-click="vm.hideModal()" style="background-color:dimgray; border: none">Done</button>
 
+        <button class="btn btn-danger" ng-click="vm.hideModal()" style="background-color:dimgray; border: none">Cancel</button>
+
     </modal>
 
 </div>
+
+
 
 
 
