@@ -15,6 +15,10 @@ router.get('/', function (req, res) {
         loginStyle = "display:none";
         logoutStyle = "display";
     }
+    else {
+        loginStyle = "display";
+        logoutStyle = "display:none";
+    }
 	request.get({
         url: awsUrl + '/dish/getalldish',
         key: fs.readFileSync('cert/key.pem'),
@@ -74,9 +78,18 @@ router.get('/', function (req, res) {
 
 
 router.get('/:catalog', function (req, res, next) {
-    
-	
-	var url = '';
+
+    if (req.session.token) {
+        loginStyle = "display:none";
+        logoutStyle = "display";
+    }
+    else {
+        loginStyle = "display";
+        logoutStyle = "display:none";
+    }
+
+
+    var url = '';
     var tmp = "\'" + req.params.catalog + "\'";
 
     if (req.params.catalog != 'alldish'){
@@ -110,7 +123,14 @@ router.get('/:catalog', function (req, res, next) {
        //console.log("response.body1-new: " + p);
 		//
 
-       return res.render('menu_list', {catalog:"empty", dishes: response.body,  dish_list_headline: tmp});
+       return res.render('menu_list',
+           {
+               catalog:"empty",
+               dishes: response.body,
+               dish_list_headline: tmp,
+               loginStyle: loginStyle,
+               logoutStyle: logoutStyle
+           });
     });
 	
 	
