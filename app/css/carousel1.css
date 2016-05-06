@@ -268,6 +268,9 @@ div.back-up{
   /*vertical-align: middle;*/
   width: 80px;
 }
+li.borderless { border-top: 0 none; }
+ul { list-style: none; }
+
 /*.red {*/
   /*border: solid 1px red;*/
 /*}*/
