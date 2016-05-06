@@ -72,10 +72,10 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="dish in vm.commentOrderData.dishes">
-                        <td id = "dish_id">{{dish.name}}</td>
+                        <td id = "dish_id">{{dish._id}}</td>
                         <!--<td><img src="image/01-MapoTofu.jpg" alt="Mapo Tofu" style="width:200px;height:150px;"></td>-->
                         <td>
-                            <img ng-src="{{'image/' + dish.name + '.jpg'}}" width="200" height="150">
+                            <img ng-src="{{'image/' + dish._id + '.jpg'}}" width="200" height="150">
                         </td>
 
 
