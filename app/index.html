@@ -84,9 +84,20 @@
                     <li>
                         <a href="/app/shoppingCart">Shopping Cart</a>
                     </li>
-                    <li>
-                        <a href="/app">Profile</a>
+                    <!--<li>-->
+                        <!--<a href="/app">Profile</a>-->
+                    <!--</li>-->
+                    <li class="dropdown">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/account">Account</a></li>
+                            <li><a href="#/address">Address</a></li>
+                            <li><a href="#/order">Order</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/login">Logout</a></li>
+                        </ul>
                     </li>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -102,11 +113,11 @@
                 <header>
                     <!--<ul class="nav nav-tabs" style="width: 70%">-->
                     <ul class="nav nav-tabs">
-                        <li ng-class="{active: activeTab === 'home'}"><a ui-sref="home" style="font-size:30px; color:dimgray">Home</a></li>
-                        <li ng-class="{active: activeTab === 'account'}"><a ui-sref="account" style="font-size:30px; color:dimgray">Account</a></li>
-                        <li ng-class="{active: activeTab === 'order'}"><a ui-sref="order" style="font-size:30px; color:dimgray">Orders</a></li>
-                        <li ng-class="{active: activeTab === 'address'}"><a ui-sref="address" style="font-size:30px; color:dimgray">Address</a></li>
-                        <li ><a href="/login" target="_self" style="font-size:30px; color:dimgray">Logout</a></li>
+                        <!--<li ng-class="{active: activeTab === 'home'}"><a ui-sref="home" style="font-size:30px; color:dimgray">Home</a></li>-->
+                        <!--<li ng-class="{active: activeTab === 'account'}"><a ui-sref="account" style="font-size:30px; color:dimgray">Account</a></li>-->
+                        <!--<li ng-class="{active: activeTab === 'order'}"><a ui-sref="order" style="font-size:30px; color:dimgray">Orders</a></li>-->
+                        <!--<li ng-class="{active: activeTab === 'address'}"><a ui-sref="address" style="font-size:30px; color:dimgray">Address</a></li>-->
+                        <!--<li ><a href="/login" target="_self" style="font-size:30px; color:dimgray">Logout</a></li>-->
                     </ul>
                     <div class="flash-message" ng-if="flash">
                         <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
@@ -119,7 +130,15 @@
         </div>
     </div>
     <!-- footer -->
-    <footer></footer>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p>Copyright &copy; Happy Time Restaurant 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- external scripts -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
