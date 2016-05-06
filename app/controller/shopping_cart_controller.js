@@ -118,31 +118,6 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
         $scope.totalPrice = $scope.totalPrice.toFixed(2)
     }
 
-    $scope.getShoppingCart = function(){
-        $http.get('/app/token').success(function(data){
-            console.log(data);
-
-            //if(data.length < 20){
-            //    $window.location.href = '/app';
-            //}
-            $http.defaults.headers.common.Authorization  = data;
-            $http.get(hostname + '/cart/getitems')
-                .success(function(data){
-                    console.log(data);
-                    parent.items = data.dish;
-                    $scope.badgeNum = parent.items.length;
-                    if(parent.items.length == 0){
-                        $scope.empty = true
-                    }
-                }).error(function(err){
-                console.log('Err: ' + err);
-            });
-        }).error(function(err){
-            console.log(err)
-        });
-
-
-    }
 
     $scope.checkOut = function(){
         //console.log(parent.items.length)
@@ -161,6 +136,39 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
 
         $window.location.href = '/app/cart/checkout';
     };
+
+    this.hoverCartItems = [];
+    $scope.getShoppingCart = function(){
+        $http.get('/app/token').success(function(data){
+            console.log(data);
+
+            //if(data.length < 20){
+            //    $window.location.href = '/app';
+            //}
+            $http.defaults.headers.common.Authorization  = data;
+            $http.get(hostname + '/cart/getitems')
+                .success(function(data){
+                    console.log(data);
+                    parent.items = data.dish;
+                    $scope.badgeNum = parent.items.length;
+                    if(parent.items.length == 0){
+                        $scope.empty = true
+                    }
+                    parent.hoverCartItems = [];
+                    for(i = 0 ; i < Math.min(parent.items.length , 4); i ++){
+                        parent.hoverCartItems.push(parent.items[parent.items.length - i - 1]);
+                    }
+                }).error(function(err){
+                console.log('Err: ' + err);
+            });
+        }).error(function(err){
+            console.log(err)
+        });
+    }
+
+    $scope.goShoppingCart = function(){
+        $window.location.href = '/app/shoppingCart';
+    }
 }]);
 
 
