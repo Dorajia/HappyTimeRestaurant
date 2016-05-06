@@ -13,6 +13,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
             'amount':4,
             'price':9}];
     var parent = this;
+    $scope.EditAddress = false;
     $scope.anynum = 0;
     this.addresses = [];
     $scope.menu_list = ['starter',
@@ -35,6 +36,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
     this.shipAddress = this.addresses[0];
     this.payCard = this.cards[0];
     this.shipCard = '';
+    $scope.editedAddress = {};
     $scope.newAddress = {
         'receiver':'',
         'address1':'',
@@ -44,6 +46,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
         'zip':'',
         'phone':'',
     };
+    $scope.editedAddressIndex = '';
     $scope.finalPrice = 0;
     $scope.continue = function(){
         if($scope.pageCtrl < 3){
@@ -100,14 +103,15 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
 
         $http.get(hostname + '/delivery/getaddress')
             .success(function(data){
-                //console.log(data);
+                console.log(data);
                 parent.addresses = data.delivery_address;
-                parent.shipAddress = parent.addresses[0];
+                //parent.shipAddress = parent.addresses[0];
                 for(i = 0 ; i < parent.addresses.length ; i ++){
                     if(parent.addresses[i].isdefault){
-                        parent.shipAddress = parent.addresses[i];
+                        $scope.anynum = i;
                     }
                 }
+                parent.shipAddress = parent.addresses[$scope.anynum];
                 //console.log(parent.shipAddress)
                 //$scope.badgeNum = this.items.length;
             }).error(function(err){
@@ -134,12 +138,6 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
     };
 
     $scope.addAddress = function(){
-        //var tmp = {};
-        //tmp.receiver = $scope.newAddress.receiver;
-        //tmp.address = $scope.newAddress.address1 + $scope.newAddress.address2 + $scope.newAddress.city;
-        //tmp.state =  $scope.newAddress.state;
-        //tmp.zipcode = $scope.newAddress.zip;
-        //tmp.phone = $scope.newAddress.phone;
         var data = $scope.newAddress;
         data.isderault = false;
         $http.post(hostname + '/delivery/addaddress',data)
@@ -275,5 +273,28 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
                     //alert(resdata);
                     window.location="/menudetail?dish=1";
                 }});
+    }
+
+    $scope.editAddress = function(index){
+        $scope.EditAddress = true;
+        $scope.editedAddressIndex = index;
+        $scope.editedAddress = parent.addresses[index];
+    }
+    $scope.editSelectedAddress = function(){
+        var data = $scope.editedAddress;
+        var id = parent.addresses[$scope.editedAddressIndex]._id;
+        console.log($scope.editedAddress);
+        $http.post(hostname + '/delivery/editaddress/' + id, data)
+            .success(function(data){
+            }).error(function(err){
+            console.log('Err: ' + err);
+        });
+        parent.addresses[$scope.editedAddressIndex] = $scope.editedAddress;
+        parent.shipAddress = data;
+        $scope.anynum = $scope.editedAddressIndex;
+        $scope.EditAddress = false;
+    }
+    $scope.canceleditAddress = function(){
+        $scope.EditAddress = false;
     }
 }]);
