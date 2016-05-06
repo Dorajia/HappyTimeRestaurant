@@ -82,6 +82,7 @@ router.get('/:catalog', function (req, res, next) {
     if (req.session.token) {
         loginStyle = "display:none";
         logoutStyle = "display";
+        showHover = true;
     }
     else {
         loginStyle = "display";
