@@ -149,9 +149,37 @@
                     <!--starter, main course, noodle, rice, beverage, dessert, soup-->
 
                 </li>
-                <li>
-                    <a href="/app/shoppingCart">Shopping Cart</a>
+                <li class="dropdown">
+                    <a class="dropbtn" href="/app/shoppingCart">Shopping Cart</a>
+                    <div class="dropdown-content" ng-click = 'goShoppingCart()'>
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <h5>&nbsp Recently Added Items</h5>
+                            </tr>
+                            <tr ng-repeat = 'hoveItem in manager.hoverCartItems'>
+                                <td class="col-md-12">
+                                    <h6>{{hoveItem._id}}</h6>
+                                    <h6>$ {{hoveItem.dish_price}}</h6>
+                                </td>
+                                <td class="col-md-2">
+
+                                    <img style = "width: auto; height: 60px; vertical-align: middle;" class = img ng-src="{{'../image/'+ hoveItem._id +'.jpg'}}">
+
+                                </td>
+                            </tr>
+
+
+
+                            </tbody>
+
+                        </table>
+                        <hr>
+                        <h6> &nbsp >>View Details in Shopping Cart</h6>
+                    </div>
+
                 </li>
+
                 <li class="dropdown">
                     <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile<span class="caret"></span></a>
                     <ul class="dropdown-menu">
