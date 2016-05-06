@@ -86,9 +86,9 @@
 //						.then(handleSuccess, handleError);
 //			}
 
-		$scope.slidepic1 = "special-beef.jpg";
-		$scope.slidepic2 = "special-Boeuf Bourgignon.jpg";
-		$scope.slidepic2 = "special-Chop Suey.jpg";
+//		$scope.slidepic1 = "special-beef.jpg";
+//		$scope.slidepic2 = "special-Boeuf Bourgignon.jpg";
+//		$scope.slidepic2 = "special-Chop Suey.jpg";
 
 		$scope.dishes = <%- dish %>;
 
@@ -226,7 +226,50 @@
 		<!-- /.navbar-collapse -->
 	</div>
 </nav>
+
 <div class="container">
+	<div class="row">
+		<div class="box">
+			<!--<div class="col-lg-12">-->
+				<!--<hr>-->
+				<!--<h2 class="intro-text text-center">Contact-->
+					<!--<strong>business casual</strong>-->
+				<!--</h2>-->
+				<!--<hr>-->
+			<!--</div>-->
+			<div class="col-md-6">
+				<!-- Embedded Google Map using an iframe - to select your location find it on Google maps and paste the link as the iframe src. If you want to use the Google Maps API instead then have at it! -->
+				<!--<iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?hl=en&amp;ie=UTF8&amp;ll=37.0625,-95.677068&amp;spn=56.506174,79.013672&amp;t=m&amp;z=4&amp;output=embed"></iframe>-->
+				<br>
+                <img ng-src="{{'/image/' + dishes[0]._id+ '.jpg'}}" width="400" height="336">
+			</div>
+			<div class="col-md-6">
+				<!--<p>Phone:-->
+					<!--<strong>123.456.7890</strong>-->
+				<!--</p>-->
+				<!--<p>Email:-->
+					<!--<strong><a href="mailto:name@example.com">name@example.com</a></strong>-->
+				<!--</p>-->
+				<!--<p>Address:-->
+					<!--<strong>1 Washington Sq-->
+						<!--<br>San Jose, CA 95192</strong>-->
+				<!--</p>-->
+                <!--<span class = 'text-center'>-->
+                <hr>
+                <h2 class="intro-text text-center">{{dishes[0]._id}}
+                </h2>
+                <hr>
+                <div class="row">
+                    <div class="box">
+
+                    </div>
+                </div>
+                    <!--</span>-->
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
 
 	<div  class="row">
 		<div class="box">
@@ -268,7 +311,7 @@
 					<div class="quantityButtonWrapper">
 						<div class="quantityButtonInner">
 							<span class="quantityButtonPrompt">
-								<img class="img-circle" src="/image/{{dish._id}}.jpg" width="400" height="336">
+								<img class="img-circle" ng-src="{{'/image/' + dish._id+ '.jpg'}}" width="400" height="336">
 							</span>
 						</div>
 					</div>
