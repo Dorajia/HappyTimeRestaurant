@@ -87,10 +87,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="index.html">Home</a>
+                        <a href="/menu">Home</a>
                     </li>
                     <li class="dropdown">
-                        <a href="about.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
+                        <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li  ng-repeat = 'category in menu_list track by $index' ><a ng-click = setTitle($index) ng-href = "{{'/menu/' + category}}" >{{category}}</a></li>
                             <li role="separator" class="divider"></li>
@@ -100,7 +100,7 @@
 
                     </li>
                     <li>
-                        <a href="/shoppingCart">Shopping Cart</a>
+                        <a href="/app/shoppingCart">Shopping Cart</a>
                     </li>
                     <li class="dropdown">
                         <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile<span class="caret"></span></a>

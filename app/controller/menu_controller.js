@@ -90,6 +90,19 @@ app.controller('menu_controller', function($scope,$http) {
             console.log(err);
         });
     }
-    $scope.getAllDishes = function(){};
+    $scope.getDishDetail = function(name){
+        //console.log($scope.recommendations[index]._id);
+        $http.post('/menudetail/menudetail',{data: name})
+            .then(function(res){
+                //$location.path('menudetail');
+                if(res.status == "200"){
+                    //alert(res.data);
+                    //alert("_id"+res.data._id);
+                    //alert(res.status);
+                    var resdata= JSON.stringify(res.data); //return project
+                    //alert(resdata);
+                    window.location="/menudetail?dish=1" ;
+                }});
+    }
 
 });

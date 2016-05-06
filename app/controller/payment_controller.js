@@ -262,7 +262,8 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
         //alert("push local finished");
         //alert(dishname);
         //$scope.pro = {};//empty the modal value
-        $http.post('/menudetail/menudetail',{data: 'Ramen'})
+        console.log($scope.recommendations[index]._id);
+        $http.post('/menudetail/menudetail',{data: $scope.recommendations[index]._id})
             .then(function(res){
                 //$location.path('menudetail');
                 if(res.status == "200"){
@@ -271,7 +272,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
                     //alert(res.status);
                     var resdata= JSON.stringify(res.data); //return project
                     //alert(resdata);
-                    window.location="/menudetail?dish=1";
+                    window.location="/menudetail?dish=1" ;
                 }});
     }
 
