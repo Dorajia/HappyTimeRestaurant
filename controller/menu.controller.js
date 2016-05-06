@@ -5,11 +5,16 @@ var config = require('config.json');
 var fs = require('fs');
 
 var awsUrl = "https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com";
-
+var loginStyle = "display";
+var logoutStyle = "display:none";
 
 router.get('/', function (req, res) {
 	//"awsApiUrl": "http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com",
 	console.log(awsUrl + '/dish/getalldish -put');
+    if (req.session.token) {
+        loginStyle = "display:none";
+        logoutStyle = "display";
+    }
 	request.get({
         url: awsUrl + '/dish/getalldish',
         key: fs.readFileSync('cert/key.pem'),
@@ -45,7 +50,14 @@ router.get('/', function (req, res) {
     		}
     	}*/
               
-       return res.render("menu2", {catalog:"empty" , dishes: response.body});
+       return res.render("menu2",
+           {
+               catalog:"empty" ,
+               dishes: response.body,
+               loginStyle: loginStyle,
+               logoutStyle: logoutStyle
+           }
+       );
     });
 	/*// log user out
     delete req.session.token;

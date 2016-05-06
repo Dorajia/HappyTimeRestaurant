@@ -3,13 +3,17 @@ var router = express.Router();
 var request = require('request');
 var config = require('config.json');
 var fs = require('fs');
+var loginStyle = "display";
+var logoutStyle = "display:none";
 
 router.get('/', function (req, res) {
     // log user out
     delete req.session.token;
 
+
     // move success message into local variable so it only appears once (single read)
-    var viewData = { success: req.session.success };
+    var viewData = { success: req.session.success, loginStyle: loginStyle, logoutStyle: logoutStyle};
+
     delete req.session.success;
 
     res.render('login', viewData);
@@ -38,6 +42,8 @@ router.post('/', function (req, res) {
 
             // save JWT token in the session to make it available to the angular app
             req.session.token = body.token;
+            loginStyle = "display:none";
+            logoutStyle = "display";
 
             // redirect to returnUrl
             var returnUrl = req.query.returnUrl && decodeURIComponent(req.query.returnUrl) || '/';

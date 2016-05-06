@@ -87,9 +87,11 @@
                     <!--<li>-->
                         <!--<a href="/app">Profile</a>-->
                     <!--</li>-->
-                    <li class="dropdown">
+                    <li class="dropdown" hi>
                         <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile<span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li class="hide"><a href="/login">Login</a></li>
+                            <li role="separator" class="divider"></li>
                             <li><a href="#/account">Account</a></li>
                             <li><a href="#/address">Address</a></li>
                             <li><a href="#/order">Order</a></li>
@@ -111,14 +113,6 @@
             <div class="box">
                 <!-- header -->
                 <header>
-                    <!--<ul class="nav nav-tabs" style="width: 70%">-->
-                    <ul class="nav nav-tabs">
-                        <!--<li ng-class="{active: activeTab === 'home'}"><a ui-sref="home" style="font-size:30px; color:dimgray">Home</a></li>-->
-                        <!--<li ng-class="{active: activeTab === 'account'}"><a ui-sref="account" style="font-size:30px; color:dimgray">Account</a></li>-->
-                        <!--<li ng-class="{active: activeTab === 'order'}"><a ui-sref="order" style="font-size:30px; color:dimgray">Orders</a></li>-->
-                        <!--<li ng-class="{active: activeTab === 'address'}"><a ui-sref="address" style="font-size:30px; color:dimgray">Address</a></li>-->
-                        <!--<li ><a href="/login" target="_self" style="font-size:30px; color:dimgray">Logout</a></li>-->
-                    </ul>
                     <div class="flash-message" ng-if="flash">
                         <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
                     </div>

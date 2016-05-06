@@ -40,6 +40,8 @@
 
     <!-- Custom CSS -->
     <link href="../css/business-casual.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
     <!-- Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
@@ -102,15 +104,16 @@
                 <li>
                     <a href="/app/shoppingCart">Shopping Cart</a>
                 </li>
-                <!--<li>-->
-                <!--<a href="/app">Profile</a>-->
-                <!--</li>-->
-                <li class="dropdown">
+                <li style="<%= loginStyle %>">
+                    <a href="/login">Login</a>
+                </li>
+                <li class="dropdown" style="<%= logoutStyle %>">
+                <!--<li class="dropdown">-->
                     <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#/account">Account</a></li>
-                        <li><a href="#/address">Address</a></li>
-                        <li><a href="#/order">Order</a></li>
+                        <li><a href="/app/#/account">Account</a></li>
+                        <li><a href="/app/#/address">Address</a></li>
+                        <li><a href="/app/#/order">Order</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="/login">Logout</a></li>
                     </ul>
