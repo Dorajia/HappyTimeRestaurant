@@ -46,7 +46,7 @@ router.post('/additem', passport.authenticate('jwt', { session: false}), functio
           totalprice = Number(req.body.amount) * Number(req.body.price);
           if (found != null){
                 var query={_id:decoded._id,'dish._id':req.body.name};
-                var update2 = {status:'active', $set:{'dish.$.dish_number':found.dish_number+req.body.amount, 'dish.$.total':found.total+totalprice}};
+                var update2 = {status:'active', $set:{'dish.$.dish_number':Number(found.dish_number)+Number(req.body.amount), 'dish.$.total':Number(found.total)+totalprice}};
                 var options2 = {new: true};
                 Cart.findOneAndUpdate(query, update2, options2, function(err, data){
                     if (err) {
