@@ -87,7 +87,8 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
     }
 
     $scope.getSelectedItems = function(){
-        $http.get("http://localhost:3000" + '/selectedItems')
+        //$http.get("http://localhost:3000" + '/selectedItems')
+        $http.get('/selectedItems')
             .success(function(data){
                 //console.log(data);
                 parent.orders = data;
