@@ -14,11 +14,11 @@ router.get('/', function (req, res) {
     res.render('menudetail',{dish: dish});
 });
 
-router.get('/getcomment', function (req, res) {
+router.get('/getcomment/:dishname', function (req, res) {
     console.log("function /getcomment");
 
     request.get({
-        url: awsUrl + '/comment/findbydish/' + req.body.data,//'Noodle', //req.params.catalog,
+        url: awsUrl + '/comment/findbydish/' + req.params.dishname,//'Noodle', //req.params.catalog,
         // form: req.body,
         //json: true
         key: fs.readFileSync('cert/key.pem'),

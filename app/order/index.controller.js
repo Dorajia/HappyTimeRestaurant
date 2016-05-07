@@ -54,7 +54,7 @@
         //function submitComment(order_id, dish_id, comment) {
         //    OrderService.SubmitComment(order_id, dish_id, comment).then(function (result) {
         function submitComment(dish, index) {
-            OrderService.SubmitComment(vm.commentOrderData._id, dish.name, vm.comments[index]).then(function (result) {
+            OrderService.SubmitComment(vm.commentOrderData._id, dish._id, vm.comments[index]).then(function (result) {
             //OrderService.SubmitComment(vm.commentOrderData._id, dish.name, $('input[name=("comment"+index)]').val()).then(function (result) {
                 if (result.sucess == true) {
                     dish.comment = null;
