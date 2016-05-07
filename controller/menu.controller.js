@@ -7,17 +7,20 @@ var fs = require('fs');
 var awsUrl = "https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com";
 var loginStyle = "display";
 var logoutStyle = "display:none";
-
+var tokenInfo = "no";
 router.get('/', function (req, res) {
 	//"awsApiUrl": "http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com",
 	console.log(awsUrl + '/dish/getalldish -put');
     if (req.session.token) {
         loginStyle = "display:none";
         logoutStyle = "display";
+        tokenInfo = "yes";
     }
     else {
         loginStyle = "display";
         logoutStyle = "display:none";
+        tokenInfo = "no";
+
     }
 	request.get({
         url: awsUrl + '/dish/getalldish',
@@ -59,8 +62,10 @@ router.get('/', function (req, res) {
                catalog:"empty" ,
                dishes: response.body,
                loginStyle: loginStyle,
-               logoutStyle: logoutStyle
-           }
+               logoutStyle: logoutStyle,
+               tokenInfo : tokenInfo
+
+    }
        );
     });
 	/*// log user out

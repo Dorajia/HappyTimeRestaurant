@@ -12,6 +12,7 @@ router.get('/', function (req, res) {
 
     loginStyle = "display";
     logoutStyle = "display:none";
+    
 
     // move success message into local variable so it only appears once (single read)
     var viewData = {
