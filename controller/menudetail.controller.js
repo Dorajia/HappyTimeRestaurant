@@ -8,10 +8,26 @@ var url = require('url');
 var awsUrl = "https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com";
 var dish = {};
 
+var loginStyle = "display";
+var logoutStyle = "display:none";
+
 router.get('/', function (req, res) {
+    if (req.session.token) {
+        loginStyle = "display:none";
+        logoutStyle = "display";
+    }
+    else {
+        loginStyle = "display";
+        logoutStyle = "display:none";
+    }
     console.log("function /");
     console.log(dish);
-    res.render('menudetail',{dish: dish});
+    res.render('menudetail',
+        {
+            dish: dish,
+            loginStyle: loginStyle,
+            logoutStyle: logoutStyle
+        });
 });
 
 router.get('/getcomment/:dishname', function (req, res) {
