@@ -104,6 +104,7 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
                     for (i = 0; i < parent.orders.length; i++) {
                         $scope.finalPrice += parent.orders[i].dish_number * parent.orders[i].dish_price;
                     }
+                    $scope.finalPrice = $scope.finalPrice.toFixed(2);
 
                 }).error(function (err) {
                 console.log('Err: ' + err);
