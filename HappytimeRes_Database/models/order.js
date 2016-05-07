@@ -1,11 +1,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var moment = require('moment-timezone');
 
 var OrderSchema = new Schema({
-    _id: String,
+    _id:String,
     user: String,
-    order_time: { type: Date, required: true, default: Date.now },
-    confirm_time: { type: Date, default:null},
+    order_time:String,
+    confirm_time: { type: String, default:null},
     restaurant_name: String,
     delivery_address:[],
     dishes: [],
@@ -13,5 +14,10 @@ var OrderSchema = new Schema({
     total_price: Number
     });
 
+OrderSchema.pre('save', function (next) {
+	 var format = 'YYYY/MM/DD HH:mm:ss ZZ';
+    this.order_time = moment().tz("America/Los_Angeles").format(format).toString();
+    next();
+});
 
 module.exports = mongoose.model('order', OrderSchema,'order');

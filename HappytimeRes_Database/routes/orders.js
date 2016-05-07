@@ -4,6 +4,7 @@ var jwt = require('jwt-simple');
 var config = require('../config/secretkey');
 var gettoken = require ('../models/gettoken');
 var passport = require('passport');
+var moment = require('moment-timezone');
 // bundle our routes
 
 require('../config/passport')(passport);
@@ -17,7 +18,9 @@ router.get('/getorders', passport.authenticate('jwt', { session: false}), functi
   var token = gettoken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
-    User.find({_id: decoded._id}, function(err, user) {
+    var query=User.find({_id: decoded._id});
+//    query.sort({"order_time":-1});
+    query.exec(function(err, user) {
         if (err) throw err;
         if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
@@ -28,7 +31,7 @@ router.get('/getorders', passport.authenticate('jwt', { session: false}), functi
          	else{
         	return res.status(200).send({sucess:true, data:data});
          	}
-         })
+         });
         }
     });
   } else {
@@ -74,8 +77,9 @@ router.post('/confirm/:id', passport.authenticate('jwt', { session: false}), fun
         if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
+          	 var format = 'YYYY/MM/DD HH:mm:ss ZZ';
           	var order_id = {_id:req.params.id};
-            var update = {confirm_time:Date.now()};
+            var update = {confirm_time:moment().tz("America/Los_Angeles").format(format)};
             var options = {new: true};
                     
             Order.findOneAndUpdate(order_id, update, options, function(err, data){
