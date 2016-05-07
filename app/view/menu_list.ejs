@@ -33,6 +33,7 @@
 
     <!-- Custom styles for this template -->
     <link href="../css2/carousel.css" rel="stylesheet">
+      <link href="../css/carousel1.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
       <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -121,12 +122,50 @@
 //              $scope.dish_list_headline = parent.dishes[index]._id;
 //              console.log( $scope.dish_list_headline);
 //          };
+
+          $scope.hasToken = "<%= tokenInfo %>";
+          $scope.token = '123123';
+          $scope.items = [];
+          $scope.getShoppingCart = function(){
+              console.log($scope.hasToken);//
+              if($scope.hasToken == 'yes') {
+                  $http.get('/app/token').success(function (data) {
+                      console.log(data);
+
+                      //if(data.length < 20){
+                      //    $window.location.href = '/app';
+                      //}
+                      $http.defaults.headers.common.Authorization = data;
+                      $http.get('https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/cart/getitems')
+                              .success(function (data) {
+                                  console.log(data);
+                                  $scope.items = data.dish;
+//                                  $scope.badgeNum = parent.items.length;
+                                  if ($scope.items.length == 0) {
+                                      $scope.empty = true
+                                  }else {
+                                      $scope.hoverCartItems = [];
+                                      for (i = 0; i < Math.min($scope.items.length, 4); i++) {
+                                          $scope.hoverCartItems.push($scope.items[$scope.items.length - i - 1]);
+                                      }
+                                  }
+                              }).error(function (err) {
+                          console.log('Err: ' + err);
+                      });
+                  }).error(function (err) {
+                      console.log(err)
+                  });
+              }
+          }
+          $scope.goShoppingCart = function(){
+              $window.location.href = '/app/shoppingCart';
+          }
       });
 
   </script>
 <!-- NAVBAR
 ================================================== -->
-  <body ng-controller="menu as mc">
+  <body ng-controller="menu as mc" ng-init = 'getShoppingCart()'>
   <div class="brand">Happy Time Restaurant</div>
   <!--<div class="address-bar">3481 Melrose Place | Beverly Hills, CA 90210 | 123.456.7890</div>-->
   <div class="address-bar">1 Washington Sq | San Jose, CA 95192 | 123.456.7890</div>

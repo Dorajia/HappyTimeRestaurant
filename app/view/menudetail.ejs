@@ -176,7 +176,42 @@
 		 //
 		 });   */
 
-
+//		$scope.hasToken = "no";
+//		$scope.token = '123123';
+//		$scope.items = [];
+//		$scope.getShoppingCart = function(){
+//			console.log($scope.hasToken);//
+//			if($scope.hasToken == 'yes') {
+//				$http.get('/app/token').success(function (data) {
+//					console.log(data);
+//
+//					//if(data.length < 20){
+//					//    $window.location.href = '/app';
+//					//}
+//					$http.defaults.headers.common.Authorization = data;
+//					$http.get('https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/cart/getitems')
+//							.success(function (data) {
+//								console.log(data);
+//								$scope.items = data.dish;
+////                                  $scope.badgeNum = parent.items.length;
+//								if ($scope.items.length == 0) {
+//									$scope.empty = true
+//								}else {
+//									$scope.hoverCartItems = [];
+//									for (i = 0; i < Math.min($scope.items.length, 4); i++) {
+//										$scope.hoverCartItems.push($scope.items[$scope.items.length - i - 1]);
+//									}
+//								}
+//							}).error(function (err) {
+//						console.log('Err: ' + err);
+//					});
+//				}).error(function (err) {
+//					console.log(err)
+//				});
+//			}
+//		}
+//
+//	});
 
 	});
 </script >

@@ -10,7 +10,8 @@ var logoutStyle = "display:none";
 var tokenInfo = "no";
 router.get('/', function (req, res) {
 	//"awsApiUrl": "http://ec2-52-11-87-42.us-west-2.compute.amazonaws.com",
-	console.log(awsUrl + '/dish/getalldish -put');
+	//console.log(awsUrl + '/dish/getalldish -put');
+
     if (req.session.token) {
         loginStyle = "display:none";
         logoutStyle = "display";
@@ -87,11 +88,12 @@ router.get('/:catalog', function (req, res, next) {
     if (req.session.token) {
         loginStyle = "display:none";
         logoutStyle = "display";
-        showHover = true;
+        tokenInfo = "yes";
     }
     else {
         loginStyle = "display";
         logoutStyle = "display:none";
+        tokenInfo = "no";
     }
 
 
@@ -135,7 +137,8 @@ router.get('/:catalog', function (req, res, next) {
                dishes: response.body,
                dish_list_headline: tmp,
                loginStyle: loginStyle,
-               logoutStyle: logoutStyle
+               logoutStyle: logoutStyle,
+               tokenInfo : tokenInfo
            });
     });
 	
