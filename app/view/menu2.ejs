@@ -164,6 +164,7 @@
                           }});
           }
           $scope.token = '123123';
+          $scope.items = [];
           $scope.getShoppingCart = function(){
               console.log($scope.hasToken);//
                if($scope.hasToken == 'yes') {
@@ -179,12 +180,13 @@
                                   console.log(data);
                                   $scope.items = data.dish;
 //                                  $scope.badgeNum = parent.items.length;
-                                  if (parent.items.length == 0) {
+                                  if ($scope.items.length == 0) {
                                       $scope.empty = true
-                                  }
-                                  $scope.hoverCartItems = [];
-                                  for (i = 0; i < Math.min($scope.items.length, 4); i++) {
-                                      $scope.hoverCartItems.push($scope.items[$scope.items.length - i - 1]);
+                                  }else {
+                                      $scope.hoverCartItems = [];
+                                      for (i = 0; i < Math.min($scope.items.length, 4); i++) {
+                                          $scope.hoverCartItems.push($scope.items[$scope.items.length - i - 1]);
+                                      }
                                   }
                               }).error(function (err) {
                           console.log('Err: ' + err);
