@@ -349,9 +349,10 @@
                             <hr>
                             <div class="row">
                                 <div ng-repeat = 'recommendation in recommendations track by $index' class="col-xs-6 col-md-3">
-                                    <a ng-click = 'getDishDetail($index)' href="#" class="thumbnail">
-                                        <img style = 'height: 150px; width: auto' ng-src="{{'../image/'+recommendation._id + '.jpg'}}" alt="...">
-                                    </a>
+                                    <!--<a ng-click = 'getDishDetail($index)' href="#" class="thumbnail">-->
+                                        <img style = 'height: 150px; width: auto' ng-src="{{'../image/'+recommendation._id + '.jpg'}}" alt="..."
+                                             ng-click = 'getDishDetail($index)' >
+                                    <!--</a>-->
                                     <h6 style = 'text-align: center;'>{{recommendation._id}}</h6>
                                 </div>
                                 <!--<div ng-repeat = 'recommendation in recommendations' class="col-xs-6 col-md-3">-->

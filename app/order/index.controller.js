@@ -5,7 +5,7 @@
         .module('app')
         .controller('Order.IndexController', Controller);
 
-    function Controller(OrderService, FlashService) {
+    function Controller($http, OrderService, FlashService) {
         var vm = this;
 
         vm.user = null;
@@ -19,6 +19,7 @@
         vm.hideModal = hideModal;
         vm.confirmOrder = confirmOrder;
         vm.submitComment = submitComment;
+        vm.jumpToDish = jumpToDish;
 
 
         initController();
@@ -64,6 +65,16 @@
                     return FlashService.Error("Comment post failed!");
                 }
             });
+        }
+
+        function jumpToDish(dish_id) {
+            $http.post('/menudetail/menudetail',{data: dish_id})
+                .then( function (res) {
+                    if (res.status == "200"){
+                        var resdata= JSON.stringify(res.data); //return project
+                        window.location="/menudetail?dish=1" ;
+                    }
+                });
         }
 
     }
