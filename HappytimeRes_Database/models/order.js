@@ -16,7 +16,7 @@ var OrderSchema = new Schema({
 
 OrderSchema.pre('save', function (next) {
 	 var format = 'YYYY/MM/DD HH:mm:ss ZZ';
-    this.order_time = moment().tz("America/Los_Angeles").format(format).toString();
+     this.order_time = moment().tz("America/Los_Angeles").format(format).toString();
     next();
 });
 

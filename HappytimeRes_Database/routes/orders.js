@@ -77,7 +77,7 @@ router.post('/confirm/:id', passport.authenticate('jwt', { session: false}), fun
         if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
-          	 var format = 'YYYY/MM/DD HH:mm:ss ZZ';
+           var format = 'YYYY/MM/DD HH:mm:ss ZZ';
           	var order_id = {_id:req.params.id};
             var update = {confirm_time:moment().tz("America/Los_Angeles").format(format)};
             var options = {new: true};
