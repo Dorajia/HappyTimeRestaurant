@@ -132,7 +132,8 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
             return;
         }
         console.log(selectedItems.length);
-        $http.post("http://localhost:3000" + '/cart/checkout', selectedItems).success(function(data){
+        //$http.post("http://localhost:3000" + '/cart/checkout', selectedItems).success(function(data){
+        $http.post('/cart/checkout', selectedItems).success(function(data){
             console.log('check out success');
         }).error(function(err){
             console.log('Err: ' + err);
