@@ -103,10 +103,10 @@
                 <li>
                     <a href="/app/shoppingCart">Shopping Cart</a>
                 </li>
-                <!--<li>-->
-                <!--<a href="/app">Profile</a>-->
-                <!--</li>-->
-                <li class="dropdown">
+                <li style="<%= loginStyle %>">
+                    <a href="/login">Login</a>
+                </li>
+                <li class="dropdown" style="<%= logoutStyle %>">
                     <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#/account">Account</a></li>
@@ -141,6 +141,10 @@
                     <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
                 </div>
             </header>
+
+            <% if(locals.error) { %>
+            <div class="alert alert-danger"><%= error %></div>
+            <% } %>
 
     <form method="post"  style="width:250pt">
         <div class="form-group">
