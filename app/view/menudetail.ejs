@@ -76,13 +76,16 @@
 		$scope.quantity = 1;
 		$scope.clickplus = function(){
 			$scope.quantity = $scope.quantity + 1;
+//			$scope.newItem.dish_number += 1;
+
 		}
 		$scope.clickminus = function(){
 			if($scope.quantity==1){
-				alert("not less than one");
+//				alert("not less than one");
 			}
 			if($scope.quantity>1){
 				$scope.quantity = $scope.quantity - 1;
+//				$scope.newItem.dish_number -= 1;
 			}
 		}
 
@@ -117,109 +120,59 @@
 						//window.location="/menudetail?dish=1";
 					}
 				});
-		// alert($scope.dish);
-		//for(var index in testp){
-		//	$scope.dish[index] = testp[index];
-		//}
 
-		/*
-		 if (testp !="empty") {
-		 alert("succeed-get dish");
-		 var testp = <%- JSON.stringify(dish)%>;
-		 var p2 = JSON.parse(testp);
-		 alert('get dish name:'+p2._id);
-		 //alert("succeed");
-		 }
+		$scope.hasToken = "<%= tokenInfo %>";
+		$scope.token = '123123';
+		$scope.items = [];
+		$scope.hasLogIn = false;
+		$scope.getShoppingCart = function(){
+			console.log($scope.hasToken);//
+			if($scope.hasToken == 'yes') {
+				$http.get('/app/token').success(function (data) {
+					console.log(data);
 
-
-		 $scope.addProduct = function(){
-		 //alert("out");
-		 var dishobj = {
-		 //"ProductID":$scope.pro.ProductID,"FarmerID":$scope.pro.FarmerID,
-		 "name":$scope.dish.name,
-		 "price":$scope.dish.price,
-		 "description":$scope.dish.description,
-		 //"Review":$scope.pro.Review,
-		 //"Rating":$scope.pro.Rating,
-		 }
-
-		 //productList.push(productobj);
-		 //alert(productList.length);
-		 alert("push local finished");
-		 //$scope.pro = {};//empty the modal value
-		 $http.post('/dish/dishdetail',{data: dishobj}).then(function(res){
-
-		 if(res.status == "200"){
-		 //alert(res.data);
-		 alert("_id"+res.data._id);
-		 alert(res.status);
-
-		 //productList.push(res.data);
-		 //$scope.products = productList;
-		 //window.location="/product?r=1111";
-		 }
-		 });
-
-		 } */
-
-
-		/* $http.get('/productlist'
-		 ).success(function(data, status, headers, config) {
-		 //do sth after get success
-
-		 $scope.products = data;
-		 for(var attr in data){
-		 alert(attr+':'+data[attr]);
-		 }
-		 alert("succeed");
-		 //window.location="/";
-		 }).error(function(data, status, headers, config) {
-		 //
-		 });   */
-
-//		$scope.hasToken = "no";
-//		$scope.token = '123123';
-//		$scope.items = [];
-//		$scope.getShoppingCart = function(){
-//			console.log($scope.hasToken);//
-//			if($scope.hasToken == 'yes') {
-//				$http.get('/app/token').success(function (data) {
-//					console.log(data);
-//
-//					//if(data.length < 20){
-//					//    $window.location.href = '/app';
-//					//}
-//					$http.defaults.headers.common.Authorization = data;
-//					$http.get('https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/cart/getitems')
-//							.success(function (data) {
-//								console.log(data);
-//								$scope.items = data.dish;
-////                                  $scope.badgeNum = parent.items.length;
-//								if ($scope.items.length == 0) {
-//									$scope.empty = true
-//								}else {
-//									$scope.hoverCartItems = [];
-//									for (i = 0; i < Math.min($scope.items.length, 4); i++) {
-//										$scope.hoverCartItems.push($scope.items[$scope.items.length - i - 1]);
-//									}
-//								}
-//							}).error(function (err) {
-//						console.log('Err: ' + err);
-//					});
-//				}).error(function (err) {
-//					console.log(err)
-//				});
-//			}
-//		}
-//
-//	});
-
+					//if(data.length < 20){
+					//    $window.location.href = '/app';
+					//}
+					$http.defaults.headers.common.Authorization = data;
+					$http.get('https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com/cart/getitems')
+							.success(function (data) {
+								console.log(data);
+								$scope.items = data.dish;
+//                                  $scope.badgeNum = parent.items.length;
+								if ($scope.items.length == 0) {
+									$scope.empty = true;
+								}else {
+									$scope.hoverCartItems = [];
+									for (i = 0; i < Math.min($scope.items.length, 4); i++) {
+										$scope.hoverCartItems.push($scope.items[$scope.items.length - i - 1]);
+									}
+								}
+								$scope.hasLogIn = true;
+							}).error(function (err) {
+						console.log('Err: ' + err);
+					});
+				}).error(function (err) {
+					console.log(err)
+				});
+			}
+		}
+		$scope.goShoppingCart = function(){
+			window.location.href = '/app/shoppingCart';
+		}
+		$scope.addItem = function(){
+//			console.log($scope.newItem);
+			$scope.hoverCartItems.unshift($scope.dishes[0]);
+			if($scope.hoverCartItems.length > 4){
+				$scope.hoverCartItems.pop();
+			}
+		}
 	});
 </script >
 
 <!-- NAVBAR
 ================================================== -->
-<body>
+<body ng-init = 'getShoppingCart()'>
 
 <!-- Marketing messaging and featurettes
 ================================================== -->
@@ -258,8 +211,36 @@
 					<!--starter, main course, noodle, rice, beverage, dessert, soup-->
 
 				</li>
-				<li>
-					<a href="/app/shoppingCart">Shopping Cart</a>
+				<li class="dropdown">
+					<a class="dropbtn" href="/app/shoppingCart">Shopping Cart</a>
+					<div ng-show = 'hasLogIn' class="dropdown-content" ng-click = 'goShoppingCart()'>
+						<table  class="table">
+							<tbody>
+							<tr ng-hide = 'empty'>
+								<h5>&nbsp Recently Added Items</h5>
+							</tr>
+							<tr ng-repeat = 'hoveItem in hoverCartItems'>
+								<td class="col-md-12">
+									<h6 style = 'text-align: left;'>{{hoveItem._id}}</h6>
+									<h6 style = 'text-align: left;'>$ {{hoveItem.dish_price}}</h6>
+								</td>
+								<td class="col-md-2">
+
+									<img style = "width: auto; height: 60px; vertical-align: middle;" class = img ng-src="{{'../image/'+ hoveItem._id +'.jpg'}}">
+
+								</td>
+							</tr>
+
+
+
+							</tbody>
+
+						</table>
+						<hr>
+						<h6 ng-show = 'empty'>Your shopping Cart is empty</h6>
+						<h6> &nbsp >>View Details in Shopping Cart</h6>
+					</div>
+
 				</li>
 				<li style="<%= loginStyle %>">
 					<a href="/login">Login</a>
@@ -369,7 +350,7 @@
                     </p>
                     <form method="post" class="addToCartForm" action="/menudetail/addtocart" target="shopping-cart">
                         <span class = 'pull-right'>
-                        <button type="submit" class="btn btn-default" style = 'height: 30px'>Add to Shopping Cart</button>
+                        <button type="submit" class="btn btn-default" style = 'height: 30px' ng-click = 'addItem()'>Add to Shopping Cart</button>
                         </span>
                         <input type="hidden" name="name" value="{{dishes[0]._id}}" />
                         <input type="hidden" name="description" value="{{dishes[0].dish_description}}" />
@@ -378,7 +359,7 @@
 										<span class="input-group-btn">
                          				<button class="btn btn-default" type="button" ng-click="clickminus()">-</button>
                     					</span>
-                        <input type="text" class="form-control" ng-model="quantity" placeholder='1' name="quantity">
+                        <input type="text" class="form-control" ng-model="quantity" placeholder='1' name="quantity" >
                      					<span class="input-group-btn">
                          				<button class="btn btn-default" type="button" ng-click="clickplus()">+</button>
                     					</span>

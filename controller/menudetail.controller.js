@@ -10,15 +10,20 @@ var dish = {};
 
 var loginStyle = "display";
 var logoutStyle = "display:none";
+var tokenInfo = "no";
 
 router.get('/', function (req, res) {
     if (req.session.token) {
         loginStyle = "display:none";
         logoutStyle = "display";
+        tokenInfo = "yes";
+
     }
     else {
         loginStyle = "display";
         logoutStyle = "display:none";
+        tokenInfo = "no";
+
     }
     console.log("function /");
     console.log(dish);
@@ -26,7 +31,9 @@ router.get('/', function (req, res) {
         {
             dish: dish,
             loginStyle: loginStyle,
-            logoutStyle: logoutStyle
+            logoutStyle: logoutStyle,
+            tokenInfo : tokenInfo
+
         });
 });
 
