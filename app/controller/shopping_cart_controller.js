@@ -99,6 +99,7 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
         });
         parent.items.splice(index , 1);
         $scope.updatePrice();
+        $scope.deleteItem();
     }
 
     $scope.checkAll = function(){
@@ -173,6 +174,13 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
 
     $scope.goShoppingCart = function(){
         $window.location.href = '/app/shoppingCart';
+    }
+    $scope.deleteItem = function(){
+//			console.log($scope.newItem);
+        parent.hoverCartItems = [];
+        for(i = 0 ; i < Math.min(parent.items.length , 4); i ++){
+            parent.hoverCartItems.push(parent.items[parent.items.length - i - 1]);
+        }
     }
 }]);
 
