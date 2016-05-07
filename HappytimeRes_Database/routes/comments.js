@@ -44,7 +44,7 @@ router.post('/addcomments/:order_id/:dish/:score/:description', passport.authent
 /* GET comment by user_id, sort by time*/
 router.get('/findbyuser/:user', function(req, res, next) {
 	var query = Comment.find({user_name: req.params.user});
-	query.sort('publish_time');
+	query.sort('createdAt');
 	query.populate('dish_name');
  	query.exec(function(err, data){
 		if (err) {
@@ -103,7 +103,7 @@ router.get('/findbyuseranddish/:user/:dish', function(req, res, next) {
 /*GET comment by order_id*/
 router.get('/findbyorder/:order_id', function(req, res, next) {
 	var query = Comment.find({order_id:req.params.order_id});
-	query.sort('publish_time');
+	query.sort('createdAt');
  	query.exec(function(err, data){
 		if (err) {
 		    return res.status(403).send({success: false, msg: 'Failed to get comment'});
@@ -120,7 +120,7 @@ router.get('/findbyorder/:order_id', function(req, res, next) {
 /*GET comment by dish, sort by time, return dish_name and score only*/
 router.get('/:dish', function(req, res, next) {
 	var query = Comment.find({dish_name:req.params.dish});
-	query.sort('publish_time');
+	query.sort('createdAt');
 	query.select('dish_name score');
  	query.exec(function(err, data){
 		if (err) {
@@ -139,7 +139,7 @@ router.get('/:dish', function(req, res, next) {
 /*GET comment by dish, sort by time, return detailed comment*/
 router.get('/findbydish/:dish', function(req, res, next) {
 	var query = Comment.find({dish_name:req.params.dish});
-	query.sort('publish_time');
+	query.sort('createdAt');
  	query.exec(function(err, data){
 		if (err) {
 		    return res.status(403).send({success: false, msg: 'Failed to get comment'});
