@@ -5,7 +5,7 @@ var app = angular.module('payment',[]);
 var hostname = 'https://ec2-52-11-87-42.us-west-2.compute.amazonaws.com';
 //var hostname = 'http://localhost:3000';
 app.controller('payment_controller',['$scope','$http', '$window',function($scope, $http, $window){
-    $http.defaults.headers.common.Authorization = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiJ0ZXN0dXNlciIsInBhc3N3b3JkIjoiJDJhJDEwJC8wYW5TT1pKbVAyRXJaV2V0d1lZTS5tMktKcjZHOW9rQ3lJTTBWcWJucGpOMTdodkZmL2UyIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiZGVsaXZlcnlfYWRkcmVzcyI6W10sIl9fdiI6MCwiX2RlbGl2ZXJ5X2FkZHJlc3MiOltdLCJwaG9uZSI6W3siX2lkIjoxMjM0NX1dfQ.urk51-SRuYecTycrzwYjgSbkh7_q6yHfCQduTnUo7eg";
+    //$http.defaults.headers.common.Authorization = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiJ0ZXN0dXNlciIsInBhc3N3b3JkIjoiJDJhJDEwJC8wYW5TT1pKbVAyRXJaV2V0d1lZTS5tMktKcjZHOW9rQ3lJTTBWcWJucGpOMTdodkZmL2UyIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiZGVsaXZlcnlfYWRkcmVzcyI6W10sIl9fdiI6MCwiX2RlbGl2ZXJ5X2FkZHJlc3MiOltdLCJwaG9uZSI6W3siX2lkIjoxMjM0NX1dfQ.urk51-SRuYecTycrzwYjgSbkh7_q6yHfCQduTnUo7eg";
     this.orders = [{'name':'Yu Xiang Rou Si',
         'amount': 2,
         'price': 15},
@@ -88,46 +88,56 @@ app.controller('payment_controller',['$scope','$http', '$window',function($scope
 
     $scope.getSelectedItems = function(){
         //$http.get("http://localhost:3000" + '/selectedItems')
-        $http.get('/selectedItems')
-            .success(function(data){
-                //console.log(data);
-                parent.orders = data;
-                //$scope.badgeNum = this.items.length;
-                //console.log(parent.orders);
-                for(i = 0 ; i < parent.orders.length ; i ++){
-                    $scope.finalPrice += parent.orders[i].dish_number * parent.orders[i].dish_price;
-                }
+        $http.get('/app/token').success(function(data) {
+            console.log(data);
 
-            }).error(function(err){
-            console.log('Err: ' + err);
-        });
-
-        $http.get(hostname + '/delivery/getaddress')
-            .success(function(data){
-                console.log(data);
-                parent.addresses = data.delivery_address;
-                //parent.shipAddress = parent.addresses[0];
-                for(i = 0 ; i < parent.addresses.length ; i ++){
-                    if(parent.addresses[i].isdefault){
-                        $scope.anynum = i;
+            //if(data.length < 20){
+            //    $window.location.href = '/app';
+            //}
+            $http.defaults.headers.common.Authorization = data;
+            $http.get('/selectedItems')
+                .success(function (data) {
+                    //console.log(data);
+                    parent.orders = data;
+                    //$scope.badgeNum = this.items.length;
+                    //console.log(parent.orders);
+                    for (i = 0; i < parent.orders.length; i++) {
+                        $scope.finalPrice += parent.orders[i].dish_number * parent.orders[i].dish_price;
                     }
-                }
-                parent.shipAddress = parent.addresses[$scope.anynum];
-                //console.log(parent.shipAddress)
-                //$scope.badgeNum = this.items.length;
-            }).error(function(err){
-            console.log('Err: ' + err);
-        });
 
-        $http.get(hostname + '/paycard/')
-            .success(function(data){
-                //console.log(data);
-                parent.cards= data;
-                //console.log((parent.cards[0].card_number + '').substring(-4));
-                //parent.shipAddress = parent.addresses[0];
-                //f(parent.shipAddress)
-                //$scope.badgeNum = this.items.length;
-            }).error(function(err){
+                }).error(function (err) {
+                console.log('Err: ' + err);
+            });
+
+            $http.get(hostname + '/delivery/getaddress')
+                .success(function (data) {
+                    console.log(data);
+                    parent.addresses = data.delivery_address;
+                    //parent.shipAddress = parent.addresses[0];
+                    for (i = 0; i < parent.addresses.length; i++) {
+                        if (parent.addresses[i].isdefault) {
+                            $scope.anynum = i;
+                        }
+                    }
+                    parent.shipAddress = parent.addresses[$scope.anynum];
+                    //console.log(parent.shipAddress)
+                    //$scope.badgeNum = this.items.length;
+                }).error(function (err) {
+                console.log('Err: ' + err);
+            });
+
+            $http.get(hostname + '/paycard/')
+                .success(function (data) {
+                    //console.log(data);
+                    parent.cards = data;
+                    //console.log((parent.cards[0].card_number + '').substring(-4));
+                    //parent.shipAddress = parent.addresses[0];
+                    //f(parent.shipAddress)
+                    //$scope.badgeNum = this.items.length;
+                }).error(function (err) {
+                console.log('Err: ' + err);
+            });
+        }).error(function(err){
             console.log('Err: ' + err);
         });
 
