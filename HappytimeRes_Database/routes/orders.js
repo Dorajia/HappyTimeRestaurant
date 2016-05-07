@@ -94,6 +94,35 @@ router.post('/confirm/:id', passport.authenticate('jwt', { session: false}), fun
   }
 });
 
+/*Confirm order by order id*/
+router.post('/remove/:id', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = gettoken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({
+      _id: decoded._id
+    }, function(err, user) {
+        if (err)
+        return res.status(500).send({success: false, msg: err});
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          	var order_id = {_id:req.params.id};
+                    
+            Order.remove(order_id,function(err, data){
+                if (err) {
+                    return res.status(403).send({success: false, msg: 'Remove comfirm order'});
+                    }
+                else {
+                      return res.status(200).send({success: true, msg: 'Remove Order successful!',data:data});
 
+                  }
+              });
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided.'});
+  }
+});
 
 module.exports = router;
