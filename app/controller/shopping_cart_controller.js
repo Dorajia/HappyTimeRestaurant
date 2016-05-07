@@ -127,6 +127,10 @@ app.controller('cartmanager',['$scope','$window', '$http', function($scope , $wi
                 selectedItems.push(parent.items[i]);
             }
         }
+        if(selectedItems.length == 0){
+            $window.alert('Please actually select something~!');
+            return;
+        }
         console.log(selectedItems.length);
         $http.post("http://localhost:3000" + '/cart/checkout', selectedItems).success(function(data){
             console.log('check out success');
